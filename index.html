@@ -217,8 +217,8 @@
 
 <div class="manga-container">
   <div class="scene-title">
-    <h1> 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите  — услышите свой голос или браузерную озвучку</p>
+    <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
+    <p>🇳 Китайский — браузерный · 🇷🇺 Русский — ваш голос (или браузерный)</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
   </div>
 
@@ -231,7 +231,7 @@
   <div id="panels-mcdonalds"></div>
 
   <div class="footer">
-     McDonald's Chinese Learning · 2026
+    🍔 McDonald's Chinese Learning · 2026
   </div>
 </div>
 
@@ -243,13 +243,13 @@ const SCENES = {
     panels: [
       { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:" Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍ Персонал" },
-      { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7564", zh:"哪里有座位？", py:"Nlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Ho xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
     ]
   }
@@ -266,7 +266,7 @@ let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 // IndexedDB
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v3', 1);
+    const request = indexedDB.open('McDonaldsAudio_v4', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) {
@@ -325,7 +325,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Рендер
+// Рендер — кнопка записи ТОЛЬКО для русского
 async function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
@@ -344,12 +344,9 @@ async function renderScene(key) {
           ${p.speaker}
         </div>
         <div class="speak-buttons">
-          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')">🇨🇳</button>
-          <button class="action-btn record-btn" id="${key}-rec-zh-${i}" onclick="toggleRecording('${key}',${i},'zh')">
-            🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'zh')">✕</span>
-          </button>
-          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')">🇷🇺</button>
-          <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')">
+          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Китайский (TTS)">🇨</button>
+          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский (ваш голос или TTS)">🇷</button>
+          <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский перевод">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
           </button>
         </div>
@@ -379,19 +376,17 @@ async function renderScene(key) {
 async function checkRecordings(key) {
   const data = SCENES[key];
   for (let i = 0; i < data.panels.length; i++) {
-    for (const lang of ['zh', 'ru']) {
-      try {
-        const blob = await getFromDB(`${key}_${lang}_${i}`);
-        if (blob) {
-          const recBtn = document.getElementById(`${key}-rec-${lang}-${i}`);
-          if (recBtn) recBtn.classList.add('has-recording');
-        }
-      } catch(e) {}
-    }
+    try {
+      const blob = await getFromDB(`${key}_ru_${i}`);
+      if (blob) {
+        const recBtn = document.getElementById(`${key}-rec-ru-${i}`);
+        if (recBtn) recBtn.classList.add('has-recording');
+      }
+    } catch(e) {}
   }
 }
 
-// ЗАПИСЬ
+// ЗАПИСЬ (только русский)
 async function toggleRecording(key, idx, lang) {
   const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
   
@@ -458,63 +453,73 @@ async function handleDelete(key, idx, lang) {
   } catch(e) {}
 }
 
-// ОЗВУЧКА (ИСПРАВЛЕНО - только один источник звука)
+// ОЗВУЧКА
 async function handleSpeak(key, idx, lang) {
-  // СТОП всё текущее
   speechSynthesis.cancel();
   
-  const dbKey = `${key}_${lang}_${idx}`;
-  
-  try {
-    const blob = await getFromDB(dbKey);
-    
-    if (blob) {
-      // ЕСТЬ ЗАПИСЬ - играем только её
-      const audio = new Audio(URL.createObjectURL(blob));
-      audio.playsInline = true;
-      
-      highlightText(key, idx, lang);
-      
-      audio.onended = () => {
-        clearHighlight(key, idx, lang);
-      };
-      
-      audio.onerror = () => {
-        clearHighlight(key, idx, lang);
-        showToast('❌ Ошибка воспроизведения');
-      };
-      
-      await audio.play();
-    } else {
-      // НЕТ ЗАПИСИ - используем TTS
-      highlightText(key, idx, lang);
-      
-      const p = SCENES[key].panels[idx];
-      const text = lang === 'zh' ? p.zh : p.ru;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-      utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
-      utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-      
-      if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
-      if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
-      
-      utterance.onend = () => clearHighlight(key, idx, lang);
-      utterance.onerror = () => clearHighlight(key, idx, lang);
-      
-      speechSynthesis.speak(utterance);
+  if (lang === 'zh') {
+    // Китайский — ВСЕГДА TTS
+    await playTTS(key, idx, 'zh');
+  } else {
+    // Русский — сначала проверяем запись
+    const dbKey = `${key}_ru_${idx}`;
+    try {
+      const blob = await getFromDB(dbKey);
+      if (blob) {
+        await playRecording(blob, key, idx, 'ru');
+      } else {
+        await playTTS(key, idx, 'ru');
+      }
+    } catch(e) {
+      await playTTS(key, idx, 'ru');
     }
-  } catch(e) {
-    // Если ошибка с DB - используем TTS
-    highlightText(key, idx, lang);
-    const p = SCENES[key].panels[idx];
-    const text = lang === 'zh' ? p.zh : p.ru;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-    utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
-    utterance.onend = () => clearHighlight(key, idx, lang);
-    speechSynthesis.speak(utterance);
   }
+}
+
+async function playRecording(blob, key, idx, lang) {
+  const audio = new Audio(URL.createObjectURL(blob));
+  audio.playsInline = true;
+  highlightText(key, idx, lang);
+  
+  return new Promise((resolve) => {
+    audio.onended = () => {
+      clearHighlight(key, idx, lang);
+      resolve();
+    };
+    audio.onerror = () => {
+      clearHighlight(key, idx, lang);
+      resolve();
+    };
+    audio.play().catch(() => {
+      clearHighlight(key, idx, lang);
+      resolve();
+    });
+  });
+}
+
+async function playTTS(key, idx, lang) {
+  highlightText(key, idx, lang);
+  const p = SCENES[key].panels[idx];
+  const text = lang === 'zh' ? p.zh : p.ru;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
+  utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
+  utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
+  
+  if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
+  if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
+  
+  return new Promise((resolve) => {
+    utterance.onend = () => {
+      clearHighlight(key, idx, lang);
+      resolve();
+    };
+    utterance.onerror = () => {
+      clearHighlight(key, idx, lang);
+      resolve();
+    };
+    speechSynthesis.speak(utterance);
+  });
 }
 
 function highlightText(key, idx, lang) {
@@ -570,98 +575,35 @@ async function playAll(key) {
       panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    const p = panels[idx];
-
-    // КИТАЙСКИЙ
+    // КИТАЙСКИЙ — всегда TTS
     npT.textContent = '🇨🇳 Китайский...';
-    await playLanguage(key, idx, 'zh');
+    await playTTS(key, idx, 'zh');
     
     if (!playingState[key]) return;
-    
-    // ПАУЗА
     await sleep(400);
-    
     if (!playingState[key]) return;
     
-    // РУССКИЙ
-    npT.textContent = '🇷🇺 Русский...';
-    await playLanguage(key, idx, 'ru');
+    // РУССКИЙ — запись или TTS
+    npT.textContent = '🇷 Русский...';
+    const dbKey = `${key}_ru_${idx}`;
+    try {
+      const blob = await getFromDB(dbKey);
+      if (blob) {
+        await playRecording(blob, key, idx, 'ru');
+      } else {
+        await playTTS(key, idx, 'ru');
+      }
+    } catch(e) {
+      await playTTS(key, idx, 'ru');
+    }
     
     if (!playingState[key]) return;
-    
     idx++;
     await sleep(500);
     processNext();
   }
 
   processNext();
-}
-
-async function playLanguage(key, idx, lang) {
-  const dbKey = `${key}_${lang}_${idx}`;
-  
-  try {
-    const blob = await getFromDB(dbKey);
-    
-    if (blob) {
-      // Запись - играем её
-      const audio = new Audio(URL.createObjectURL(blob));
-      audio.playsInline = true;
-      highlightText(key, idx, lang);
-      
-      return new Promise((resolve) => {
-        audio.onended = () => {
-          clearHighlight(key, idx, lang);
-          resolve();
-        };
-        audio.onerror = () => {
-          clearHighlight(key, idx, lang);
-          resolve();
-        };
-        audio.play().catch(() => resolve());
-      });
-    } else {
-      // TTS
-      highlightText(key, idx, lang);
-      const p = SCENES[key].panels[idx];
-      const text = lang === 'zh' ? p.zh : p.ru;
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-      utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
-      utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-      
-      if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
-      if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
-      
-      return new Promise((resolve) => {
-        utterance.onend = () => {
-          clearHighlight(key, idx, lang);
-          resolve();
-        };
-        utterance.onerror = () => {
-          clearHighlight(key, idx, lang);
-          resolve();
-        };
-        speechSynthesis.speak(utterance);
-      });
-    }
-  } catch(e) {
-    // Fallback на TTS
-    highlightText(key, idx, lang);
-    const p = SCENES[key].panels[idx];
-    const text = lang === 'zh' ? p.zh : p.ru;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-    utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
-    
-    return new Promise((resolve) => {
-      utterance.onend = () => {
-        clearHighlight(key, idx, lang);
-        resolve();
-      };
-      speechSynthesis.speak(utterance);
-    });
-  }
 }
 
 function sleep(ms) {
