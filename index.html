@@ -38,6 +38,67 @@
     .play-all-btn:hover  { transform: scale(1.05); }
     .play-all-btn.playing { background: #ffe8d6; color: #da291c; }
 
+    /* ===== ПОЛЗУНОК СКОРОСТИ ===== */
+    .speed-control {
+      background: white;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(218,41,28,0.1);
+      border: 2px solid #ffd6b3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .speed-label {
+      font-weight: 700;
+      color: #da291c;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .speed-slider {
+      flex: 1;
+      min-width: 150px;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #da291c, #ffc72c);
+      outline: none;
+    }
+    .speed-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #da291c;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .speed-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #da291c;
+      cursor: pointer;
+    }
+    .speed-value {
+      font-weight: 700;
+      color: #da291c;
+      font-size: 14px;
+      min-width: 45px;
+      text-align: center;
+      background: #fff0f0;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
     .panel {
       background: white; border-radius: 16px; margin-bottom: 16px;
       overflow: hidden; box-shadow: 0 4px 20px rgba(218,41,28,0.1);
@@ -172,9 +233,16 @@
 
 <div class="manga-container">
   <div class="scene-title">
-    <h1> 在麦当劳 — Диалог в McDonald's</h1>
+    <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
     <p>Нажмите 🔊 для озвучки. Иероглифы и слова будут подсвечиваться!</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
+  </div>
+
+  <!-- ПОЛЗУНОК СКОРОСТИ -->
+  <div class="speed-control">
+    <div class="speed-label">🐢 Скорость:</div>
+    <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
+    <div class="speed-value" id="speedValue">0.55x</div>
   </div>
 
   <div id="panels-mcdonalds"></div>
@@ -189,14 +257,14 @@
 const SCENES = {
   mcdonalds: {
     panels: [
-      { img:"IMG_7558", zh:"欢迎光临！请问需要点什么？", py:"Huānyíng guānglín! Qǐngwèn xūyào diǎn shénme?", ru:"Добро пожаловать! Что будете заказывать?", who:"w", speaker:"🧑🍳 Персонал" },
-      { img:"IMG_7559", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"好的，饮料要大杯还是中杯？", py:"Hǎo de, yǐnliào yào dà bēi háishì zhōng bēi?", ru:"Хорошо, напиток большой или средний?", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7558", zh:"欢迎光临！请问需要点什么？", py:"Huānyíng guānglín! Qǐngwèn xūyào diǎn shénme?", ru:"Добро пожаловать! Что будете заказывать?", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7559", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7560", zh:"好的，饮料要大杯还是中杯？", py:"Hǎo de, yǐnliào yào dà bēi háishì zhōng bēi?", ru:"Хорошо, напиток большой или средний?", who:"w", speaker:"🧑‍ Персонал" },
       { img:"IMG_7561", zh:"大杯可乐，加冰。还要一份大份薯条。", py:"Dà bēi kělè, jiā bīng. Hái yào yí fèn dà fèn shǔtiáo.", ru:"Большую колу со льдом. И большую картошку.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7563", zh:"当然可以。一共四十二元。", py:"Dāngrán kěyǐ. Yígòng sìshí'èr yuán.", ru:"Конечно. Итого 42 юаня.", who:"w", speaker:"‍🍳 Персонал" },
-      { img:"IMG_7564", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7565", zh:"谢谢！嗯…真好吃！", py:"Xièxie! g… zhēn hǎo chī!", ru:"Спасибо! Ммм… очень вкусно!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"当然可以。一共四十二元。", py:"Dāngrán kěyǐ. Yígòng sìshí'èr yuán.", ru:"Конечно. Итого 42 юаня.", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7564", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"‍🍳 Персонал" },
+      { img:"IMG_7565", zh:"谢谢！嗯…真好吃！", py:"Xièxie! Ńg… zhēn hǎo chī!", ru:"Спасибо! Ммм… очень вкусно!", who:"s", speaker:" Покупатель" },
       { img:"IMG_7566", zh:"再来一个冰淇淋！好香滑啊！", py:"Zài lái yí gè bīngqílín! Hǎo xiāng huá a!", ru:"Ещё одно мороженое! Такое нежное!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7567", zh:"谢谢光临！欢迎下次再来！", py:"Xièxie guānglín! Huānyíng xià cì zài lái!", ru:"Спасибо за посещение! Приходите ещё!", who:"w", speaker:"🧑‍🍳 Персонал" }
     ]
@@ -205,6 +273,7 @@ const SCENES = {
 
 let zhVoice = null;
 let ruVoice = null;
+let currentSpeed = 0.55; // Медленная скорость по умолчанию
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
@@ -213,6 +282,14 @@ function loadVoices() {
 }
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
+
+// Обработчик ползунка скорости
+const speedSlider = document.getElementById('speedSlider');
+const speedValue = document.getElementById('speedValue');
+speedSlider.addEventListener('input', (e) => {
+  currentSpeed = parseFloat(e.target.value);
+  speedValue.textContent = currentSpeed.toFixed(2) + 'x';
+});
 
 function renderScene(key) {
   const data = SCENES[key];
@@ -249,12 +326,12 @@ function renderScene(key) {
           <span class="panel-num-badge">${i+1}</span>
           ${p.speaker}
         </div>
-        <button class="speak-btn" id="${key}-btn${i}" onclick="speakPanel('${key}',${i})" title="Озвучить">🔊</button>
+        <button class="speak-btn" id="${key}-btn${i}" onclick="speakPanel('${key}',${i})" title="Озвучить"></button>
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
         <img class="panel-img" src="${imgSrc}" alt="Панель ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
         <div class="img-error-msg">
-          <div class="big">🖼️</div>
+          <div class="big">️</div>
           <div><b>${p.img}.png</b> не найден<br><small>Проверьте путь: Bejdialog/img/${p.img}.png</small></div>
         </div>
       </div>
@@ -303,11 +380,11 @@ function speakPanel(key, idx) {
 
   const zhUtterance = new SpeechSynthesisUtterance(p.zh);
   zhUtterance.lang = "zh-CN";
-  zhUtterance.rate = 0.75;
+  zhUtterance.rate = currentSpeed; // Используем скорость из ползунка
   zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
   if (zhVoice) zhUtterance.voice = zhVoice;
 
-  npText.textContent = "🇨 Китайский...";
+  npText.textContent = "🇨🇳 Китайский...";
 
   zhUtterance.onboundary = (event) => {
     if (event.name === 'word' || event.name === 'sentence') {
@@ -324,11 +401,10 @@ function speakPanel(key, idx) {
     setTimeout(() => {
       const ruUtterance = new SpeechSynthesisUtterance(p.ru);
       ruUtterance.lang = "ru-RU";
-      ruUtterance.rate = 0.85;
+      ruUtterance.rate = currentSpeed * 1.15; // Русский чуть быстрее, но всё равно медленно
       if (ruVoice) ruUtterance.voice = ruVoice;
 
       const ruWords = panelEl.querySelectorAll('.ru-word');
-      const ruText = p.ru;
       
       ruUtterance.onboundary = (event) => {
         if (event.name === 'word') {
@@ -398,11 +474,11 @@ function playAll(key) {
 
     const zhUtterance = new SpeechSynthesisUtterance(p.zh);
     zhUtterance.lang = "zh-CN";
-    zhUtterance.rate = 0.75;
+    zhUtterance.rate = currentSpeed;
     zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
     if (zhVoice) zhUtterance.voice = zhVoice;
 
-    npText.textContent = "🇨🇳 Китайский...";
+    npText.textContent = "🇳 Китайский...";
 
     zhUtterance.onboundary = (event) => {
       if (event.name === 'word' || event.name === 'sentence') {
@@ -415,11 +491,11 @@ function playAll(key) {
     };
 
     zhUtterance.onend = () => {
-      npText.textContent = "🇷🇺 Русский...";
+      npText.textContent = "🇷 Русский...";
       setTimeout(() => {
         const ruUtterance = new SpeechSynthesisUtterance(p.ru);
         ruUtterance.lang = "ru-RU";
-        ruUtterance.rate = 0.85;
+        ruUtterance.rate = currentSpeed * 1.15;
         if (ruVoice) ruUtterance.voice = ruVoice;
 
         const ruWords = panelEl.querySelectorAll('.ru-word');
