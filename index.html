@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍔 McDonald's — Учим китайский</title>
+  <title>🍔 McDonald's — Локальная запись голоса</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
 
@@ -16,7 +16,7 @@
       padding-bottom: 40px;
     }
 
-    .manga-container { max-width: 600px; margin: 0 auto; padding: 0 12px; }
+    .manga-container { max-width: 700px; margin: 0 auto; padding: 0 12px; }
 
     .scene-title {
       border-radius: 20px; padding: 22px 18px; text-align: center;
@@ -37,6 +37,19 @@
     }
     .play-all-btn:hover  { transform: scale(1.05); }
     .play-all-btn.playing { background: #ffe8d6; color: #da291c; }
+
+    .info-box {
+      background: white;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(218,41,28,0.1);
+      border: 2px solid #ffd6b3;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .info-box strong { color: #da291c; }
 
     .speed-control {
       background: white;
@@ -110,18 +123,54 @@
       font-size: 12px;
     }
 
-    .speak-buttons { display: flex; gap: 8px; }
+    .speak-buttons { display: flex; gap: 6px; align-items: center; }
 
     .speak-btn {
-      border: none; width: 38px; height: 38px; border-radius: 50%;
+      border: none; width: 36px; height: 36px; border-radius: 50%;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      font-size: 16px; transition: 0.2s; flex-shrink: 0;
+      font-size: 15px; transition: 0.2s; flex-shrink: 0;
       color: white;
     }
     .speak-btn:hover  { transform: scale(1.15); }
     .speak-btn.speaking { animation: pulse 0.9s ease-in-out infinite; }
     .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
+    
+    .record-btn {
+      border: none; width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 15px; transition: 0.2s; flex-shrink: 0;
+      color: white;
+      background: linear-gradient(135deg, #ff9800, #f57c00);
+      position: relative;
+    }
+    .record-btn:hover { transform: scale(1.15); }
+    .record-btn.recording { 
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      animation: pulse 0.9s ease-in-out infinite;
+    }
+    .record-btn.has-recording {
+      background: linear-gradient(135deg, #4CAF50, #67b26f);
+    }
+    .record-btn .delete-btn {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 16px;
+      height: 16px;
+      background: #f44336;
+      border: 2px solid white;
+      border-radius: 50%;
+      font-size: 10px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+    }
+    .record-btn.has-recording .delete-btn {
+      display: flex;
+    }
     
     @keyframes pulse {
       0%,100%{box-shadow:0 0 0 0 rgba(218,41,28,0.45)}
@@ -168,7 +217,6 @@
       transition: all 0.3s ease;
       background: white;
     }
-    /* Подсветка всей китайской фразы */
     .zh-text.active {
       background: #ffc72c;
       color: #da291c;
@@ -189,13 +237,25 @@
       transition: all 0.3s ease;
       background: white;
     }
-    /* Подсветка всей русской фразы */
     .ru-text.active {
       background: #4a90e2;
       color: white;
       border-left-color: #2c5aa0;
       box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5);
       transform: scale(1.02);
+    }
+
+    .audio-player {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #f5f5f5;
+      border-radius: 10px;
+      display: none;
+    }
+    .audio-player.visible { display: block; }
+    .audio-player audio {
+      width: 100%;
+      height: 36px;
     }
 
     .now-playing-bar {
@@ -219,19 +279,35 @@
     .footer {
       text-align: center; padding: 28px 20px; color: #cc6644; font-size: 12px;
     }
+
+    .toast {
+      position: fixed; bottom: 22px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(40,15,50,0.92); color: white;
+      padding: 11px 22px; border-radius: 28px;
+      font-size: 13px; font-family: inherit; z-index: 999;
+      transition: transform 0.3s ease; pointer-events: none; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
 <div class="manga-container">
   <div class="scene-title">
-    <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите 🔊 — вся фраза подсветится во время озвучки!</p>
+    <h1> 在麦当劳 — Запись голоса</h1>
+    <p>Записывайте свой голос — всё сохраняется в браузере!</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
   </div>
 
+  <div class="info-box">
+    <strong>🎤 Как записать:</strong> Нажмите 🟠 рядом с фразой → произнесите → нажмите ⏹ для остановки.<br>
+    <strong>✅ Зелёная кнопка</strong> = запись сохранена. Нажмите 🔊 чтобы услышать свой голос.<br>
+    <strong>️ Удалить:</strong> Нажмите на красный крестик на кнопке записи.
+  </div>
+
   <div class="speed-control">
-    <div class="speed-label">🐢 Скорость:</div>
+    <div class="speed-label">🐢 Скорость TTS:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
@@ -239,24 +315,26 @@
   <div id="panels-mcdonalds"></div>
 
   <div class="footer">
-    🍔 McDonald's Chinese Learning · 2026<br>
-    <small>Используйте Google Chrome для лучшей работы</small>
+     McDonald's Chinese Learning · 2026<br>
+    <small>Аудио сохраняется локально в вашем браузере</small>
   </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 const SCENES = {
   mcdonalds: {
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xun nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍ Персонал" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"W kěyǐ sǎo m zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:" Покупатель" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
     ]
   }
@@ -265,7 +343,60 @@ const SCENES = {
 let zhVoice = null;
 let ruVoice = null;
 let currentSpeed = 0.55;
+let mediaRecorder = null;
+let recordedChunks = [];
+let currentRecording = null;
+let db = null;
 
+// IndexedDB для хранения аудио
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('McDonaldsAudio', 1);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains('recordings')) {
+        db.createObjectStore('recordings');
+      }
+    };
+    request.onsuccess = (event) => {
+      db = event.target.result;
+      resolve(db);
+    };
+    request.onerror = (event) => reject(event.target.error);
+  });
+}
+
+function saveToDB(key, blob) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['recordings'], 'readwrite');
+    const store = transaction.objectStore('recordings');
+    const request = store.put(blob, key);
+    request.onsuccess = () => resolve();
+    request.onerror = (event) => reject(event.target.error);
+  });
+}
+
+function getFromDB(key) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['recordings'], 'readonly');
+    const store = transaction.objectStore('recordings');
+    const request = store.get(key);
+    request.onsuccess = (event) => resolve(event.target.result);
+    request.onerror = (event) => reject(event.target.error);
+  });
+}
+
+function deleteFromDB(key) {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['recordings'], 'readwrite');
+    const store = transaction.objectStore('recordings');
+    const request = store.delete(key);
+    request.onsuccess = () => resolve();
+    request.onerror = (event) => reject(event.target.error);
+  });
+}
+
+// Загрузка голосов
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
@@ -274,6 +405,7 @@ function loadVoices() {
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
+// Ползунок скорости
 const speedSlider = document.getElementById('speedSlider');
 const speedValue = document.getElementById('speedValue');
 speedSlider.addEventListener('input', (e) => {
@@ -281,7 +413,15 @@ speedSlider.addEventListener('input', (e) => {
   speedValue.textContent = currentSpeed.toFixed(2) + 'x';
 });
 
-function renderScene(key) {
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// Рендер сцены
+async function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
   let html = "";
@@ -300,7 +440,15 @@ function renderScene(key) {
         </div>
         <div class="speak-buttons">
           <button class="speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="speakChinese('${key}',${i})" title="Китайский">🇨🇳</button>
+          <button class="record-btn" id="${key}-rec-zh-${i}" onclick="toggleRecording('${key}',${i},'zh')" title="Записать китайский">
+            🎤
+            <span class="delete-btn" onclick="event.stopPropagation(); deleteRecording('${key}',${i},'zh')">✕</span>
+          </button>
           <button class="speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="speakRussian('${key}',${i})" title="Русский">🇷🇺</button>
+          <button class="record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
+            🎤
+            <span class="delete-btn" onclick="event.stopPropagation(); deleteRecording('${key}',${i},'ru')">✕</span>
+          </button>
         </div>
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
@@ -316,6 +464,12 @@ function renderScene(key) {
           <div class="zh-text" id="${key}-zh-${i}">${p.zh}</div>
           <div class="py-text">${p.py}</div>
           <div class="ru-text" id="${key}-ru-${i}">${p.ru}</div>
+          <div class="audio-player" id="${key}-player-zh-${i}">
+            <audio controls id="${key}-audio-zh-${i}"></audio>
+          </div>
+          <div class="audio-player" id="${key}-player-ru-${i}">
+            <audio controls id="${key}-audio-ru-${i}"></audio>
+          </div>
         </div>
         <div class="now-playing-bar" id="${key}-np${i}">
           <div class="bars"><span></span><span></span><span></span><span></span></div>
@@ -325,80 +479,209 @@ function renderScene(key) {
     </div>`;
   });
   container.innerHTML = html;
+
+  // Проверяем наличие записей
+  await checkRecordings(key);
 }
 
-// ===== ОЗВУЧКА КИТАЙСКОГО =====
+async function checkRecordings(key) {
+  const data = SCENES[key];
+  for (let i = 0; i < data.panels.length; i++) {
+    for (const lang of ['zh', 'ru']) {
+      const dbKey = `${key}_${lang}_${i}`;
+      try {
+        const blob = await getFromDB(dbKey);
+        if (blob) {
+          const audioUrl = URL.createObjectURL(blob);
+          const audioEl = document.getElementById(`${key}-audio-${lang}-${i}`);
+          const playerEl = document.getElementById(`${key}-player-${lang}-${i}`);
+          const recBtn = document.getElementById(`${key}-rec-${lang}-${i}`);
+          
+          if (audioEl && playerEl && recBtn) {
+            audioEl.src = audioUrl;
+            playerEl.classList.add('visible');
+            recBtn.classList.add('has-recording');
+          }
+        }
+      } catch (e) {
+        console.error('Error checking recording:', e);
+      }
+    }
+  }
+}
+
+// Запись голоса
+async function toggleRecording(key, idx, lang) {
+  const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
+  
+  if (recBtn.classList.contains('recording')) {
+    stopRecording(key, idx, lang);
+  } else {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      recordedChunks = [];
+      
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          recordedChunks.push(event.data);
+        }
+      };
+      
+      mediaRecorder.onstop = async () => {
+        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+        const dbKey = `${key}_${lang}_${idx}`;
+        
+        try {
+          await saveToDB(dbKey, blob);
+          const audioUrl = URL.createObjectURL(blob);
+          const audioEl = document.getElementById(`${key}-audio-${lang}-${idx}`);
+          const playerEl = document.getElementById(`${key}-player-${lang}-${idx}`);
+          const recBtnEl = document.getElementById(`${key}-rec-${lang}-${idx}`);
+          
+          if (audioEl && playerEl && recBtnEl) {
+            audioEl.src = audioUrl;
+            playerEl.classList.add('visible');
+            recBtnEl.classList.add('has-recording');
+          }
+          showToast('✅ Запись сохранена!');
+        } catch (e) {
+          showToast('❌ Ошибка сохранения!');
+        }
+        
+        stream.getTracks().forEach(track => track.stop());
+      };
+      
+      mediaRecorder.start();
+      recBtn.classList.add('recording');
+      recBtn.querySelector('.delete-btn').style.display = 'none';
+      showToast(' Запись... Нажмите ещё раз для остановки');
+      
+      currentRecording = { key, idx, lang };
+      
+      setTimeout(() => {
+        if (recBtn.classList.contains('recording')) {
+          stopRecording(key, idx, lang);
+        }
+      }, 10000);
+      
+    } catch (err) {
+      showToast('⚠️ Ошибка доступа к микрофону!');
+    }
+  }
+}
+
+function stopRecording(key, idx, lang) {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
+    if (recBtn) {
+      recBtn.classList.remove('recording');
+      recBtn.querySelector('.delete-btn').style.display = 'flex';
+    }
+  }
+}
+
+async function deleteRecording(key, idx, lang) {
+  const dbKey = `${key}_${lang}_${idx}`;
+  try {
+    await deleteFromDB(dbKey);
+    const audioEl = document.getElementById(`${key}-audio-${lang}-${idx}`);
+    const playerEl = document.getElementById(`${key}-player-${lang}-${idx}`);
+    const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
+    
+    if (audioEl) audioEl.src = '';
+    if (playerEl) playerEl.classList.remove('visible');
+    if (recBtn) {
+      recBtn.classList.remove('has-recording');
+      recBtn.querySelector('.delete-btn').style.display = 'none';
+    }
+    showToast('🗑️ Запись удалена');
+  } catch (e) {
+    showToast('❌ Ошибка удаления!');
+  }
+}
+
+// Озвучка китайского
 function speakChinese(key, idx) {
+  const audioEl = document.getElementById(`${key}-audio-zh-${idx}`);
+  
+  if (audioEl && audioEl.src) {
+    audioEl.play();
+    highlightText(key, idx, 'zh');
+    audioEl.onended = () => clearHighlight(key, idx, 'zh');
+    return;
+  }
+  
   speechSynthesis.cancel();
-
-  const panelEl = document.getElementById(`${key}-p${idx}`);
-  const zhEl = document.getElementById(`${key}-zh-${idx}`);
-  const btnEl = document.getElementById(`${key}-btn-zh-${idx}`);
-  const npEl = document.getElementById(`${key}-np${idx}`);
-  const npText = document.getElementById(`${key}-np-text${idx}`);
-
-  // Подсвечиваем всю китайскую фразу
-  zhEl.classList.add("active");
-  panelEl.classList.add("active-panel");
-  btnEl.classList.add("speaking");
-  npEl.classList.add("visible");
-  npText.textContent = "🇨🇳 Китайский...";
-  panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
-
+  highlightText(key, idx, 'zh');
+  
   const p = SCENES[key].panels[idx];
   const zhUtterance = new SpeechSynthesisUtterance(p.zh);
   zhUtterance.lang = "zh-CN";
   zhUtterance.rate = currentSpeed;
   zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
   if (zhVoice) zhUtterance.voice = zhVoice;
-
-  zhUtterance.onend = () => {
-    zhEl.classList.remove("active");
-    btnEl.classList.remove("speaking");
-    npEl.classList.remove("visible");
-    panelEl.classList.remove("active-panel");
-  };
-
+  
+  zhUtterance.onend = () => clearHighlight(key, idx, 'zh');
   zhUtterance.onerror = zhUtterance.onend;
+  
   speechSynthesis.speak(zhUtterance);
 }
 
-// ===== ОЗВУЧКА РУССКОГО =====
+// Озвучка русского
 function speakRussian(key, idx) {
+  const audioEl = document.getElementById(`${key}-audio-ru-${idx}`);
+  
+  if (audioEl && audioEl.src) {
+    audioEl.play();
+    highlightText(key, idx, 'ru');
+    audioEl.onended = () => clearHighlight(key, idx, 'ru');
+    return;
+  }
+  
   speechSynthesis.cancel();
-
-  const panelEl = document.getElementById(`${key}-p${idx}`);
-  const ruEl = document.getElementById(`${key}-ru-${idx}`);
-  const btnEl = document.getElementById(`${key}-btn-ru-${idx}`);
-  const npEl = document.getElementById(`${key}-np${idx}`);
-  const npText = document.getElementById(`${key}-np-text${idx}`);
-
-  // Подсвечиваем всю русскую фразу
-  ruEl.classList.add("active");
-  panelEl.classList.add("active-panel");
-  btnEl.classList.add("speaking");
-  npEl.classList.add("visible");
-  npText.textContent = "🇷🇺 Русский...";
-  panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
-
+  highlightText(key, idx, 'ru');
+  
   const p = SCENES[key].panels[idx];
   const ruUtterance = new SpeechSynthesisUtterance(p.ru);
   ruUtterance.lang = "ru-RU";
   ruUtterance.rate = currentSpeed * 1.1;
   if (ruVoice) ruUtterance.voice = ruVoice;
-
-  ruUtterance.onend = () => {
-    ruEl.classList.remove("active");
-    btnEl.classList.remove("speaking");
-    npEl.classList.remove("visible");
-    panelEl.classList.remove("active-panel");
-  };
-
+  
+  ruUtterance.onend = () => clearHighlight(key, idx, 'ru');
   ruUtterance.onerror = ruUtterance.onend;
+  
   speechSynthesis.speak(ruUtterance);
 }
 
-// ===== ОЗВУЧКА ВСЕГО ДИАЛОГА =====
+function highlightText(key, idx, lang) {
+  const textEl = document.getElementById(`${key}-${lang}-${idx}`);
+  const panelEl = document.getElementById(`${key}-p${idx}`);
+  const btnEl = document.getElementById(`${key}-btn-${lang}-${idx}`);
+  const npEl = document.getElementById(`${key}-np${idx}`);
+  const npText = document.getElementById(`${key}-np-text${idx}`);
+  
+  if (textEl) textEl.classList.add('active');
+  if (panelEl) panelEl.classList.add('active-panel');
+  if (btnEl) btnEl.classList.add('speaking');
+  if (npEl) npEl.classList.add('visible');
+  if (npText) npText.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
+}
+
+function clearHighlight(key, idx, lang) {
+  const textEl = document.getElementById(`${key}-${lang}-${idx}`);
+  const panelEl = document.getElementById(`${key}-p${idx}`);
+  const btnEl = document.getElementById(`${key}-btn-${lang}-${idx}`);
+  const npEl = document.getElementById(`${key}-np${idx}`);
+  
+  if (textEl) textEl.classList.remove('active');
+  if (panelEl) panelEl.classList.remove('active-panel');
+  if (btnEl) btnEl.classList.remove('speaking');
+  if (npEl) npEl.classList.remove('visible');
+}
+
+// Озвучка всего диалога
 const playingState = {};
 
 function playAll(key) {
@@ -409,8 +692,8 @@ function playAll(key) {
 
   playingState[key] = true;
   const btn = document.getElementById(`playBtn-${key}`);
-  btn.textContent = " Остановить";
-  btn.classList.add("playing");
+  btn.textContent = '⏹ Остановить';
+  btn.classList.add('playing');
 
   const panels = SCENES[key].panels;
   let idx = 0;
@@ -422,64 +705,75 @@ function playAll(key) {
     }
 
     const panelEl = document.getElementById(`${key}-p${idx}`);
-    const zhEl = document.getElementById(`${key}-zh-${idx}`);
-    const ruEl = document.getElementById(`${key}-ru-${idx}`);
-    const btnZh = document.getElementById(`${key}-btn-zh-${idx}`);
-    const btnRu = document.getElementById(`${key}-btn-ru-${idx}`);
     const npEl = document.getElementById(`${key}-np${idx}`);
     const npText = document.getElementById(`${key}-np-text${idx}`);
 
-    panelEl.classList.add("active-panel");
-    npEl.classList.add("visible");
-    panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
+    if (panelEl) {
+      panelEl.classList.add('active-panel');
+      npEl.classList.add('visible');
+      panelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
     const p = panels[idx];
 
-    // Китайский
-    npText.textContent = "🇨🇳 Китайский...";
-    btnZh.classList.add("speaking");
-    zhEl.classList.add("active");
-
-    const zhUtterance = new SpeechSynthesisUtterance(p.zh);
-    zhUtterance.lang = "zh-CN";
-    zhUtterance.rate = currentSpeed;
-    zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
-    if (zhVoice) zhUtterance.voice = zhVoice;
-
-    zhUtterance.onend = () => {
-      zhEl.classList.remove("active");
-      btnZh.classList.remove("speaking");
-
-      setTimeout(() => {
-        if (!playingState[key]) return;
-
-        // Русский
-        npText.textContent = "🇺 Русский...";
-        btnRu.classList.add("speaking");
-        ruEl.classList.add("active");
-
-        const ruUtterance = new SpeechSynthesisUtterance(p.ru);
-        ruUtterance.lang = "ru-RU";
-        ruUtterance.rate = currentSpeed * 1.1;
-        if (ruVoice) ruUtterance.voice = ruVoice;
-
-        ruUtterance.onend = () => {
-          ruEl.classList.remove("active");
-          btnRu.classList.remove("speaking");
-          npEl.classList.remove("visible");
-          panelEl.classList.remove("active-panel");
-          idx++;
-          setTimeout(next, 500);
-        };
-
-        ruUtterance.onerror = ruUtterance.onend;
-        speechSynthesis.speak(ruUtterance);
-      }, 400);
-    };
-
-    zhUtterance.onerror = zhUtterance.onend;
-    speechSynthesis.speak(zhUtterance);
+    npText.textContent = '🇳 Китайский...';
+    
+    const zhAudioEl = document.getElementById(`${key}-audio-zh-${idx}`);
+    if (zhAudioEl && zhAudioEl.src) {
+      zhAudioEl.play();
+      highlightText(key, idx, 'zh');
+      zhAudioEl.onended = () => {
+        clearHighlight(key, idx, 'zh');
+        setTimeout(() => playRussian(key, idx, next), 400);
+      };
+    } else {
+      highlightText(key, idx, 'zh');
+      const zhUtterance = new SpeechSynthesisUtterance(p.zh);
+      zhUtterance.lang = 'zh-CN';
+      zhUtterance.rate = currentSpeed;
+      zhUtterance.pitch = p.who === 's' ? 1.15 : 0.9;
+      if (zhVoice) zhUtterance.voice = zhVoice;
+      zhUtterance.onend = () => {
+        clearHighlight(key, idx, 'zh');
+        setTimeout(() => playRussian(key, idx, next), 400);
+      };
+      zhUtterance.onerror = zhUtterance.onend;
+      speechSynthesis.speak(zhUtterance);
+    }
   }
+
+  function playRussian(key, idx, callback) {
+    if (!playingState[key]) return;
+    
+    const p = panels[idx];
+    const npText = document.getElementById(`${key}-np-text${idx}`);
+    npText.textContent = '🇷🇺 Русский...';
+    
+    const ruAudioEl = document.getElementById(`${key}-audio-ru-${idx}`);
+    if (ruAudioEl && ruAudioEl.src) {
+      ruAudioEl.play();
+      highlightText(key, idx, 'ru');
+      ruAudioEl.onended = () => {
+        clearHighlight(key, idx, 'ru');
+        idx++;
+        setTimeout(callback, 500);
+      };
+    } else {
+      highlightText(key, idx, 'ru');
+      const ruUtterance = new SpeechSynthesisUtterance(p.ru);
+      ruUtterance.lang = 'ru-RU';
+      ruUtterance.rate = currentSpeed * 1.1;
+      if (ruVoice) ruUtterance.voice = ruVoice;
+      ruUtterance.onend = () => {
+        clearHighlight(key, idx, 'ru');
+        idx++;
+        setTimeout(callback, 500);
+      };
+      ruUtterance.onerror = ruUtterance.onend;
+      speechSynthesis.speak(ruUtterance);
+    }
+  }
+
   next();
 }
 
@@ -487,25 +781,30 @@ function stopScene(key) {
   speechSynthesis.cancel();
   playingState[key] = false;
   
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active-panel"));
-  document.querySelectorAll(".speak-btn").forEach(b => b.classList.remove("speaking"));
-  document.querySelectorAll(".now-playing-bar").forEach(n => n.classList.remove("visible"));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+  document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
+  document.querySelectorAll('.now-playing-bar').forEach(n => n.classList.remove('visible'));
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('audio').forEach(a => a.pause());
   
   const btn = document.getElementById(`playBtn-${key}`);
   if (btn) {
-    btn.textContent = "▶ Озвучить весь диалог";
-    btn.classList.remove("playing");
+    btn.textContent = '▶ Озвучить весь диалог';
+    btn.classList.remove('playing');
   }
 }
 
-window.addEventListener("load", () => {
-  renderScene("mcdonalds");
-  if (!("speechSynthesis" in window)) {
-    alert("️ Используйте Google Chrome для озвучки!");
+// Инициализация
+window.addEventListener('load', async () => {
+  await initDB();
+  renderScene('mcdonalds');
+  
+  if (!('speechSynthesis' in window)) {
+    showToast('⚠️ Используйте Google Chrome для озвучки!');
   }
 });
 </script>
 
 </body>
 </html>
+
