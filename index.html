@@ -14,29 +14,15 @@
     }
     .manga-container { max-width: 700px; margin: 0 auto; padding: 0 12px; }
     
-    /* Заголовок сцены */
     .scene-title {
       border-radius: 20px; padding: 22px 18px; text-align: center;
       margin: 15px 0 18px; 
       background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
       box-shadow: 0 8px 32px rgba(218,41,28,0.25); color: white;
-      position: relative;
     }
     .scene-title h1 { font-size: 20px; margin-bottom: 5px; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
     .scene-title p  { font-size: 13px; opacity: 0.95; margin-bottom: 14px; }
     
-    /* Главная кнопка управления диалогом */
-    .play-all-btn {
-      background: white; color: #da291c; border: none;
-      padding: 12px 28px; border-radius: 30px;
-      font-size: 15px; font-weight: 700; cursor: pointer;
-      font-family: inherit; transition: all 0.2s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      touch-action: manipulation; width: 100%; max-width: 300px;
-    }
-    .play-all-btn:active { transform: scale(0.95); }
-    
-    /* Контроль скорости */
     .speed-control {
       background: white; border-radius: 16px; padding: 14px 18px;
       margin-bottom: 16px; box-shadow: 0 4px 16px rgba(218,41,28,0.1);
@@ -60,12 +46,11 @@
       background: #fff0f0; padding: 4px 10px; border-radius: 12px;
     }
 
-    /* Карточка */
     .panel {
       background: white; border-radius: 16px; margin-bottom: 16px;
       overflow: hidden; box-shadow: 0 4px 20px rgba(218,41,28,0.1);
       border: 2px solid #ffd6b3; transition: all 0.3s;
-      scroll-margin-top: 20px; /* Отступ при скролле */
+      scroll-margin-top: 20px;
     }
     .panel.active-panel {
       border-color: #da291c;
@@ -77,7 +62,6 @@
       box-shadow: 0 0 0 3px rgba(244,67,54,0.3);
     }
 
-    /* Шапка панели */
     .panel-header {
       display: flex; justify-content: space-between; align-items: center;
       padding: 10px 14px; background: #fffaf8;
@@ -93,7 +77,6 @@
       display: inline-flex; align-items: center; justify-content: center; font-size: 12px;
     }
 
-    /* Кнопки действий */
     .speak-buttons { display: flex; gap: 6px; align-items: center; }
     
     .action-btn {
@@ -116,7 +99,6 @@
     }
     .record-btn.has-recording { background: linear-gradient(135deg, #4CAF50, #67b26f); }
     
-    /* Маленькая кнопка повтора (не на картинке) */
     .replay-btn {
       background: #eee; color: #888;
       border: 1px solid #ddd;
@@ -138,7 +120,6 @@
       50%{box-shadow:0 0 0 10px rgba(218,41,28,0)}
     }
 
-    /* Картинка */
     .panel-img-wrap {
       position: relative; background: linear-gradient(135deg, #fff8f0, #ffe8d6);
       min-height: 150px; overflow: hidden;
@@ -154,7 +135,6 @@
     .panel-img-wrap.has-error .panel-img     { display: none; }
     .panel-img-wrap.has-error .img-error-msg { display: flex; }
 
-    /* Диалог */
     .dialogue { padding: 18px 16px; }
     .bubble {
       padding: 16px; border-radius: 14px; margin-bottom: 14px;
@@ -186,6 +166,32 @@
     .ru-text.active {
       background: #4a90e2; color: white; border-left-color: #2c5aa0;
       box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5); transform: scale(1.02);
+    }
+
+    /* Кнопка "Далее" на карточке */
+    .next-card-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      background: linear-gradient(135deg, #ffc72c, #ff9800);
+      color: #333;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+      font-family: inherit;
+      display: none;
+    }
+    .next-card-btn.visible {
+      display: block;
+    }
+    .next-card-btn:active { transform: scale(0.97); }
+    .next-card-btn.playing {
+      background: linear-gradient(135deg, #da291c, #ff6b6b);
+      color: white;
     }
 
     .now-playing-bar {
@@ -223,9 +229,7 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите кнопку ниже для пошагового изучения</p>
-    <!-- Единая кнопка управления -->
-    <button class="play-all-btn" id="mainControlBtn" onclick="handleMainControl()">▶ Начать диалог</button>
+    <p>Нажмите "Далее" на карточке → послушайте → переход к следующей</p>
   </div>
   
   <div class="speed-control">
@@ -267,13 +271,7 @@ let activeRecorder = null;
 let activeStream = null;
 let activeRecordingKey = null;
 let recordingTimeout = null;
-
-// Глобальное состояние диалога
-let dialogState = {
-  isActive: false,
-  currentIndex: 0,
-  key: 'mcdonalds'
-};
+let currentCardIndex = 0;
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return;
@@ -287,7 +285,7 @@ function wakeUpSpeechSynthesis() {
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v10', 1);
+    const request = indexedDB.open('McDonaldsAudio_v11', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
@@ -370,10 +368,8 @@ async function renderScene(key) {
           ${p.speaker}
         </div>
         <div class="speak-buttons">
-          <!-- Маленькая кнопка повтора здесь, а не на картинке -->
-          <button class="action-btn replay-btn" id="${key}-replay-${i}" onclick="playCard('${key}',${i})" title="Повторить озвучку">🔊</button>
-          
-          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨🇳</button>
+          <button class="action-btn replay-btn" id="${key}-replay-${i}" onclick="playCard('${key}',${i})" title="Повторить">🔊</button>
+          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨</button>
           <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Только русский">🇷🇺</button>
           <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
@@ -382,7 +378,7 @@ async function renderScene(key) {
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
         <img class="panel-img" src="${imgSrc}" alt="Panel ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
-        <div class="img-error-msg"><div class="big">🖼️</div><div><b>${p.img}.png</b> не найден</div></div>
+        <div class="img-error-msg"><div class="big">️</div><div><b>${p.img}.png</b> не найден</div></div>
       </div>
       <div class="dialogue">
         <div class="bubble ${bubbleClass}" id="${key}-bub${i}">
@@ -395,11 +391,37 @@ async function renderScene(key) {
           <div class="bars"><span></span><span></span><span></span><span></span></div>
           <span id="${key}-np-text${i}">Идёт озвучка...</span>
         </div>
+        <!-- Кнопка "Далее" на карточке -->
+        <button class="next-card-btn" id="${key}-next-${i}" onclick="playAndNext('${key}',${i})">
+          ▶ Озвучить и перейти к следующей
+        </button>
       </div>
     </div>`;
   });
   container.innerHTML = html;
   await checkRecordings(key);
+  
+  // Показываем кнопку на первой карточке
+  showNextButton(0);
+}
+
+function showNextButton(idx) {
+  // Скрываем все кнопки
+  document.querySelectorAll('.next-card-btn').forEach(btn => {
+    btn.classList.remove('visible');
+  });
+  
+  // Показываем на текущей
+  const btn = document.getElementById(`mcdonalds-next-${idx}`);
+  if (btn) {
+    btn.classList.add('visible');
+    const panels = SCENES.mcdonalds.panels;
+    if (idx >= panels.length - 1) {
+      btn.textContent = '🔄 Озвучить и начать сначала';
+    } else {
+      btn.textContent = `▶ Озвучить и перейти к карточке ${idx + 2}`;
+    }
+  }
 }
 
 async function checkRecordings(key) {
@@ -489,8 +511,6 @@ async function handleDelete(key, idx, lang) {
   } catch(e) {}
 }
 
-// --- AUDIO & TTS LOGIC ---
-
 function playTTSRobust(key, idx, lang) {
   return new Promise(async (resolve) => {
     highlightText(key, idx, lang);
@@ -537,11 +557,13 @@ function highlightText(key, idx, lang) {
   const np = document.getElementById(`${key}-np${idx}`);
   const npT = document.getElementById(`${key}-np-text${idx}`);
   const replayBtn = document.getElementById(`${key}-replay-${idx}`);
+  const nextBtn = document.getElementById(`${key}-next-${idx}`);
   
   if(el) el.classList.add('active');
   if(panel) panel.classList.add('active-panel');
   if(btn) btn.classList.add('speaking');
   if(replayBtn) replayBtn.classList.add('playing');
+  if(nextBtn) nextBtn.classList.add('playing');
   if(np) np.classList.add('visible');
   if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
 }
@@ -552,11 +574,13 @@ function clearHighlight(key, idx, lang) {
   const btn = document.getElementById(`${key}-btn-${lang}-${idx}`);
   const np = document.getElementById(`${key}-np${idx}`);
   const replayBtn = document.getElementById(`${key}-replay-${idx}`);
+  const nextBtn = document.getElementById(`${key}-next-${idx}`);
   
   if(el) el.classList.remove('active');
   if(panel) panel.classList.remove('active-panel');
   if(btn) btn.classList.remove('speaking');
   if(replayBtn) replayBtn.classList.remove('playing');
+  if(nextBtn) nextBtn.classList.remove('playing');
   if(np) np.classList.remove('visible');
 }
 
@@ -594,39 +618,34 @@ async function playCard(key, idx) {
   if (btn) btn.classList.remove('playing');
 }
 
-// --- MAIN CONTROL LOGIC ---
-
-async function handleMainControl() {
-  const btn = document.getElementById('mainControlBtn');
-  const panels = SCENES.mcdonalds.panels;
+// Главная функция: озвучить и перейти к следующей
+async function playAndNext(key, idx) {
+  const panels = SCENES[key].panels;
   
-  // Если диалог завершен или не начат
-  if (!dialogState.isActive || dialogState.currentIndex >= panels.length) {
-    dialogState.isActive = true;
-    dialogState.currentIndex = 0;
+  // Озвучиваем текущую карточку
+  await playCard(key, idx);
+  
+  // Определяем следующую карточку
+  let nextIdx = idx + 1;
+  if (nextIdx >= panels.length) {
+    nextIdx = 0; // Начинаем сначала
+    showToast('🔄 Начинаем сначала');
   }
   
-  const idx = dialogState.currentIndex;
-  
-  // 1. Скролл к карточке
-  const panel = document.getElementById(`mcdonalds-p${idx}`);
-  if (panel) {
-    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Скроллим к следующей карточке
+  const nextPanel = document.getElementById(`${key}-p${nextIdx}`);
+  if (nextPanel) {
+    setTimeout(() => {
+      nextPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   }
   
-  // 2. Озвучка
-  await playCard('mcdonalds', idx);
+  // Показываем кнопку на следующей карточке
+  setTimeout(() => {
+    showNextButton(nextIdx);
+  }, 500);
   
-  // 3. Подготовка к следующему шагу
-  dialogState.currentIndex++;
-  
-  if (dialogState.currentIndex < panels.length) {
-    btn.textContent = `▶ Далее: Карточка ${dialogState.currentIndex + 1}`;
-  } else {
-    btn.textContent = '🔄 Начать сначала';
-    dialogState.isActive = false; // Сброс флага, чтобы следующий клик начал заново
-    dialogState.currentIndex = 0;
-  }
+  currentCardIndex = nextIdx;
 }
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
