@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🍔 McDonald's — Учим китайский</title>
+  <title> McDonald's — Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -168,30 +168,33 @@
       box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5); transform: scale(1.02);
     }
 
-    /* Кнопка "Далее" на карточке */
+    /* МАЛЕНЬКАЯ НЕЗАМЕТНАЯ КНОПКА */
     .next-card-btn {
-      width: 100%;
-      padding: 14px;
-      margin-top: 15px;
-      background: linear-gradient(135deg, #ffc72c, #ff9800);
-      color: #333;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
+      display: block;
+      margin: 8px auto 0;
+      padding: 6px 14px;
+      background: transparent;
+      color: #bbb;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
       touch-action: manipulation;
       font-family: inherit;
-      display: none;
+      opacity: 0.5;
     }
-    .next-card-btn.visible {
-      display: block;
+    .next-card-btn:hover {
+      opacity: 1;
+      background: #fff8f0;
+      border-color: #ffc72c;
+      color: #da291c;
     }
-    .next-card-btn:active { transform: scale(0.97); }
+    .next-card-btn:active { transform: scale(0.95); }
     .next-card-btn.playing {
-      background: linear-gradient(135deg, #da291c, #ff6b6b);
-      color: white;
+      opacity: 0.3;
+      pointer-events: none;
     }
 
     .now-playing-bar {
@@ -229,11 +232,11 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите "Далее" на карточке → послушайте → переход к следующей</p>
+    <p>Нажмите маленькую кнопку под текстом для озвучки и перехода</p>
   </div>
   
   <div class="speed-control">
-    <div class="speed-label">🐢 Скорость TTS:</div>
+    <div class="speed-label"> Скорость TTS:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
@@ -250,14 +253,14 @@ const SCENES = {
     panels: [
       { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:" Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍ Персонал" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
+      { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:" Покупатель" }
     ]
   }
 };
@@ -271,7 +274,6 @@ let activeRecorder = null;
 let activeStream = null;
 let activeRecordingKey = null;
 let recordingTimeout = null;
-let currentCardIndex = 0;
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return;
@@ -285,7 +287,7 @@ function wakeUpSpeechSynthesis() {
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v11', 1);
+    const request = indexedDB.open('McDonaldsAudio_v12', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
@@ -359,6 +361,7 @@ async function renderScene(key) {
     const bubbleClass = p.who === "w" ? "waiter" : "sailor";
     const speakerClass = p.who === "w" ? "w" : "s";
     const imgSrc = `img/${p.img}.png`;
+    const isLast = i === data.panels.length - 1;
 
     html += `
     <div class="panel" id="${key}-p${i}">
@@ -369,7 +372,7 @@ async function renderScene(key) {
         </div>
         <div class="speak-buttons">
           <button class="action-btn replay-btn" id="${key}-replay-${i}" onclick="playCard('${key}',${i})" title="Повторить">🔊</button>
-          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨</button>
+          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨🇳</button>
           <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Только русский">🇷🇺</button>
           <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
@@ -391,37 +394,14 @@ async function renderScene(key) {
           <div class="bars"><span></span><span></span><span></span><span></span></div>
           <span id="${key}-np-text${i}">Идёт озвучка...</span>
         </div>
-        <!-- Кнопка "Далее" на карточке -->
         <button class="next-card-btn" id="${key}-next-${i}" onclick="playAndNext('${key}',${i})">
-          ▶ Озвучить и перейти к следующей
+          ${isLast ? '↻ в начало' : '→ далее'}
         </button>
       </div>
     </div>`;
   });
   container.innerHTML = html;
   await checkRecordings(key);
-  
-  // Показываем кнопку на первой карточке
-  showNextButton(0);
-}
-
-function showNextButton(idx) {
-  // Скрываем все кнопки
-  document.querySelectorAll('.next-card-btn').forEach(btn => {
-    btn.classList.remove('visible');
-  });
-  
-  // Показываем на текущей
-  const btn = document.getElementById(`mcdonalds-next-${idx}`);
-  if (btn) {
-    btn.classList.add('visible');
-    const panels = SCENES.mcdonalds.panels;
-    if (idx >= panels.length - 1) {
-      btn.textContent = '🔄 Озвучить и начать сначала';
-    } else {
-      btn.textContent = `▶ Озвучить и перейти к карточке ${idx + 2}`;
-    }
-  }
 }
 
 async function checkRecordings(key) {
@@ -618,34 +598,24 @@ async function playCard(key, idx) {
   if (btn) btn.classList.remove('playing');
 }
 
-// Главная функция: озвучить и перейти к следующей
+// Озвучить и перейти к следующей
 async function playAndNext(key, idx) {
   const panels = SCENES[key].panels;
   
-  // Озвучиваем текущую карточку
   await playCard(key, idx);
   
-  // Определяем следующую карточку
   let nextIdx = idx + 1;
   if (nextIdx >= panels.length) {
-    nextIdx = 0; // Начинаем сначала
+    nextIdx = 0;
     showToast('🔄 Начинаем сначала');
   }
   
-  // Скроллим к следующей карточке
   const nextPanel = document.getElementById(`${key}-p${nextIdx}`);
   if (nextPanel) {
     setTimeout(() => {
       nextPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 300);
   }
-  
-  // Показываем кнопку на следующей карточке
-  setTimeout(() => {
-    showNextButton(nextIdx);
-  }, 500);
-  
-  currentCardIndex = nextIdx;
 }
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -653,7 +623,7 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 window.addEventListener('load', async () => {
   await initDB();
   renderScene('mcdonalds');
-  if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
+  if (!('speechSynthesis' in window)) showToast('️ Используйте Chrome/Safari');
 });
 </script>
 </body>
