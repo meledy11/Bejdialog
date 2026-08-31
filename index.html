@@ -41,16 +41,10 @@
     .play-all-btn.playing { background: #ffe8d6; color: #da291c; }
 
     .speed-control {
-      background: white;
-      border-radius: 16px;
-      padding: 14px 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 16px rgba(218,41,28,0.1);
+      background: white; border-radius: 16px; padding: 14px 18px;
+      margin-bottom: 16px; box-shadow: 0 4px 16px rgba(218,41,28,0.1);
       border: 2px solid #ffd6b3;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
     .speed-label { font-weight: 700; color: #da291c; font-size: 13px; }
     .speed-slider {
@@ -78,6 +72,10 @@
       border-color: #da291c;
       box-shadow: 0 0 0 3px rgba(218,41,28,0.15), 0 8px 30px rgba(255,199,44,0.25);
     }
+    .panel.recording-panel {
+      border-color: #f44336;
+      box-shadow: 0 0 0 3px rgba(244,67,54,0.3), 0 8px 30px rgba(244,67,54,0.25);
+    }
 
     .panel-header {
       display: flex; justify-content: space-between; align-items: center;
@@ -103,6 +101,7 @@
       color: white; position: relative; touch-action: manipulation;
     }
     .action-btn:active { transform: scale(0.9); }
+    .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     
     .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
@@ -218,12 +217,12 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>🇳 Китайский — браузерный · 🇷🇺 Русский — ваш голос (или браузерный)</p>
+    <p>🇨🇳 Китайский — браузерный · 🇷🇺 Русский — ваш голос (или браузерный)</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
   </div>
 
   <div class="speed-control">
-    <div class="speed-label">🐢 Скорость TTS:</div>
+    <div class="speed-label"> Скорость TTS:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
@@ -241,15 +240,15 @@
 const SCENES = {
   mcdonalds: {
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ ho! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:" Покупатель" },
       { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7564", zh:"哪里有座位？", py:"Nlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"好香滑啊！", py:"Ho xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
     ]
   }
@@ -258,15 +257,19 @@ const SCENES = {
 let zhVoice = null;
 let ruVoice = null;
 let currentSpeed = 0.55;
-let mediaRecorder = null;
-let recordedChunks = [];
 let db = null;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+// Глобальные переменные для записи
+let activeRecorder = null;
+let activeStream = null;
+let activeRecordingKey = null; // {key, idx, lang}
+let recordingTimeout = null;
 
 // IndexedDB
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v4', 1);
+    const request = indexedDB.open('McDonaldsAudio_v5', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) {
@@ -325,7 +328,16 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Рендер — кнопка записи ТОЛЬКО для русского
+// Сброс всех кнопок записи
+function resetAllRecordButtons() {
+  document.querySelectorAll('.record-btn').forEach(btn => {
+    btn.classList.remove('recording');
+    btn.disabled = false;
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
+}
+
+// Рендер
 async function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
@@ -344,9 +356,9 @@ async function renderScene(key) {
           ${p.speaker}
         </div>
         <div class="speak-buttons">
-          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Китайский (TTS)">🇨</button>
-          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский (ваш голос или TTS)">🇷</button>
-          <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский перевод">
+          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Китайский">🇨🇳</button>
+          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский">🇷</button>
+          <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
           </button>
         </div>
@@ -386,36 +398,64 @@ async function checkRecordings(key) {
   }
 }
 
-// ЗАПИСЬ (только русский)
+// ЗАПИСЬ — ИСПРАВЛЕННАЯ ВЕРСИЯ
 async function toggleRecording(key, idx, lang) {
   const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
+  const panelEl = document.getElementById(`${key}-p${idx}`);
   
-  if (recBtn.classList.contains('recording')) {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-    }
+  // Если сейчас идёт запись ЭТОЙ карточки — останавливаем
+  if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
+    stopCurrentRecording();
     return;
   }
-
+  
+  // Если идёт запись ДРУГОЙ карточки — сначала останавливаем её
+  if (activeRecordingKey) {
+    stopCurrentRecording();
+    await sleep(300); // Ждём завершения
+  }
+  
+  // Запускаем новую запись
   try {
+    // Сбрасываем все кнопки
+    resetAllRecordButtons();
+    
+    // Отключаем все кнопки на время запроса микрофона
+    document.querySelectorAll('.action-btn').forEach(b => b.disabled = true);
+    
+    // Запрашиваем НОВЫЙ stream каждый раз
     const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 44100 } 
+      audio: { 
+        echoCancellation: true, 
+        noiseSuppression: true,
+        autoGainControl: true
+      } 
     });
-
+    
+    activeStream = stream;
+    
+    // Определяем формат
     let mimeType = 'audio/webm';
     if (isIOS && MediaRecorder.isTypeSupported('audio/mp4')) {
       mimeType = 'audio/mp4';
+    } else if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+      mimeType = 'audio/webm;codecs=opus';
     }
-
-    mediaRecorder = new MediaRecorder(stream, { mimeType });
-    recordedChunks = [];
     
-    mediaRecorder.ondataavailable = (e) => {
-      if (e.data.size > 0) recordedChunks.push(e.data);
+    const recorder = new MediaRecorder(stream, { mimeType });
+    activeRecorder = recorder;
+    activeRecordingKey = { key, idx, lang };
+    
+    const chunks = [];
+    
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) {
+        chunks.push(e.data);
+      }
     };
     
-    mediaRecorder.onstop = async () => {
-      const blob = new Blob(recordedChunks, { type: mimeType });
+    recorder.onstop = async () => {
+      const blob = new Blob(chunks, { type: mimeType });
       const dbKey = `${key}_${lang}_${idx}`;
       
       try {
@@ -424,23 +464,90 @@ async function toggleRecording(key, idx, lang) {
         if (btn) btn.classList.add('has-recording');
         showToast('✅ Запись сохранена!');
       } catch(e) {
+        console.error('Save error:', e);
         showToast('❌ Ошибка сохранения!');
       }
       
-      stream.getTracks().forEach(t => t.stop());
+      // Обязательно закрываем stream
+      if (activeStream) {
+        activeStream.getTracks().forEach(t => t.stop());
+        activeStream = null;
+      }
+      
+      activeRecorder = null;
+      activeRecordingKey = null;
+      
+      // Разблокируем кнопки
+      resetAllRecordButtons();
     };
     
-    mediaRecorder.start(100);
-    recBtn.classList.add('recording');
-    showToast('🔴 Запись... Нажмите ещё раз');
+    recorder.onerror = (e) => {
+      console.error('Recorder error:', e);
+      showToast('❌ Ошибка записи!');
+      cleanupRecording();
+    };
     
-    setTimeout(() => {
-      if (recBtn.classList.contains('recording')) toggleRecording(key, idx, lang);
+    // Включаем UI записи
+    recBtn.classList.add('recording');
+    recBtn.disabled = false;
+    if (panelEl) panelEl.classList.add('recording-panel');
+    
+    // Разблокируем только кнопку остановки этой карточки
+    document.querySelectorAll('.action-btn').forEach(b => {
+      if (b.id !== `${key}-rec-${lang}-${idx}`) {
+        b.disabled = true;
+      }
+    });
+    
+    recorder.start();
+    showToast('🔴 Запись... Нажмите  ещё раз для остановки');
+    
+    // Автостоп через 15 сек
+    recordingTimeout = setTimeout(() => {
+      if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
+        stopCurrentRecording();
+      }
     }, 15000);
     
   } catch (err) {
+    console.error('Microphone error:', err);
     showToast('⚠️ Нет доступа к микрофону!');
+    cleanupRecording();
   }
+}
+
+function stopCurrentRecording() {
+  if (recordingTimeout) {
+    clearTimeout(recordingTimeout);
+    recordingTimeout = null;
+  }
+  
+  if (activeRecorder && activeRecorder.state !== 'inactive') {
+    try {
+      activeRecorder.stop();
+    } catch(e) {
+      console.error('Stop error:', e);
+      cleanupRecording();
+    }
+  } else {
+    cleanupRecording();
+  }
+}
+
+function cleanupRecording() {
+  if (recordingTimeout) {
+    clearTimeout(recordingTimeout);
+    recordingTimeout = null;
+  }
+  
+  if (activeStream) {
+    activeStream.getTracks().forEach(t => t.stop());
+    activeStream = null;
+  }
+  
+  activeRecorder = null;
+  activeRecordingKey = null;
+  resetAllRecordButtons();
 }
 
 async function handleDelete(key, idx, lang) {
@@ -449,7 +556,7 @@ async function handleDelete(key, idx, lang) {
     await deleteFromDB(dbKey);
     const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
     if (recBtn) recBtn.classList.remove('has-recording');
-    showToast('🗑️ Удалено');
+    showToast('️ Удалено');
   } catch(e) {}
 }
 
@@ -458,10 +565,8 @@ async function handleSpeak(key, idx, lang) {
   speechSynthesis.cancel();
   
   if (lang === 'zh') {
-    // Китайский — ВСЕГДА TTS
     await playTTS(key, idx, 'zh');
   } else {
-    // Русский — сначала проверяем запись
     const dbKey = `${key}_ru_${idx}`;
     try {
       const blob = await getFromDB(dbKey);
@@ -554,6 +659,12 @@ const playingState = {};
 async function playAll(key) {
   if (playingState[key]) { stopScene(key); return; }
   
+  // Если идёт запись — останавливаем
+  if (activeRecordingKey) {
+    stopCurrentRecording();
+    await sleep(500);
+  }
+  
   playingState[key] = true;
   const btn = document.getElementById(`playBtn-${key}`);
   btn.textContent = '⏹ Стоп';
@@ -575,16 +686,14 @@ async function playAll(key) {
       panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // КИТАЙСКИЙ — всегда TTS
-    npT.textContent = '🇨🇳 Китайский...';
+    npT.textContent = '🇨 Китайский...';
     await playTTS(key, idx, 'zh');
     
     if (!playingState[key]) return;
     await sleep(400);
     if (!playingState[key]) return;
     
-    // РУССКИЙ — запись или TTS
-    npT.textContent = '🇷 Русский...';
+    npT.textContent = '🇷🇺 Русский...';
     const dbKey = `${key}_ru_${idx}`;
     try {
       const blob = await getFromDB(dbKey);
@@ -613,7 +722,7 @@ function sleep(ms) {
 function stopScene(key) {
   speechSynthesis.cancel();
   playingState[key] = false;
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel', 'recording-panel'));
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
   document.querySelectorAll('.now-playing-bar').forEach(n => n.classList.remove('visible'));
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
