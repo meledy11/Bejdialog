@@ -167,7 +167,7 @@
     }
     .zh-char {
       display: inline-block; padding: 3px 5px; border-radius: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       margin: 1px;
     }
     .zh-char.active {
@@ -192,7 +192,7 @@
     }
     .ru-word {
       display: inline-block; padding: 3px 5px; border-radius: 6px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
       margin: 1px;
     }
     .ru-word.active {
@@ -232,12 +232,12 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите 🔊 для озвучки. Иероглифы и слова подсвечиваются по очереди!</p>
+    <p>Нажмите 🔊 для озвучки. Подсветка синхронизирована с речью!</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
   </div>
 
   <div class="speed-control">
-    <div class="speed-label">🐢 Скорость:</div>
+    <div class="speed-label"> Скорость:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
@@ -254,16 +254,16 @@
 const SCENES = {
   mcdonalds: {
     panels: [
-      { img:"IMG_7558", zh:"欢迎光临！请问需要点什么？", py:"Huānyíng guānglín! Qǐngwèn xūyào diǎn shénme?", ru:"Добро пожаловать! Что будете заказывать?", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7559", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"好的，饮料要大杯还是中杯？", py:"Hǎo de, yǐnliào yào dà bēi háishì zhōng bēi?", ru:"Хорошо, напиток большой или средний?", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7561", zh:"大杯可乐，加冰。还要一份大份薯条。", py:"Dà bēi kělè, jiā bīng. Hái yào yí fèn dà fèn shǔtiáo.", ru:"Большую колу со льдом. И большую картошку.", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěy sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7563", zh:"当然可以。一共四十二元。", py:"Dāngrán kěyǐ. Yígòng sìshí'èr yuán.", ru:"Конечно. Итого 42 юаня.", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7564", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7565", zh:"谢谢！嗯…真好吃！", py:"Xièxie! Ńg… zhēn hǎo chī!", ru:"Спасибо! Ммм… очень вкусно!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"再来一个冰淇淋！好香滑啊！", py:"Zài lái yí gè bīngqílín! Hǎo xiāng huá a!", ru:"Ещё одно мороженое! Такое нежное!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7567", zh:"谢谢光临！欢迎下次再来！", py:"Xièxie guānglín! Huānyíng xià cì zài lái!", ru:"Спасибо за посещение! Приходите ещё!", who:"w", speaker:"🧑‍🍳 Персонал" }
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"W kěyǐ sǎo m zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
     ]
   }
 };
@@ -271,11 +271,6 @@ const SCENES = {
 let zhVoice = null;
 let ruVoice = null;
 let currentSpeed = 0.55;
-let highlightTimer = null; // Таймер подсветки
-let currentZhChars = [];
-let currentRuWords = [];
-let currentZhIndex = 0;
-let currentRuIndex = 0;
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
@@ -292,7 +287,6 @@ speedSlider.addEventListener('input', (e) => {
   speedValue.textContent = currentSpeed.toFixed(2) + 'x';
 });
 
-// ===== РЕНДЕР =====
 function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
@@ -304,13 +298,12 @@ function renderScene(key) {
     const imgSrc = `img/${p.img}.png`;
 
     const zhChars = p.zh.split('').map((char, idx) => 
-      `<span class="zh-char" id="${key}-zh-${i}-${idx}">${char}</span>`
+      `<span class="zh-char" data-idx="${idx}">${char}</span>`
     ).join('');
 
-    // Разбиваем русский на слова (сохраняем знаки препинания вместе со словами)
     const ruWords = p.ru.match(/\S+/g) || [];
     const ruHtml = ruWords.map((word, idx) => 
-      `<span class="ru-word" id="${key}-ru-${i}-${idx}">${word}</span>`
+      `<span class="ru-word" data-idx="${idx}">${word}</span>`
     ).join(' ');
 
     html += `
@@ -321,7 +314,7 @@ function renderScene(key) {
           ${p.speaker}
         </div>
         <div class="speak-buttons">
-          <button class="speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="speakChinese('${key}',${i})" title="Китайский">🇨🇳</button>
+          <button class="speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="speakChinese('${key}',${i})" title="Китайский">🇳</button>
           <button class="speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="speakRussian('${key}',${i})" title="Русский">🇷🇺</button>
         </div>
       </div>
@@ -349,95 +342,35 @@ function renderScene(key) {
   container.innerHTML = html;
 }
 
-// ===== ОЧИСТКА ПОДСВЕТКИ =====
-function clearAllHighlights(key, idx) {
+function clearHighlights(key, idx) {
   const panel = document.getElementById(`${key}-p${idx}`);
   if (!panel) return;
   panel.querySelectorAll('.zh-char').forEach(el => {
-    el.classList.remove('active', 'spoken');
+    el.classList.remove('active');
+    el.classList.add('spoken');
   });
   panel.querySelectorAll('.ru-word').forEach(el => {
-    el.classList.remove('active', 'spoken');
+    el.classList.remove('active');
+    el.classList.add('spoken');
   });
-  if (highlightTimer) {
-    clearInterval(highlightTimer);
-    highlightTimer = null;
-  }
 }
 
-// ===== ПОДСВЕТКА КИТАЙСКОГО (по таймеру) =====
-function startZhHighlight(key, idx, totalChars) {
-  clearAllHighlights(key, idx);
-  currentZhIndex = 0;
-  const chars = [];
-  for (let i = 0; i < totalChars; i++) {
-    const el = document.getElementById(`${key}-zh-${idx}-${i}`);
-    if (el) chars.push(el);
-  }
-  
-  // Базовое время на иероглиф при rate=1.0 ≈ 220мс
-  // При меньшей скорости — больше
-  const msPerChar = (220 / currentSpeed);
-  
-  highlightTimer = setInterval(() => {
-    if (currentZhIndex >= chars.length) {
-      clearInterval(highlightTimer);
-      highlightTimer = null;
-      return;
-    }
-    // Снимаем active с предыдущего, помечаем как spoken
-    if (currentZhIndex > 0) {
-      chars[currentZhIndex - 1].classList.remove('active');
-      chars[currentZhIndex - 1].classList.add('spoken');
-    }
-    chars[currentZhIndex].classList.add('active');
-    currentZhIndex++;
-  }, msPerChar);
-}
-
-// ===== ПОДСВЕТКА РУССКОГО (по таймеру) =====
-function startRuHighlight(key, idx, totalWords) {
-  const words = [];
-  for (let i = 0; i < totalWords; i++) {
-    const el = document.getElementById(`${key}-ru-${idx}-${i}`);
-    if (el) words.push(el);
-  }
-  
-  // Базовое время на слово при rate=1.0 ≈ 350мс
-  const msPerWord = (350 / currentSpeed);
-  
-  let wordIdx = 0;
-  highlightTimer = setInterval(() => {
-    if (wordIdx >= words.length) {
-      clearInterval(highlightTimer);
-      highlightTimer = null;
-      return;
-    }
-    if (wordIdx > 0) {
-      words[wordIdx - 1].classList.remove('active');
-      words[wordIdx - 1].classList.add('spoken');
-    }
-    words[wordIdx].classList.add('active');
-    wordIdx++;
-  }, msPerWord);
-}
-
-// ===== ОЗВУЧКА КИТАЙСКОГО =====
 function speakChinese(key, idx) {
   speechSynthesis.cancel();
-  clearAllHighlights(key, idx);
-
+  
   const panelEl = document.getElementById(`${key}-p${idx}`);
   const bubEl = document.getElementById(`${key}-bub${idx}`);
   const btnEl = document.getElementById(`${key}-btn-zh-${idx}`);
   const npEl = document.getElementById(`${key}-np${idx}`);
   const npText = document.getElementById(`${key}-np-text${idx}`);
 
+  panelEl.querySelectorAll('.zh-char').forEach(el => el.classList.remove('active', 'spoken'));
+  
   panelEl.classList.add("active-panel");
   bubEl.classList.add("highlight");
   btnEl.classList.add("speaking");
   npEl.classList.add("visible");
-  npText.textContent = "🇨 Китайский...";
+  npText.textContent = "🇨🇳 Китайский...";
   panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
 
   const p = SCENES[key].panels[idx];
@@ -447,22 +380,20 @@ function speakChinese(key, idx) {
   zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
   if (zhVoice) zhUtterance.voice = zhVoice;
 
-  // Считаем количество иероглифов (без знаков препинания для таймера)
-  const zhCharsCount = p.zh.replace(/[!！?？,，。.、…]/g, '').length;
+  const chars = panelEl.querySelectorAll('.zh-char');
   
-  // Запускаем подсветку через таймер
-  startZhHighlight(key, idx, zhCharsCount);
+  zhUtterance.onboundary = (event) => {
+    if (event.name === 'word' || event.name === 'sentence') {
+      chars.forEach(c => c.classList.remove('active'));
+      const charIdx = event.charIndex;
+      if (charIdx < chars.length) {
+        chars[charIdx].classList.add('active');
+      }
+    }
+  };
 
   zhUtterance.onend = () => {
-    if (highlightTimer) {
-      clearInterval(highlightTimer);
-      highlightTimer = null;
-    }
-    // Помечаем все как spoken
-    panelEl.querySelectorAll('.zh-char').forEach(el => {
-      el.classList.remove('active');
-      el.classList.add('spoken');
-    });
+    clearHighlights(key, idx);
     btnEl.classList.remove("speaking");
     npEl.classList.remove("visible");
     panelEl.classList.remove("active-panel");
@@ -474,17 +405,17 @@ function speakChinese(key, idx) {
   speechSynthesis.speak(zhUtterance);
 }
 
-// ===== ОЗВУЧКА РУССКОГО =====
 function speakRussian(key, idx) {
   speechSynthesis.cancel();
-  clearAllHighlights(key, idx);
-
+  
   const panelEl = document.getElementById(`${key}-p${idx}`);
   const bubEl = document.getElementById(`${key}-bub${idx}`);
   const btnEl = document.getElementById(`${key}-btn-ru-${idx}`);
   const npEl = document.getElementById(`${key}-np${idx}`);
   const npText = document.getElementById(`${key}-np-text${idx}`);
 
+  panelEl.querySelectorAll('.ru-word').forEach(el => el.classList.remove('active', 'spoken'));
+  
   panelEl.classList.add("active-panel");
   bubEl.classList.add("highlight");
   btnEl.classList.add("speaking");
@@ -498,18 +429,20 @@ function speakRussian(key, idx) {
   ruUtterance.rate = currentSpeed * 1.1;
   if (ruVoice) ruUtterance.voice = ruVoice;
 
-  const ruWordsCount = (p.ru.match(/\S+/g) || []).length;
-  startRuHighlight(key, idx, ruWordsCount);
+  const words = panelEl.querySelectorAll('.ru-word');
+  
+  ruUtterance.onboundary = (event) => {
+    if (event.name === 'word') {
+      words.forEach(w => w.classList.remove('active'));
+      const wordIdx = event.charIndex;
+      if (wordIdx < words.length) {
+        words[wordIdx].classList.add('active');
+      }
+    }
+  };
 
   ruUtterance.onend = () => {
-    if (highlightTimer) {
-      clearInterval(highlightTimer);
-      highlightTimer = null;
-    }
-    panelEl.querySelectorAll('.ru-word').forEach(el => {
-      el.classList.remove('active');
-      el.classList.add('spoken');
-    });
+    clearHighlights(key, idx);
     btnEl.classList.remove("speaking");
     npEl.classList.remove("visible");
     panelEl.classList.remove("active-panel");
@@ -521,7 +454,6 @@ function speakRussian(key, idx) {
   speechSynthesis.speak(ruUtterance);
 }
 
-// ===== ОЗВУЧКА ВСЕГО ДИАЛОГА =====
 const playingState = {};
 
 function playAll(key) {
@@ -558,7 +490,6 @@ function playAll(key) {
 
     const p = panels[idx];
 
-    // Китайский
     npText.textContent = "🇨🇳 Китайский...";
     btnZh.classList.add("speaking");
 
@@ -568,19 +499,26 @@ function playAll(key) {
     zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
     if (zhVoice) zhUtterance.voice = zhVoice;
 
-    const zhCharsCount = p.zh.replace(/[!！?？,，。.、…]/g, '').length;
-    startZhHighlight(key, idx, zhCharsCount);
+    const chars = panelEl.querySelectorAll('.zh-char');
+    
+    zhUtterance.onboundary = (event) => {
+      if (event.name === 'word' || event.name === 'sentence') {
+        chars.forEach(c => c.classList.remove('active'));
+        const charIdx = event.charIndex;
+        if (charIdx < chars.length) {
+          chars[charIdx].classList.add('active');
+        }
+      }
+    };
 
     zhUtterance.onend = () => {
-      if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
-      panelEl.querySelectorAll('.zh-char').forEach(el => { el.classList.remove('active'); el.classList.add('spoken'); });
+      clearHighlights(key, idx);
       btnZh.classList.remove("speaking");
 
-      // Пауза, потом русский
       setTimeout(() => {
         if (!playingState[key]) return;
         
-        npText.textContent = "🇺 Русский...";
+        npText.textContent = "🇷🇺 Русский...";
         btnRu.classList.add("speaking");
 
         const ruUtterance = new SpeechSynthesisUtterance(p.ru);
@@ -588,12 +526,20 @@ function playAll(key) {
         ruUtterance.rate = currentSpeed * 1.1;
         if (ruVoice) ruUtterance.voice = ruVoice;
 
-        const ruWordsCount = (p.ru.match(/\S+/g) || []).length;
-        startRuHighlight(key, idx, ruWordsCount);
+        const words = panelEl.querySelectorAll('.ru-word');
+        
+        ruUtterance.onboundary = (event) => {
+          if (event.name === 'word') {
+            words.forEach(w => w.classList.remove('active'));
+            const wordIdx = event.charIndex;
+            if (wordIdx < words.length) {
+              words[wordIdx].classList.add('active');
+            }
+          }
+        };
 
         ruUtterance.onend = () => {
-          if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
-          panelEl.querySelectorAll('.ru-word').forEach(el => { el.classList.remove('active'); el.classList.add('spoken'); });
+          clearHighlights(key, idx);
           btnRu.classList.remove("speaking");
           npEl.classList.remove("visible");
           panelEl.classList.remove("active-panel");
@@ -616,7 +562,6 @@ function playAll(key) {
 function stopScene(key) {
   speechSynthesis.cancel();
   playingState[key] = false;
-  if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
   
   document.querySelectorAll(".panel").forEach(p => p.classList.remove("active-panel"));
   document.querySelectorAll(".bubble").forEach(b => b.classList.remove("highlight"));
