@@ -13,24 +13,30 @@
       min-height: 100vh; padding-bottom: 40px; overscroll-behavior: none;
     }
     .manga-container { max-width: 700px; margin: 0 auto; padding: 0 12px; }
+    
+    /* Заголовок сцены */
     .scene-title {
       border-radius: 20px; padding: 22px 18px; text-align: center;
       margin: 15px 0 18px; 
       background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
       box-shadow: 0 8px 32px rgba(218,41,28,0.25); color: white;
+      position: relative;
     }
     .scene-title h1 { font-size: 20px; margin-bottom: 5px; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
     .scene-title p  { font-size: 13px; opacity: 0.95; margin-bottom: 14px; }
+    
+    /* Главная кнопка управления диалогом */
     .play-all-btn {
       background: white; color: #da291c; border: none;
       padding: 12px 28px; border-radius: 30px;
       font-size: 15px; font-weight: 700; cursor: pointer;
       font-family: inherit; transition: all 0.2s;
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      touch-action: manipulation;
+      touch-action: manipulation; width: 100%; max-width: 300px;
     }
     .play-all-btn:active { transform: scale(0.95); }
-    .play-all-btn.playing { background: #ffe8d6; color: #da291c; }
+    
+    /* Контроль скорости */
     .speed-control {
       background: white; border-radius: 16px; padding: 14px 18px;
       margin-bottom: 16px; box-shadow: 0 4px 16px rgba(218,41,28,0.1);
@@ -53,19 +59,25 @@
       min-width: 50px; text-align: center;
       background: #fff0f0; padding: 4px 10px; border-radius: 12px;
     }
+
+    /* Карточка */
     .panel {
       background: white; border-radius: 16px; margin-bottom: 16px;
       overflow: hidden; box-shadow: 0 4px 20px rgba(218,41,28,0.1);
       border: 2px solid #ffd6b3; transition: all 0.3s;
+      scroll-margin-top: 20px; /* Отступ при скролле */
     }
     .panel.active-panel {
       border-color: #da291c;
       box-shadow: 0 0 0 3px rgba(218,41,28,0.15), 0 8px 30px rgba(255,199,44,0.25);
+      transform: scale(1.01);
     }
     .panel.recording-panel {
       border-color: #f44336;
       box-shadow: 0 0 0 3px rgba(244,67,54,0.3);
     }
+
+    /* Шапка панели */
     .panel-header {
       display: flex; justify-content: space-between; align-items: center;
       padding: 10px 14px; background: #fffaf8;
@@ -80,36 +92,53 @@
       width: 24px; height: 24px; border-radius: 50%;
       display: inline-flex; align-items: center; justify-content: center; font-size: 12px;
     }
-    .speak-buttons { display: flex; gap: 8px; align-items: center; }
+
+    /* Кнопки действий */
+    .speak-buttons { display: flex; gap: 6px; align-items: center; }
+    
     .action-btn {
-      border: none; width: 40px; height: 40px; border-radius: 50%;
+      border: none; width: 36px; height: 36px; border-radius: 50%;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
-      font-size: 18px; transition: 0.2s; flex-shrink: 0;
+      font-size: 16px; transition: 0.2s; flex-shrink: 0;
       color: white; position: relative; touch-action: manipulation;
     }
     .action-btn:active { transform: scale(0.9); }
     .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    
     .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
     .speak-btn.speaking { animation: pulse 0.9s ease-in-out infinite; }
+    
     .record-btn { background: linear-gradient(135deg, #ff9800, #f57c00); }
     .record-btn.recording { 
       background: linear-gradient(135deg, #f44336, #d32f2f);
       animation: pulse 0.9s ease-in-out infinite;
     }
     .record-btn.has-recording { background: linear-gradient(135deg, #4CAF50, #67b26f); }
+    
+    /* Маленькая кнопка повтора (не на картинке) */
+    .replay-btn {
+      background: #eee; color: #888;
+      border: 1px solid #ddd;
+    }
+    .replay-btn:hover { background: #ffc72c; color: #da291c; border-color: #ffc72c; }
+    .replay-btn.playing { background: #da291c; color: white; border-color: #da291c; }
+
     .delete-overlay {
       position: absolute; top: -2px; right: -2px;
-      width: 18px; height: 18px; background: #f44336;
+      width: 16px; height: 16px; background: #f44336;
       border: 2px solid white; border-radius: 50%;
-      font-size: 10px; display: none; align-items: center; justify-content: center;
+      font-size: 9px; display: none; align-items: center; justify-content: center;
       color: white; cursor: pointer; z-index: 2;
     }
     .record-btn.has-recording .delete-overlay { display: flex; }
+    
     @keyframes pulse {
       0%,100%{box-shadow:0 0 0 0 rgba(218,41,28,0.45)}
-      50%{box-shadow:0 0 0 12px rgba(218,41,28,0)}
+      50%{box-shadow:0 0 0 10px rgba(218,41,28,0)}
     }
+
+    /* Картинка */
     .panel-img-wrap {
       position: relative; background: linear-gradient(135deg, #fff8f0, #ffe8d6);
       min-height: 150px; overflow: hidden;
@@ -124,6 +153,8 @@
     .img-error-msg .big { font-size: 40px; }
     .panel-img-wrap.has-error .panel-img     { display: none; }
     .panel-img-wrap.has-error .img-error-msg { display: flex; }
+
+    /* Диалог */
     .dialogue { padding: 18px 16px; }
     .bubble {
       padding: 16px; border-radius: 14px; margin-bottom: 14px;
@@ -134,6 +165,7 @@
     .speaker-tag { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
     .speaker-tag.w { color: #4488cc; }
     .speaker-tag.s { color: #cc4488; }
+    
     .zh-text {
       font-family: 'Noto Sans SC', sans-serif; 
       font-size: 26px; font-weight: 700; color: #2a2a2a; 
@@ -155,34 +187,7 @@
       background: #4a90e2; color: white; border-left-color: #2c5aa0;
       box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5); transform: scale(1.02);
     }
-    /* Маленькая кнопка озвучки карточки */
-    .play-card-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 199, 44, 0.3);
-      border: 2px solid #ffc72c;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: all 0.2s;
-      opacity: 0.6;
-    }
-    .play-card-btn:hover {
-      opacity: 1;
-      background: rgba(255, 199, 44, 0.6);
-    }
-    .play-card-btn:active { transform: scale(0.9); }
-    .play-card-btn.playing {
-      background: #da291c;
-      border-color: #da291c;
-      opacity: 1;
-    }
+
     .now-playing-bar {
       display: none; align-items: center; gap: 8px;
       font-size: 12px; color: #da291c; font-weight: 700;
@@ -200,6 +205,7 @@
     .bars span:nth-child(3){height:6px;animation-delay:.2s}
     .bars span:nth-child(4){height:12px;animation-delay:.05s}
     @keyframes barAnim { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.3)} }
+
     .footer { text-align: center; padding: 28px 20px; color: #cc6644; font-size: 12px; }
     .toast {
       position: fixed; bottom: 30px; left: 50%;
@@ -217,16 +223,20 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>🇨🇳 Китайский — браузерный · 🇷🇺 Русский — ваш голос (или браузерный)</p>
-    <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playNextCard('mcdonalds')">▶ Начать диалог</button>
+    <p>Нажмите кнопку ниже для пошагового изучения</p>
+    <!-- Единая кнопка управления -->
+    <button class="play-all-btn" id="mainControlBtn" onclick="handleMainControl()">▶ Начать диалог</button>
   </div>
+  
   <div class="speed-control">
     <div class="speed-label">🐢 Скорость TTS:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
+
   <div id="panels-mcdonalds"></div>
-  <div class="footer"> McDonald's Chinese Learning · 2026</div>
+
+  <div class="footer">🍔 McDonald's Chinese Learning · 2026</div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -257,27 +267,30 @@ let activeRecorder = null;
 let activeStream = null;
 let activeRecordingKey = null;
 let recordingTimeout = null;
-let currentCardIndex = 0; // Текущая карточка в диалоге
+
+// Глобальное состояние диалога
+let dialogState = {
+  isActive: false,
+  currentIndex: 0,
+  key: 'mcdonalds'
+};
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   if (isIOS) speechSynthesis.resume();
   const dummy = new SpeechSynthesisUtterance(' ');
-  dummy.volume = 0;
-  dummy.rate = 2;
+  dummy.volume = 0; dummy.rate = 2;
   speechSynthesis.speak(dummy);
   return new Promise(resolve => setTimeout(resolve, 150));
 }
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v9', 1);
+    const request = indexedDB.open('McDonaldsAudio_v10', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
-      if (!db.objectStoreNames.contains('recordings')) {
-        db.createObjectStore('recordings');
-      }
+      if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
     };
     request.onsuccess = (event) => { db = event.target.result; resolve(db); };
     request.onerror = (event) => reject(event.target.error);
@@ -357,8 +370,11 @@ async function renderScene(key) {
           ${p.speaker}
         </div>
         <div class="speak-buttons">
-          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Китайский">🇨🇳</button>
-          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский">🇷🇺</button>
+          <!-- Маленькая кнопка повтора здесь, а не на картинке -->
+          <button class="action-btn replay-btn" id="${key}-replay-${i}" onclick="playCard('${key}',${i})" title="Повторить озвучку">🔊</button>
+          
+          <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨🇳</button>
+          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Только русский">🇷🇺</button>
           <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
           </button>
@@ -366,9 +382,7 @@ async function renderScene(key) {
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
         <img class="panel-img" src="${imgSrc}" alt="Panel ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
-        <div class="img-error-msg"><div class="big">️</div><div><b>${p.img}.png</b> не найден</div></div>
-        <!-- Маленькая кнопка озвучки карточки -->
-        <button class="play-card-btn" id="${key}-playcard-${i}" onclick="playCard('${key}',${i})" title="Озвучить карточку">🔊</button>
+        <div class="img-error-msg"><div class="big">🖼️</div><div><b>${p.img}.png</b> не найден</div></div>
       </div>
       <div class="dialogue">
         <div class="bubble ${bubbleClass}" id="${key}-bub${i}">
@@ -409,7 +423,6 @@ async function toggleRecording(key, idx, lang) {
     stopCurrentRecording();
     return;
   }
-  
   if (activeRecordingKey) {
     stopCurrentRecording();
     await sleep(300);
@@ -418,160 +431,88 @@ async function toggleRecording(key, idx, lang) {
   try {
     resetAllRecordButtons();
     document.querySelectorAll('.action-btn').forEach(b => b.disabled = true);
-    
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
-    });
-    
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
     activeStream = stream;
     
     let mimeType = 'audio/webm';
-    if (isIOS && MediaRecorder.isTypeSupported('audio/mp4')) {
-      mimeType = 'audio/mp4';
-    } else if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-      mimeType = 'audio/webm;codecs=opus';
-    }
+    if (isIOS && MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
     
     const recorder = new MediaRecorder(stream, { mimeType });
     activeRecorder = recorder;
     activeRecordingKey = { key, idx, lang };
-    
     const chunks = [];
     
-    recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) chunks.push(e.data);
-    };
-    
+    recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: mimeType });
-      const dbKey = `${key}_${lang}_${idx}`;
-      
       try {
-        await saveToDB(dbKey, blob);
-        const btn = document.getElementById(`${key}-rec-${lang}-${idx}`);
-        if (btn) btn.classList.add('has-recording');
-        showToast('✅ Запись сохранена!');
-      } catch(e) {
-        showToast('❌ Ошибка сохранения!');
-      }
-      
-      if (activeStream) {
-        activeStream.getTracks().forEach(t => t.stop());
-        activeStream = null;
-      }
-      
-      activeRecorder = null;
-      activeRecordingKey = null;
+        await saveToDB(`${key}_${lang}_${idx}`, blob);
+        document.getElementById(`${key}-rec-${lang}-${idx}`).classList.add('has-recording');
+        showToast('✅ Сохранено!');
+      } catch(e) { showToast('❌ Ошибка'); }
+      if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
+      activeRecorder = null; activeRecordingKey = null;
       resetAllRecordButtons();
     };
-    
-    recorder.onerror = (e) => {
-      console.error('Recorder error:', e);
-      showToast('❌ Ошибка записи!');
-      cleanupRecording();
-    };
+    recorder.onerror = () => { showToast('❌ Ошибка записи'); cleanupRecording(); };
     
     recBtn.classList.add('recording');
     recBtn.disabled = false;
     if (panelEl) panelEl.classList.add('recording-panel');
-    
-    document.querySelectorAll('.action-btn').forEach(b => {
-      if (b.id !== `${key}-rec-${lang}-${idx}`) b.disabled = true;
-    });
+    document.querySelectorAll('.action-btn').forEach(b => { if (b.id !== `${key}-rec-${lang}-${idx}`) b.disabled = true; });
     
     recorder.start();
-    showToast('🔴 Запись... Нажмите ещё раз для остановки');
-    
-    recordingTimeout = setTimeout(() => {
-      if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
-        stopCurrentRecording();
-      }
-    }, 15000);
-    
-  } catch (err) {
-    console.error('Microphone error:', err);
-    showToast('⚠️ Нет доступа к микрофону!');
-    cleanupRecording();
-  }
+    showToast('🔴 Запись...');
+    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
+  } catch (err) { showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
 }
 
 function stopCurrentRecording() {
-  if (recordingTimeout) {
-    clearTimeout(recordingTimeout);
-    recordingTimeout = null;
-  }
-  
+  if (recordingTimeout) clearTimeout(recordingTimeout);
   if (activeRecorder && activeRecorder.state !== 'inactive') {
-    try {
-      activeRecorder.stop();
-    } catch(e) {
-      cleanupRecording();
-    }
-  } else {
-    cleanupRecording();
-  }
+    try { activeRecorder.stop(); } catch(e) { cleanupRecording(); }
+  } else { cleanupRecording(); }
 }
 
 function cleanupRecording() {
-  if (recordingTimeout) {
-    clearTimeout(recordingTimeout);
-    recordingTimeout = null;
-  }
-  
-  if (activeStream) {
-    activeStream.getTracks().forEach(t => t.stop());
-    activeStream = null;
-  }
-  
-  activeRecorder = null;
-  activeRecordingKey = null;
+  if (recordingTimeout) clearTimeout(recordingTimeout);
+  if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
+  activeRecorder = null; activeRecordingKey = null;
   resetAllRecordButtons();
 }
 
 async function handleDelete(key, idx, lang) {
-  const dbKey = `${key}_${lang}_${idx}`;
   try {
-    await deleteFromDB(dbKey);
-    const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
-    if (recBtn) recBtn.classList.remove('has-recording');
+    await deleteFromDB(`${key}_${lang}_${idx}`);
+    document.getElementById(`${key}-rec-${lang}-${idx}`).classList.remove('has-recording');
     showToast('🗑️ Удалено');
   } catch(e) {}
 }
 
+// --- AUDIO & TTS LOGIC ---
+
 function playTTSRobust(key, idx, lang) {
   return new Promise(async (resolve) => {
     highlightText(key, idx, lang);
-    
     const p = SCENES[key].panels[idx];
     const text = lang === 'zh' ? p.zh : p.ru;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-    
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     
     let finished = false;
-    
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      clearHighlight(key, idx, lang);
-      resolve();
-    };
+    const finish = () => { if(finished) return; finished=true; clearHighlight(key, idx, lang); resolve(); };
     
     const maxDuration = Math.min((text.length * 400) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.1) + 3000, 20000);
     const safetyTimeout = setTimeout(finish, maxDuration);
-    
     utterance.onend = () => { clearTimeout(safetyTimeout); finish(); };
     utterance.onerror = () => { clearTimeout(safetyTimeout); finish(); };
     
     await wakeUpSpeechSynthesis();
-    
-    setTimeout(() => {
-      if (!finished) speechSynthesis.speak(utterance);
-    }, 100);
+    setTimeout(() => { if (!finished) speechSynthesis.speak(utterance); }, 100);
   });
 }
 
@@ -580,25 +521,12 @@ function playRecordingRobust(blob, key, idx, lang) {
     const audio = new Audio(URL.createObjectURL(blob));
     audio.playsInline = true;
     highlightText(key, idx, lang);
-    
     let finished = false;
-    
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      clearHighlight(key, idx, lang);
-      resolve();
-    };
-    
+    const finish = () => { if(finished) return; finished=true; clearHighlight(key, idx, lang); resolve(); };
     const safetyTimeout = setTimeout(finish, 10000);
-    
     audio.onended = () => { clearTimeout(safetyTimeout); finish(); };
     audio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
-    
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => { clearTimeout(safetyTimeout); finish(); });
-    }
+    audio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
   });
 }
 
@@ -608,12 +536,14 @@ function highlightText(key, idx, lang) {
   const btn = document.getElementById(`${key}-btn-${lang}-${idx}`);
   const np = document.getElementById(`${key}-np${idx}`);
   const npT = document.getElementById(`${key}-np-text${idx}`);
+  const replayBtn = document.getElementById(`${key}-replay-${idx}`);
   
   if(el) el.classList.add('active');
   if(panel) panel.classList.add('active-panel');
   if(btn) btn.classList.add('speaking');
+  if(replayBtn) replayBtn.classList.add('playing');
   if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇺 Русский...';
+  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
 }
 
 function clearHighlight(key, idx, lang) {
@@ -621,35 +551,29 @@ function clearHighlight(key, idx, lang) {
   const panel = document.getElementById(`${key}-p${idx}`);
   const btn = document.getElementById(`${key}-btn-${lang}-${idx}`);
   const np = document.getElementById(`${key}-np${idx}`);
+  const replayBtn = document.getElementById(`${key}-replay-${idx}`);
   
   if(el) el.classList.remove('active');
   if(panel) panel.classList.remove('active-panel');
   if(btn) btn.classList.remove('speaking');
+  if(replayBtn) replayBtn.classList.remove('playing');
   if(np) np.classList.remove('visible');
 }
 
 async function handleSpeak(key, idx, lang) {
   await wakeUpSpeechSynthesis();
-  
-  if (lang === 'zh') {
-    await playTTSRobust(key, idx, 'zh');
-  } else {
-    const dbKey = `${key}_ru_${idx}`;
+  if (lang === 'zh') await playTTSRobust(key, idx, 'zh');
+  else {
     try {
-      const blob = await getFromDB(dbKey);
-      if (blob) {
-        await playRecordingRobust(blob, key, idx, 'ru');
-      } else {
-        await playTTSRobust(key, idx, 'ru');
-      }
-    } catch(e) {
-      await playTTSRobust(key, idx, 'ru');
-    }
+      const blob = await getFromDB(`${key}_ru_${idx}`);
+      if (blob) await playRecordingRobust(blob, key, idx, 'ru');
+      else await playTTSRobust(key, idx, 'ru');
+    } catch(e) { await playTTSRobust(key, idx, 'ru'); }
   }
 }
 
 async function playCard(key, idx) {
-  const btn = document.getElementById(`${key}-playcard-${idx}`);
+  const btn = document.getElementById(`${key}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
   
   await wakeUpSpeechSynthesis();
@@ -657,63 +581,60 @@ async function playCard(key, idx) {
   await sleep(500);
   await wakeUpSpeechSynthesis();
   
-  const dbKey = `${key}_ru_${idx}`;
   try {
-    const blob = await getFromDB(dbKey);
+    const blob = await getFromDB(`${key}_ru_${idx}`);
     if (blob) {
       await playRecordingRobust(blob, key, idx, 'ru');
       await wakeUpSpeechSynthesis();
     } else {
       await playTTSRobust(key, idx, 'ru');
     }
-  } catch(e) {
-    await playTTSRobust(key, idx, 'ru');
-  }
+  } catch(e) { await playTTSRobust(key, idx, 'ru'); }
   
   if (btn) btn.classList.remove('playing');
 }
 
-// НОВАЯ ФУНКЦИЯ: Озвучить текущую карточку и перейти к следующей
-async function playNextCard(key) {
-  const panels = SCENES[key].panels;
+// --- MAIN CONTROL LOGIC ---
+
+async function handleMainControl() {
+  const btn = document.getElementById('mainControlBtn');
+  const panels = SCENES.mcdonalds.panels;
   
-  // Если дошли до конца — начинаем сначала
-  if (currentCardIndex >= panels.length) {
-    currentCardIndex = 0;
-    showToast('🔄 Начинаем сначала');
+  // Если диалог завершен или не начат
+  if (!dialogState.isActive || dialogState.currentIndex >= panels.length) {
+    dialogState.isActive = true;
+    dialogState.currentIndex = 0;
   }
   
-  const idx = currentCardIndex;
-  const panel = document.getElementById(`${key}-p${idx}`);
+  const idx = dialogState.currentIndex;
   
-  // Скроллим к карточке
+  // 1. Скролл к карточке
+  const panel = document.getElementById(`mcdonalds-p${idx}`);
   if (panel) {
     panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   
-  // Озвучиваем карточку
-  await playCard(key, idx);
+  // 2. Озвучка
+  await playCard('mcdonalds', idx);
   
-  // Переходим к следующей
-  currentCardIndex++;
+  // 3. Подготовка к следующему шагу
+  dialogState.currentIndex++;
   
-  // Обновляем кнопку
-  const btn = document.getElementById(`playBtn-${key}`);
-  if (currentCardIndex < panels.length) {
-    btn.textContent = `▶ Карточка ${currentCardIndex + 1} из ${panels.length}`;
+  if (dialogState.currentIndex < panels.length) {
+    btn.textContent = `▶ Далее: Карточка ${dialogState.currentIndex + 1}`;
   } else {
-    btn.textContent = ' Начать сначала';
+    btn.textContent = '🔄 Начать сначала';
+    dialogState.isActive = false; // Сброс флага, чтобы следующий клик начал заново
+    dialogState.currentIndex = 0;
   }
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 window.addEventListener('load', async () => {
   await initDB();
   renderScene('mcdonalds');
-  if (!('speechSynthesis' in window)) showToast('️ Используйте Chrome/Safari');
+  if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
 </script>
 </body>
