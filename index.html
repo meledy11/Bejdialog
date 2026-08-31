@@ -3,165 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Китайский в Макдональдсе - Учим с озвучкой</title>
+<title>Диалог в Макдональдсе - Китайский</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #ffe6e6 0%, #fff5e6 100%);
+    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
     min-height: 100vh;
     padding: 20px;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
   .header {
     text-align: center;
     background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
   }
 
   .header h1 {
     color: #da291c;
     font-size: 2.5em;
     margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #ffc72c;
   }
 
-  .scene-selector {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
+  .header p {
+    color: #666;
+    font-size: 1.1em;
+  }
+
+  .dialogue-container {
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     margin-bottom: 20px;
   }
 
-  .scene-btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 25px;
-    background: #ffc72c;
-    color: #da291c;
-    font-weight: bold;
+  .scene-image {
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  }
+
+  .dialogue {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .message {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
     cursor: pointer;
     transition: all 0.3s;
-    font-size: 1em;
-  }
-
-  .scene-btn:hover, .scene-btn.active {
-    background: #da291c;
-    color: white;
-    transform: scale(1.05);
-  }
-
-  .card-container {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-  }
-
-  .card-image {
-    width: 100%;
-    max-width: 800px;
-    height: auto;
+    padding: 15px;
     border-radius: 15px;
-    margin: 0 auto 30px;
-    display: block;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
 
-  .text-display {
-    background: linear-gradient(135deg, #fff9e6, #fff);
-    border: 3px solid #ffc72c;
+  .message:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+  }
+
+  .message.left {
+    flex-direction: row;
+  }
+
+  .message.right {
+    flex-direction: row-reverse;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+
+  .message.left .avatar {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+  }
+
+  .message.right .avatar {
+    background: linear-gradient(135deg, #48dbfb, #0abde3);
+  }
+
+  .bubble {
+    background: #f1f3f5;
+    padding: 15px 20px;
     border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 20px;
+    max-width: 70%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   }
 
-  .chinese-display {
-    font-size: 3.5em;
-    margin: 20px 0;
-    line-height: 1.6;
-    color: #da291c;
-    font-weight: bold;
+  .message.right .bubble {
+    background: linear-gradient(135deg, #ffe66d, #feca57);
   }
 
-  .chinese-display .char {
-    display: inline-block;
-    padding: 5px 12px;
-    margin: 3px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    background: white;
-    color: #333;
-  }
-
-  .chinese-display .char.active {
-    background: #ffc72c;
-    color: #da291c;
-    transform: scale(1.3);
-    box-shadow: 0 4px 12px rgba(255, 199, 44, 0.6);
-    font-weight: bold;
-  }
-
-  .chinese-display .char.spoken {
-    background: #4CAF50;
-    color: white;
-  }
-
-  .pinyin-display {
+  .chinese {
     font-size: 1.8em;
-    color: #666;
-    margin: 20px 0;
-    font-style: italic;
-    line-height: 1.5;
+    font-weight: bold;
+    color: #da291c;
+    margin-bottom: 8px;
+    line-height: 1.4;
   }
 
-  .pinyin-display .word {
+  .chinese .char {
     display: inline-block;
-    padding: 4px 10px;
-    margin: 3px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    background: white;
+    transition: all 0.3s;
+    padding: 2px 4px;
+    border-radius: 5px;
   }
 
-  .pinyin-display .word.active {
+  .chinese .char.active {
     background: #ffc72c;
     color: #da291c;
-    transform: scale(1.15);
-    box-shadow: 0 3px 10px rgba(255, 199, 44, 0.5);
+    transform: scale(1.2);
   }
 
-  .russian-display {
-    font-size: 1.5em;
+  .pinyin {
+    font-size: 1.1em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .russian {
+    font-size: 1em;
     color: #333;
-    margin: 20px 0;
-    line-height: 1.5;
-  }
-
-  .russian-display .word {
-    display: inline-block;
-    padding: 4px 10px;
-    margin: 3px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    background: white;
-  }
-
-  .russian-display .word.active {
-    background: #2196F3;
-    color: white;
-    transform: scale(1.15);
-    box-shadow: 0 3px 10px rgba(33, 150, 243, 0.5);
   }
 
   .controls {
@@ -173,439 +158,433 @@
   }
 
   .btn {
-    padding: 15px 35px;
+    padding: 18px 40px;
     border: none;
     border-radius: 30px;
     font-size: 1.2em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   }
 
   .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   }
 
-  .btn-play {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+  .btn-play-all {
+    background: linear-gradient(135deg, #da291c, #ff6b6b);
     color: white;
-  }
-
-  .btn-record {
-    background: linear-gradient(135deg, #da291c, #b71c1c);
-    color: white;
-  }
-
-  .btn-record.recording {
-    background: linear-gradient(135deg, #ff0000, #cc0000);
-    animation: pulse 1s infinite;
   }
 
   .btn-stop {
-    background: linear-gradient(135deg, #ff9800, #f57c00);
+    background: linear-gradient(135deg, #868e96, #495057);
     color: white;
+  }
+
+  .btn-nav {
+    background: linear-gradient(135deg, #ffc72c, #feca57);
+    color: #da291c;
+  }
+
+  .status {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 15px;
+    background: #e3f2fd;
+    color: #1976d2;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  .playing {
+    animation: pulse 1s infinite;
   }
 
   @keyframes pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(218, 41, 28, 0.7); }
-    50% { box-shadow: 0 0 0 25px rgba(218, 41, 28, 0); }
+    50% { box-shadow: 0 0 0 15px rgba(218, 41, 28, 0); }
   }
 
-  .status {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    background: #e3f2fd;
-    color: #1976d2;
-    font-weight: bold;
+  .scene-indicator {
     text-align: center;
-    font-size: 1.1em;
-  }
-
-  .progress-container {
-    margin-top: 20px;
-  }
-
-  .progress-bar {
-    width: 100%;
-    height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #4CAF50, #ffc72c, #da291c);
-    width: 0%;
-    transition: width 0.1s linear;
-  }
-
-  .video-container {
-    margin-top: 20px;
-    text-align: center;
-    display: none;
-  }
-
-  .video-container video {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  }
-
-  .instructions {
-    background: #fff3cd;
-    border-left: 5px solid #ffc72c;
-    padding: 15px;
-    border-radius: 10px;
     margin-bottom: 20px;
-    color: #856404;
+    font-size: 1.3em;
+    color: #da291c;
+    font-weight: bold;
   }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <h1> Китайский в Макдональдсе</h1>
-    <p>Слушайте → Повторяйте → Записывайте видео</p>
+    <h1> Диалог в Макдональдсе</h1>
+    <p>Нажмите на фразу для озвучки или "Воспроизвести весь диалог"</p>
   </div>
 
-  <div class="instructions">
-    <strong>📚 Как учиться:</strong> 
-    1. Нажмите "▶ Воспроизвести" - услышите китайский (пиньинь) → русский<br>
-    2. Следите за подсветкой иероглифов и слов<br>
-    3. Нажмите "🔴 Записать" для записи вашего произношения
-  </div>
+  <div class="scene-indicator" id="sceneIndicator">Сцена 1 из 10: Приветствие</div>
 
-  <div class="scene-selector">
-    <button class="scene-btn active" onclick="loadCard(0)"> 1. Вход</button>
-    <button class="scene-btn" onclick="loadCard(1)">🎴 2. Меню</button>
-    <button class="scene-btn" onclick="loadCard(2)"> 3. Заказ</button>
-    <button class="scene-btn" onclick="loadCard(3)">🎴 4. Вопросы</button>
-    <button class="scene-btn" onclick="loadCard(4)">🎴 5. Оплата</button>
-    <button class="scene-btn" onclick="loadCard(5)">🎴 6. Получение</button>
-    <button class="scene-btn" onclick="loadCard(6)"> 7. Место</button>
-    <button class="scene-btn" onclick="loadCard(7)">🎴 8. Вкусно</button>
-    <button class="scene-btn" onclick="loadCard(8)">🎴 9. Десерт</button>
-    <button class="scene-btn" onclick="loadCard(9)">🎴 10. Выход</button>
-  </div>
-
-  <div class="card-container">
-    <img id="cardImage" src="img/card1.jpg" alt="Карточка" class="card-image">
+  <div class="dialogue-container">
+    <img id="sceneImage" src="img/IMG_7558.png" alt="Сцена" class="scene-image">
     
-    <div class="text-display">
-      <div id="chineseText" class="chinese-display"></div>
-      <div id="pinyinText" class="pinyin-display"></div>
-      <div id="russianText" class="russian-display"></div>
+    <div class="dialogue" id="dialogue">
+      <!-- Диалог загружается через JS -->
     </div>
 
     <div class="controls">
-      <button class="btn btn-play" onclick="playAudio()">
-        <span>▶</span> Воспроизвести
-      </button>
-      <button class="btn btn-record" id="recordBtn" onclick="toggleRecording()">
-        <span>🔴</span> Записать видео
-      </button>
-      <button class="btn btn-stop" onclick="stopRecording()" style="display:none;" id="stopBtn">
-        <span>⏹</span> Остановить
-      </button>
+      <button class="btn btn-nav" onclick="prevScene()">⬅ Предыдущая</button>
+      <button class="btn btn-play-all" onclick="playAllDialogue()">▶ Весь диалог</button>
+      <button class="btn btn-stop" onclick="stopAudio()">⏹ Стоп</button>
+      <button class="btn btn-nav" onclick="nextScene()">Следующая ➡</button>
     </div>
 
-    <div class="progress-container">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-
-    <div class="status" id="status">Нажмите "Воспроизвести" для прослушивания</div>
-
-    <div class="video-container" id="videoContainer">
-      <h3>📹 Ваша запись:</h3>
-      <video id="videoPreview" controls></video>
-    </div>
+    <div class="status" id="status">Нажмите на фразу или "Весь диалог" для озвучки</div>
   </div>
 </div>
 
 <script>
-const cards = [
+const scenes = [
   {
-    image: "img/card1.jpg",
-    chinese: "你好！我要一份巨无霸套餐。",
-    pinyin: "Nǐ ho! Wǒ yào yī fèn jùwúbà tàocān.",
-    russian: "Привет! Мне набор Биг Мак, пожалуйста."
+    name: "Приветствие",
+    image: "img/IMG_7558.png",
+    dialogue: [
+      {
+        speaker: "staff",
+        chinese: "欢迎光临！",
+        pinyin: "Huānyíng guānglín!",
+        russian: "Добро пожаловать!"
+      },
+      {
+        speaker: "customer",
+        chinese: "你好！我要一份巨无霸套餐。",
+        pinyin: "Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.",
+        russian: "Привет! Мне набор Биг Мак, пожалуйста."
+      }
+    ]
   },
   {
-    image: "img/card2.jpg",
-    chinese: "嗯…选哪个好呢？",
-    pinyin: "Ńg... xuǎn nǎge hǎo ne?",
-    russian: "Хм… что же выбрать?"
+    name: "Выбор меню",
+    image: "img/IMG_7559.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "嗯…选哪个好呢？",
+        pinyin: "g... xuǎn nǎge hǎo ne?",
+        russian: "Хм… что же выбрать?"
+      }
+    ]
   },
   {
-    image: "img/card3.jpg",
-    chinese: "请给我一个芝士汉堡和大份薯条。",
-    pinyin: "Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shtiáo.",
-    russian: "Один чизбургер и большую картошку, пожалуйста."
+    name: "Заказ",
+    image: "img/IMG_7560.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "请给我一个芝士汉堡和大份薯条。",
+        pinyin: "Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.",
+        russian: "Один чизбургер и большую картошку, пожалуйста."
+      },
+      {
+        speaker: "staff",
+        chinese: "好的，马上来。",
+        pinyin: "Hǎo de, mǎshàng lái.",
+        russian: "Хорошо, сейчас будет."
+      }
+    ]
   },
   {
-    image: "img/card4.jpg",
-    chinese: "请问今天有素食选项吗？",
-    pinyin: "Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?",
-    russian: "Подскажите, есть сегодня вегетарианские блюда?"
+    name: "Вопрос о меню",
+    image: "img/IMG_7561.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "请问今天有素食选项吗？",
+        pinyin: "Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?",
+        russian: "Подскажите, есть сегодня вегетарианские блюда?"
+      },
+      {
+        speaker: "staff",
+        chinese: "有的，我们有蔬菜汉堡。",
+        pinyin: "Yǒu de, wǒmen yǒu shūcài hànbǎo.",
+        russian: "Да, у нас есть овощной бургер."
+      }
+    ]
   },
   {
-    image: "img/card5.jpg",
-    chinese: "我可以扫码支付吗？",
-    pinyin: "Wǒ kěyǐ sǎo mǎ zhīfù ma?",
-    russian: "Можно оплатить по QR-коду?"
+    name: "Оплата",
+    image: "img/IMG_7562.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "我可以扫码支付吗？",
+        pinyin: "Wǒ kěyǐ sǎo mǎ zhīfù ma?",
+        russian: "Можно оплатить по QR-коду?"
+      },
+      {
+        speaker: "staff",
+        chinese: "当然可以。",
+        pinyin: "Dāngrán kěyǐ.",
+        russian: "Конечно, можно."
+      }
+    ]
   },
   {
-    image: "img/card6.jpg",
-    chinese: "这是您的餐，请慢用！",
-    pinyin: "Zhè shì nín de cān, qng màn yòng!",
-    russian: "Вот ваш заказ, приятного аппетита!"
+    name: "Получение заказа",
+    image: "img/IMG_7563.png",
+    dialogue: [
+      {
+        speaker: "staff",
+        chinese: "这是您的餐，请慢用！",
+        pinyin: "Zhè shì nín de cān, qǐng màn yòng!",
+        russian: "Вот ваш заказ, приятного аппетита!"
+      },
+      {
+        speaker: "customer",
+        chinese: "谢谢！",
+        pinyin: "Xièxie!",
+        russian: "Спасибо!"
+      }
+    ]
   },
   {
-    image: "img/card7.jpg",
-    chinese: "哪里有座位？",
-    pinyin: "Nǎlǐ yǒu zuòwèi?",
-    russian: "Где есть свободные места?"
+    name: "Поиск места",
+    image: "img/IMG_7564.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "哪里有座位？",
+        pinyin: "Nǎlǐ yǒu zuòwèi?",
+        russian: "Где есть свободные места?"
+      }
+    ]
   },
   {
-    image: "img/card8.jpg",
-    chinese: "真好吃！",
-    pinyin: "Zhēn hǎochī!",
-    russian: "Очень вкусно!"
+    name: "Вкусная еда",
+    image: "img/IMG_7565.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "真好吃！",
+        pinyin: "Zhēn hǎochī!",
+        russian: "Очень вкусно!"
+      }
+    ]
   },
   {
-    image: "img/card9.jpg",
-    chinese: "好香滑啊！",
-    pinyin: "Hǎo xiāng huá a!",
-    russian: "Такое нежное и сливочное!"
+    name: "Десерт",
+    image: "img/IMG_7566.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "好香滑啊！",
+        pinyin: "Hǎo xiāng huá a!",
+        russian: "Такое нежное и сливочное!"
+      }
+    ]
   },
   {
-    image: "img/card10.jpg",
-    chinese: "再见！谢谢光临！欢迎下次再来！",
-    pinyin: "Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!",
-    russian: "До свидания! Спасибо, приходите ещё!"
+    name: "Прощание",
+    image: "img/IMG_7567.png",
+    dialogue: [
+      {
+        speaker: "customer",
+        chinese: "再见！谢谢光临！",
+        pinyin: "Zàijiàn! Xièxie guānglín!",
+        russian: "До свидания! Спасибо за посещение!"
+      },
+      {
+        speaker: "staff",
+        chinese: "欢迎下次再来！",
+        pinyin: "Huānyíng xiàcì zài lái!",
+        russian: "Приходите ещё!"
+      }
+    ]
   }
 ];
 
-let currentCard = 0;
-let mediaRecorder;
-let recordedChunks = [];
-let isRecording = false;
+let currentScene = 0;
 let synth = window.speechSynthesis;
+let isPlaying = false;
+let currentUtterance = null;
 
-function loadCard(index) {
-  currentCard = index;
-  const card = cards[index];
+function loadScene(index) {
+  currentScene = index;
+  const scene = scenes[index];
   
-  document.getElementById('cardImage').src = card.image;
-  document.getElementById('chineseText').innerHTML = '';
-  document.getElementById('pinyinText').innerHTML = '';
-  document.getElementById('russianText').innerHTML = '';
+  document.getElementById('sceneImage').src = scene.image;
+  document.getElementById('sceneIndicator').textContent = `Сцена ${index + 1} из ${scenes.length}: ${scene.name}`;
   
-  // Разбиваем китайский текст на иероглифы
-  const chineseChars = card.chinese.split('');
-  chineseChars.forEach((char, i) => {
-    const span = document.createElement('span');
-    span.className = 'char';
-    span.textContent = char;
-    span.dataset.index = i;
-    document.getElementById('chineseText').appendChild(span);
+  const dialogueDiv = document.getElementById('dialogue');
+  dialogueDiv.innerHTML = '';
+  
+  scene.dialogue.forEach((msg, i) => {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${msg.speaker}`;
+    messageDiv.onclick = () => playMessage(index, i);
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = msg.speaker === 'staff' ? '👩‍' : '👧';
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    
+    const chineseDiv = document.createElement('div');
+    chineseDiv.className = 'chinese';
+    msg.chinese.split('').forEach(char => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = char;
+      chineseDiv.appendChild(span);
+    });
+    
+    const pinyinDiv = document.createElement('div');
+    pinyinDiv.className = 'pinyin';
+    pinyinDiv.textContent = msg.pinyin;
+    
+    const russianDiv = document.createElement('div');
+    russianDiv.className = 'russian';
+    russianDiv.textContent = msg.russian;
+    
+    bubble.appendChild(chineseDiv);
+    bubble.appendChild(pinyinDiv);
+    bubble.appendChild(russianDiv);
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(bubble);
+    dialogueDiv.appendChild(messageDiv);
   });
   
-  // Разбиваем пиньинь на слова
-  const pinyinWords = card.pinyin.split(' ');
-  pinyinWords.forEach((word, i) => {
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = word + ' ';
-    span.dataset.index = i;
-    document.getElementById('pinyinText').appendChild(span);
-  });
-  
-  // Разбиваем русский текст на слова
-  const russianWords = card.russian.split(' ');
-  russianWords.forEach((word, i) => {
-    const span = document.createElement('span');
-    span.className = 'word';
-    span.textContent = word + ' ';
-    span.dataset.index = i;
-    document.getElementById('russianText').appendChild(span);
-  });
-  
-  // Обновляем активную кнопку
-  document.querySelectorAll('.scene-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', i === index);
-  });
-  
-  document.getElementById('status').textContent = 'Карточка ' + (index + 1) + ' из 10. Нажмите "Воспроизвести"';
-  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('status').textContent = `Сцена ${index + 1}: ${scene.name}. Нажмите на фразу для озвучки`;
 }
 
-async function playAudio() {
-  const card = cards[currentCard];
-  const status = document.getElementById('status');
+function playMessage(sceneIndex, messageIndex) {
+  stopAudio();
   
-  // Очищаем подсветку
-  document.querySelectorAll('.char, .word').forEach(el => {
-    el.classList.remove('active', 'spoken');
-  });
+  const scene = scenes[sceneIndex];
+  const msg = scene.dialogue[messageIndex];
   
-  status.textContent = '🔊 Воспроизведение: Китайский...';
+  const messages = document.querySelectorAll('.message');
+  messages.forEach(m => m.classList.remove('playing'));
+  messages[messageIndex].classList.add('playing');
   
-  // Озвучиваем китайский (пиньинь) с подсветкой
-  await speakWithHighlight(card.pinyin, 'zh-CN', highlightPinyin);
+  document.getElementById('status').textContent = '🔊 Воспроизведение...';
   
-  status.textContent = '🔊 Воспроизведение: Русский...';
+  // Озвучка китайского
+  const chineseUtterance = new SpeechSynthesisUtterance(msg.chinese);
+  chineseUtterance.lang = 'zh-CN';
+  chineseUtterance.rate = 0.8;
   
-  // Озвучиваем русский с подсветкой
-  await speakWithHighlight(card.russian, 'ru-RU', highlightRussian);
+  const chars = messages[messageIndex].querySelectorAll('.char');
+  let charIndex = 0;
   
-  status.textContent = '✅ Готово! Теперь запишите ваше произношение';
+  chineseUtterance.onboundary = (event) => {
+    if (event.name === 'word' && charIndex < chars.length) {
+      chars.forEach(c => c.classList.remove('active'));
+      chars[charIndex].classList.add('active');
+      charIndex++;
+    }
+  };
+  
+  chineseUtterance.onend = () => {
+    chars.forEach(c => c.classList.remove('active'));
+    
+    // Озвучка русского
+    const russianUtterance = new SpeechSynthesisUtterance(msg.russian);
+    russianUtterance.lang = 'ru-RU';
+    russianUtterance.rate = 0.9;
+    
+    russianUtterance.onend = () => {
+      messages[messageIndex].classList.remove('playing');
+      document.getElementById('status').textContent = '✅ Готово! Нажмите на другую фразу';
+    };
+    
+    synth.speak(russianUtterance);
+  };
+  
+  synth.speak(chineseUtterance);
 }
 
-function speakWithHighlight(text, lang, highlightFn) {
+async function playAllDialogue() {
+  stopAudio();
+  
+  const scene = scenes[currentScene];
+  const messages = document.querySelectorAll('.message');
+  
+  document.getElementById('status').textContent = '🔊 Воспроизведение всего диалога...';
+  
+  for (let i = 0; i < scene.dialogue.length; i++) {
+    if (!isPlaying) break;
+    
+    const msg = scene.dialogue[i];
+    messages[i].classList.add('playing');
+    
+    // Озвучка китайского
+    await speakAndWait(msg.chinese, 'zh-CN', 0.8, messages[i]);
+    
+    // Озвучка русского
+    await speakAndWait(msg.russian, 'ru-RU', 0.9, messages[i]);
+    
+    messages[i].classList.remove('playing');
+  }
+  
+  document.getElementById('status').textContent = '✅ Диалог завершён!';
+}
+
+function speakAndWait(text, lang, rate, messageElement) {
   return new Promise((resolve) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang;
-    utterance.rate = 0.8;
-    utterance.pitch = 1;
+    utterance.rate = rate;
     
-    // Приблизительная синхронизация
-    const words = text.split(' ');
-    const duration = (text.length * 150); // примерная длительность в мс
+    const chars = messageElement.querySelectorAll('.char');
+    let charIndex = 0;
     
-    utterance.onstart = () => {
-      const progressBar = document.getElementById('progressFill');
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 2;
-        progressBar.style.width = progress + '%';
-        if (progress >= 100) clearInterval(interval);
-      }, duration / 50);
-      
-      // Подсвечиваем постепенно
-      if (highlightFn) {
-        let wordIndex = 0;
-        const wordInterval = setInterval(() => {
-          if (wordIndex < words.length) {
-            highlightFn(wordIndex);
-            wordIndex++;
-          } else {
-            clearInterval(wordInterval);
-          }
-        }, duration / words.length);
+    utterance.onboundary = (event) => {
+      if (event.name === 'word' && charIndex < chars.length) {
+        chars.forEach(c => c.classList.remove('active'));
+        chars[charIndex].classList.add('active');
+        charIndex++;
       }
     };
     
     utterance.onend = () => {
+      chars.forEach(c => c.classList.remove('active'));
       setTimeout(resolve, 500);
     };
     
+    currentUtterance = utterance;
     synth.speak(utterance);
   });
 }
 
-function highlightPinyin(index) {
-  document.querySelectorAll('.pinyin-display .word').forEach((el, i) => {
-    if (i === index) el.classList.add('active');
-    else el.classList.remove('active');
-  });
-}
-
-function highlightRussian(index) {
-  document.querySelectorAll('.russian-display .word').forEach((el, i) => {
-    if (i === index) el.classList.add('active');
-    else el.classList.remove('active');
-  });
-}
-
-async function toggleRecording() {
-  const recordBtn = document.getElementById('recordBtn');
-  const stopBtn = document.getElementById('stopBtn');
-  const status = document.getElementById('status');
+function stopAudio() {
+  synth.cancel();
+  isPlaying = false;
   
-  if (!isRecording) {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: true, 
-        audio: true 
-      });
-      
-      mediaRecorder = new MediaRecorder(stream);
-      recordedChunks = [];
-      
-      mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          recordedChunks.push(event.data);
-        }
-      };
-      
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const video = document.getElementById('videoPreview');
-        video.src = url;
-        document.getElementById('videoContainer').style.display = 'block';
-        
-        // Автосохранение
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `chinese-card${currentCard + 1}-${Date.now()}.webm`;
-        a.click();
-        
-        status.textContent = '✅ Видео сохранено!';
-      };
-      
-      mediaRecorder.start();
-      isRecording = true;
-      recordBtn.classList.add('recording');
-      stopBtn.style.display = 'inline-flex';
-      status.textContent = '🔴 Запись идёт... Произносите фразу!';
-      
-      // Прогресс бар (30 секунд)
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += 1;
-        document.getElementById('progressFill').style.width = progress + '%';
-        if (progress >= 100) {
-          clearInterval(interval);
-          stopRecording();
-        }
-      }, 300);
-      
-    } catch (err) {
-      alert('Ошибка доступа к камере: ' + err.message);
-    }
+  document.querySelectorAll('.message').forEach(m => m.classList.remove('playing'));
+  document.querySelectorAll('.char').forEach(c => c.classList.remove('active'));
+  
+  document.getElementById('status').textContent = ' Остановлено';
+}
+
+function nextScene() {
+  if (currentScene < scenes.length - 1) {
+    loadScene(currentScene + 1);
   }
 }
 
-function stopRecording() {
-  const recordBtn = document.getElementById('recordBtn');
-  const stopBtn = document.getElementById('stopBtn');
-  
-  if (mediaRecorder && isRecording) {
-    mediaRecorder.stop();
-    mediaRecorder.stream.getTracks().forEach(track => track.stop());
-    isRecording = false;
-    recordBtn.classList.remove('recording');
-    stopBtn.style.display = 'none';
-    document.getElementById('progressFill').style.width = '0%';
+function prevScene() {
+  if (currentScene > 0) {
+    loadScene(currentScene - 1);
   }
 }
 
-// Загружаем первую карточку при старте
-loadCard(0);
+// Загружаем первую сцену
+loadScene(0);
 </script>
 </body>
 </html>
-
 
