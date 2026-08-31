@@ -74,7 +74,7 @@
     }
     .panel.recording-panel {
       border-color: #f44336;
-      box-shadow: 0 0 0 3px rgba(244,67,54,0.3), 0 8px 30px rgba(244,67,54,0.25);
+      box-shadow: 0 0 0 3px rgba(244,67,54,0.3);
     }
 
     .panel-header {
@@ -222,7 +222,7 @@
   </div>
 
   <div class="speed-control">
-    <div class="speed-label"> Скорость TTS:</div>
+    <div class="speed-label">🐢 Скорость TTS:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
     <div class="speed-value" id="speedValue">0.55x</div>
   </div>
@@ -240,14 +240,14 @@
 const SCENES = {
   mcdonalds: {
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ ho! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xun nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"W kěyǐ sǎo m zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7563", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"‍🍳 Персонал" },
+      { img:"IMG_7564", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
     ]
@@ -260,16 +260,15 @@ let currentSpeed = 0.55;
 let db = null;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-// Глобальные переменные для записи
 let activeRecorder = null;
 let activeStream = null;
-let activeRecordingKey = null; // {key, idx, lang}
+let activeRecordingKey = null;
 let recordingTimeout = null;
 
 // IndexedDB
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v5', 1);
+    const request = indexedDB.open('McDonaldsAudio_v6', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) {
@@ -328,7 +327,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Сброс всех кнопок записи
 function resetAllRecordButtons() {
   document.querySelectorAll('.record-btn').forEach(btn => {
     btn.classList.remove('recording');
@@ -337,7 +335,6 @@ function resetAllRecordButtons() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
-// Рендер
 async function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
@@ -357,7 +354,7 @@ async function renderScene(key) {
         </div>
         <div class="speak-buttons">
           <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Китайский">🇨🇳</button>
-          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский">🇷</button>
+          <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Русский">🇷🇺</button>
           <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
             🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
           </button>
@@ -365,7 +362,7 @@ async function renderScene(key) {
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
         <img class="panel-img" src="${imgSrc}" alt="Panel ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
-        <div class="img-error-msg"><div class="big">🖼️</div><div><b>${p.img}.png</b> не найден</div></div>
+        <div class="img-error-msg"><div class="big">️</div><div><b>${p.img}.png</b> не найден</div></div>
       </div>
       <div class="dialogue">
         <div class="bubble ${bubbleClass}" id="${key}-bub${i}">
@@ -398,43 +395,30 @@ async function checkRecordings(key) {
   }
 }
 
-// ЗАПИСЬ — ИСПРАВЛЕННАЯ ВЕРСИЯ
 async function toggleRecording(key, idx, lang) {
   const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${key}-p${idx}`);
   
-  // Если сейчас идёт запись ЭТОЙ карточки — останавливаем
   if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
     stopCurrentRecording();
     return;
   }
   
-  // Если идёт запись ДРУГОЙ карточки — сначала останавливаем её
   if (activeRecordingKey) {
     stopCurrentRecording();
-    await sleep(300); // Ждём завершения
+    await sleep(300);
   }
   
-  // Запускаем новую запись
   try {
-    // Сбрасываем все кнопки
     resetAllRecordButtons();
-    
-    // Отключаем все кнопки на время запроса микрофона
     document.querySelectorAll('.action-btn').forEach(b => b.disabled = true);
     
-    // Запрашиваем НОВЫЙ stream каждый раз
     const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { 
-        echoCancellation: true, 
-        noiseSuppression: true,
-        autoGainControl: true
-      } 
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
     });
     
     activeStream = stream;
     
-    // Определяем формат
     let mimeType = 'audio/webm';
     if (isIOS && MediaRecorder.isTypeSupported('audio/mp4')) {
       mimeType = 'audio/mp4';
@@ -449,9 +433,7 @@ async function toggleRecording(key, idx, lang) {
     const chunks = [];
     
     recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) {
-        chunks.push(e.data);
-      }
+      if (e.data && e.data.size > 0) chunks.push(e.data);
     };
     
     recorder.onstop = async () => {
@@ -464,11 +446,9 @@ async function toggleRecording(key, idx, lang) {
         if (btn) btn.classList.add('has-recording');
         showToast('✅ Запись сохранена!');
       } catch(e) {
-        console.error('Save error:', e);
         showToast('❌ Ошибка сохранения!');
       }
       
-      // Обязательно закрываем stream
       if (activeStream) {
         activeStream.getTracks().forEach(t => t.stop());
         activeStream = null;
@@ -476,8 +456,6 @@ async function toggleRecording(key, idx, lang) {
       
       activeRecorder = null;
       activeRecordingKey = null;
-      
-      // Разблокируем кнопки
       resetAllRecordButtons();
     };
     
@@ -487,22 +465,17 @@ async function toggleRecording(key, idx, lang) {
       cleanupRecording();
     };
     
-    // Включаем UI записи
     recBtn.classList.add('recording');
     recBtn.disabled = false;
     if (panelEl) panelEl.classList.add('recording-panel');
     
-    // Разблокируем только кнопку остановки этой карточки
     document.querySelectorAll('.action-btn').forEach(b => {
-      if (b.id !== `${key}-rec-${lang}-${idx}`) {
-        b.disabled = true;
-      }
+      if (b.id !== `${key}-rec-${lang}-${idx}`) b.disabled = true;
     });
     
     recorder.start();
     showToast('🔴 Запись... Нажмите  ещё раз для остановки');
     
-    // Автостоп через 15 сек
     recordingTimeout = setTimeout(() => {
       if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
         stopCurrentRecording();
@@ -526,7 +499,6 @@ function stopCurrentRecording() {
     try {
       activeRecorder.stop();
     } catch(e) {
-      console.error('Stop error:', e);
       cleanupRecording();
     }
   } else {
@@ -556,74 +528,127 @@ async function handleDelete(key, idx, lang) {
     await deleteFromDB(dbKey);
     const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
     if (recBtn) recBtn.classList.remove('has-recording');
-    showToast('️ Удалено');
+    showToast('🗑️ Удалено');
   } catch(e) {}
 }
 
-// ОЗВУЧКА
+// ===== ОЗВУЧКА С ИСПРАВЛЕНИЕМ ДЛЯ iOS =====
+
+// Трюк для iOS: resume() перед каждым speak()
+function wakeUpSpeechSynthesis() {
+  if (isIOS) {
+    speechSynthesis.cancel();
+    speechSynthesis.resume();
+  }
+}
+
 async function handleSpeak(key, idx, lang) {
-  speechSynthesis.cancel();
+  wakeUpSpeechSynthesis();
   
   if (lang === 'zh') {
-    await playTTS(key, idx, 'zh');
+    await playTTSRobust(key, idx, 'zh');
   } else {
     const dbKey = `${key}_ru_${idx}`;
     try {
       const blob = await getFromDB(dbKey);
       if (blob) {
-        await playRecording(blob, key, idx, 'ru');
+        await playRecordingRobust(blob, key, idx, 'ru');
       } else {
-        await playTTS(key, idx, 'ru');
+        await playTTSRobust(key, idx, 'ru');
       }
     } catch(e) {
-      await playTTS(key, idx, 'ru');
+      await playTTSRobust(key, idx, 'ru');
     }
   }
 }
 
-async function playRecording(blob, key, idx, lang) {
-  const audio = new Audio(URL.createObjectURL(blob));
-  audio.playsInline = true;
-  highlightText(key, idx, lang);
-  
+// Надёжное TTS с трюками для iOS
+function playTTSRobust(key, idx, lang) {
   return new Promise((resolve) => {
-    audio.onended = () => {
+    highlightText(key, idx, lang);
+    
+    const p = SCENES[key].panels[idx];
+    const text = lang === 'zh' ? p.zh : p.ru;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
+    utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
+    utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
+    
+    if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
+    if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
+    
+    let finished = false;
+    
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       clearHighlight(key, idx, lang);
       resolve();
     };
-    audio.onerror = () => {
-      clearHighlight(key, idx, lang);
-      resolve();
+    
+    utterance.onend = finish;
+    utterance.onerror = finish;
+    
+    // На iOS onend может не сработать — добавляем таймаут
+    const maxDuration = (text.length * 300) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.1) + 2000;
+    const safetyTimeout = setTimeout(finish, Math.min(maxDuration, 15000));
+    
+    // Трюк для iOS: небольшой delay перед speak
+    setTimeout(() => {
+      if (!finished) {
+        speechSynthesis.speak(utterance);
+      }
+    }, 100);
+    
+    // Переопределяем finish чтобы clearTimeout
+    const origFinish = finish;
+    const newFinish = () => {
+      clearTimeout(safetyTimeout);
+      origFinish();
     };
-    audio.play().catch(() => {
-      clearHighlight(key, idx, lang);
-      resolve();
-    });
+    utterance.onend = newFinish;
+    utterance.onerror = newFinish;
   });
 }
 
-async function playTTS(key, idx, lang) {
-  highlightText(key, idx, lang);
-  const p = SCENES[key].panels[idx];
-  const text = lang === 'zh' ? p.zh : p.ru;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-  utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
-  utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-  
-  if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
-  if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
-  
+// Надёжное воспроизведение записи с таймаутом
+function playRecordingRobust(blob, key, idx, lang) {
   return new Promise((resolve) => {
-    utterance.onend = () => {
+    const audio = new Audio(URL.createObjectURL(blob));
+    audio.playsInline = true;
+    highlightText(key, idx, lang);
+    
+    let finished = false;
+    
+    const finish = () => {
+      if (finished) return;
+      finished = true;
       clearHighlight(key, idx, lang);
       resolve();
     };
-    utterance.onerror = () => {
-      clearHighlight(key, idx, lang);
-      resolve();
+    
+    audio.onended = finish;
+    audio.onerror = finish;
+    
+    // Таймаут на случай если onended не сработает (короткие записи на iOS)
+    const safetyTimeout = setTimeout(finish, 10000);
+    
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        clearTimeout(safetyTimeout);
+        finish();
+      });
+    }
+    
+    // Переопределяем чтобы clearTimeout
+    const origFinish = finish;
+    const newFinish = () => {
+      clearTimeout(safetyTimeout);
+      origFinish();
     };
-    speechSynthesis.speak(utterance);
+    audio.onended = newFinish;
+    audio.onerror = newFinish;
   });
 }
 
@@ -653,28 +678,33 @@ function clearHighlight(key, idx, lang) {
   if(np) np.classList.remove('visible');
 }
 
-// PLAY ALL
+// ===== PLAY ALL — ПОЛНОСТЬЮ ПЕРЕПИСАН =====
 const playingState = {};
 
 async function playAll(key) {
-  if (playingState[key]) { stopScene(key); return; }
+  if (playingState[key]) { 
+    stopScene(key); 
+    return; 
+  }
   
-  // Если идёт запись — останавливаем
   if (activeRecordingKey) {
     stopCurrentRecording();
     await sleep(500);
   }
   
+  // Разблокируем speechSynthesis для iOS
+  wakeUpSpeechSynthesis();
+  
   playingState[key] = true;
   const btn = document.getElementById(`playBtn-${key}`);
-  btn.textContent = '⏹ Стоп';
+  btn.textContent = ' Стоп';
   btn.classList.add('playing');
 
   const panels = SCENES[key].panels;
-  let idx = 0;
-
-  async function processNext() {
-    if (!playingState[key] || idx >= panels.length) { stopScene(key); return; }
+  
+  // Используем for-цикл вместо рекурсии — надёжнее
+  for (let idx = 0; idx < panels.length; idx++) {
+    if (!playingState[key]) break;
 
     const panel = document.getElementById(`${key}-p${idx}`);
     const np = document.getElementById(`${key}-np${idx}`);
@@ -686,33 +716,44 @@ async function playAll(key) {
       panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    npT.textContent = '🇨 Китайский...';
-    await playTTS(key, idx, 'zh');
+    // 1. КИТАЙСКИЙ — всегда TTS
+    npT.textContent = '🇨🇳 Китайский...';
+    await playTTSRobust(key, idx, 'zh');
     
-    if (!playingState[key]) return;
-    await sleep(400);
-    if (!playingState[key]) return;
+    if (!playingState[key]) break;
     
+    // Пауза между языками
+    await sleep(600);
+    if (!playingState[key]) break;
+    
+    // 2. РУССКИЙ — запись или TTS
     npT.textContent = '🇷🇺 Русский...';
     const dbKey = `${key}_ru_${idx}`;
+    let playedRecording = false;
+    
     try {
       const blob = await getFromDB(dbKey);
       if (blob) {
-        await playRecording(blob, key, idx, 'ru');
-      } else {
-        await playTTS(key, idx, 'ru');
+        playedRecording = true;
+        await playRecordingRobust(blob, key, idx, 'ru');
       }
     } catch(e) {
-      await playTTS(key, idx, 'ru');
+      console.error('DB error:', e);
     }
     
-    if (!playingState[key]) return;
-    idx++;
-    await sleep(500);
-    processNext();
+    // Если записи нет или ошибка — используем TTS
+    if (!playedRecording && playingState[key]) {
+      await playTTSRobust(key, idx, 'ru');
+    }
+    
+    if (!playingState[key]) break;
+    
+    // Пауза между карточками
+    await sleep(700);
   }
 
-  processNext();
+  // Завершение
+  stopScene(key);
 }
 
 function sleep(ms) {
@@ -728,7 +769,10 @@ function stopScene(key) {
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
   
   const btn = document.getElementById(`playBtn-${key}`);
-  if (btn) { btn.textContent = '▶ Озвучить весь диалог'; btn.classList.remove('playing'); }
+  if (btn) { 
+    btn.textContent = '▶ Озвучить весь диалог'; 
+    btn.classList.remove('playing'); 
+  }
 }
 
 window.addEventListener('load', async () => {
