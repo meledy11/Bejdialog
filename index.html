@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍔 McDonald's — Учим китайский с подсветкой</title>
+  <title>🍔 McDonald's — Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
 
@@ -23,7 +23,7 @@
       margin: 15px 0 18px; 
       background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
       box-shadow: 0 8px 32px rgba(218,41,28,0.25);
-      position: relative; overflow: hidden; color: white;
+      color: white;
     }
     .scene-title h1 { font-size: 20px; margin-bottom: 5px; text-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
     .scene-title p  { font-size: 13px; opacity: 0.95; margin-bottom: 14px; }
@@ -38,7 +38,6 @@
     .play-all-btn:hover  { transform: scale(1.05); }
     .play-all-btn.playing { background: #ffe8d6; color: #da291c; }
 
-    /* ===== ПОЛЗУНОК СКОРОСТИ ===== */
     .speed-control {
       background: white;
       border-radius: 16px;
@@ -55,9 +54,6 @@
       font-weight: 700;
       color: #da291c;
       font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
     .speed-slider {
       flex: 1;
@@ -71,18 +67,7 @@
     }
     .speed-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: white;
-      border: 3px solid #da291c;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-    .speed-slider::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
+      width: 22px; height: 22px;
       border-radius: 50%;
       background: white;
       border: 3px solid #da291c;
@@ -92,7 +77,7 @@
       font-weight: 700;
       color: #da291c;
       font-size: 14px;
-      min-width: 45px;
+      min-width: 50px;
       text-align: center;
       background: #fff0f0;
       padding: 4px 10px;
@@ -107,7 +92,6 @@
     .panel.active-panel {
       border-color: #da291c;
       box-shadow: 0 0 0 3px rgba(218,41,28,0.15), 0 8px 30px rgba(255,199,44,0.25);
-      transform: scale(1.01);
     }
 
     .panel-header {
@@ -126,14 +110,19 @@
       font-size: 12px;
     }
 
+    .speak-buttons { display: flex; gap: 8px; }
+
     .speak-btn {
-      background: linear-gradient(135deg, #da291c, #ff6b6b); color: white;
-      border: none; width: 36px; height: 36px; border-radius: 50%;
+      border: none; width: 38px; height: 38px; border-radius: 50%;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       font-size: 16px; transition: 0.2s; flex-shrink: 0;
+      color: white;
     }
     .speak-btn:hover  { transform: scale(1.15); }
     .speak-btn.speaking { animation: pulse 0.9s ease-in-out infinite; }
+    .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
+    .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
+    
     @keyframes pulse {
       0%,100%{box-shadow:0 0 0 0 rgba(218,41,28,0.45)}
       50%{box-shadow:0 0 0 10px rgba(218,41,28,0)}
@@ -144,8 +133,7 @@
       min-height: 150px; overflow: hidden;
       border-top: 1px dashed #ffd6b3; border-bottom: 1px dashed #ffd6b3;
     }
-    .panel-img { width: 100%; display: block; transition: transform 0.4s; }
-    .panel:hover .panel-img { transform: scale(1.02); }
+    .panel-img { width: 100%; display: block; }
     .img-error-msg {
       position: absolute; inset: 0; display: none;
       align-items: center; justify-content: center; flex-direction: column;
@@ -159,32 +147,38 @@
 
     .bubble {
       padding: 16px; border-radius: 14px; margin-bottom: 14px;
-      border: 2px solid transparent; transition: all 0.3s;
+      border: 2px solid transparent;
     }
     .bubble.waiter { background: linear-gradient(135deg, #f0f8ff, #fff); border-color: #99ccff; }
     .bubble.sailor { background: linear-gradient(135deg, #fff5f8, #fff); border-color: #ffb3cc; }
-    .bubble.highlight { filter: brightness(1.05) saturate(1.1); transform: scale(1.01); }
+    .bubble.highlight { filter: brightness(1.05) saturate(1.1); }
 
     .speaker-tag {
       font-size: 12px; font-weight: 700; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 6px;
     }
     .speaker-tag.w { color: #4488cc; }
     .speaker-tag.s { color: #cc4488; }
 
     .zh-text {
       font-family: 'Noto Sans SC', sans-serif; 
-      font-size: 24px; font-weight: 700; color: #2a2a2a; 
+      font-size: 26px; font-weight: 700; color: #2a2a2a; 
       margin-bottom: 8px; line-height: 1.8;
+      letter-spacing: 2px;
     }
     .zh-char {
-      display: inline-block; padding: 2px 4px; border-radius: 6px;
-      transition: all 0.15s ease;
+      display: inline-block; padding: 3px 5px; border-radius: 6px;
+      transition: all 0.2s ease;
+      margin: 1px;
     }
     .zh-char.active {
       background: #ffc72c; color: #da291c;
-      transform: scale(1.25); font-weight: 900;
-      box-shadow: 0 2px 8px rgba(255, 199, 44, 0.6);
+      transform: scale(1.3); font-weight: 900;
+      box-shadow: 0 3px 10px rgba(255, 199, 44, 0.7);
+      z-index: 10;
+      position: relative;
+    }
+    .zh-char.spoken {
+      background: #ffe8a3;
     }
 
     .py-text { 
@@ -193,17 +187,21 @@
     }
 
     .ru-text {
-      font-size: 15px; color: #555; line-height: 1.6;
+      font-size: 16px; color: #555; line-height: 1.7;
       padding-left: 12px; border-left: 4px solid #ffd6b3;
     }
     .ru-word {
-      display: inline-block; padding: 2px 4px; border-radius: 6px;
-      transition: all 0.15s ease;
+      display: inline-block; padding: 3px 5px; border-radius: 6px;
+      transition: all 0.2s ease;
+      margin: 1px;
     }
     .ru-word.active {
-      background: #da291c; color: white;
-      transform: scale(1.1); font-weight: 700;
-      box-shadow: 0 2px 8px rgba(218, 41, 28, 0.4);
+      background: #4a90e2; color: white;
+      transform: scale(1.15); font-weight: 700;
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.5);
+    }
+    .ru-word.spoken {
+      background: #c5dcf5;
     }
 
     .now-playing-bar {
@@ -234,11 +232,10 @@
 <div class="manga-container">
   <div class="scene-title">
     <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-    <p>Нажмите 🔊 для озвучки. Иероглифы и слова будут подсвечиваться!</p>
+    <p>Нажмите 🔊 для озвучки. Иероглифы и слова подсвечиваются по очереди!</p>
     <button class="play-all-btn" id="playBtn-mcdonalds" onclick="playAll('mcdonalds')">▶ Озвучить весь диалог</button>
   </div>
 
-  <!-- ПОЛЗУНОК СКОРОСТИ -->
   <div class="speed-control">
     <div class="speed-label">🐢 Скорость:</div>
     <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
@@ -249,7 +246,7 @@
 
   <div class="footer">
     🍔 McDonald's Chinese Learning · 2026<br>
-    <small>Используйте Google Chrome для лучшей работы подсветки</small>
+    <small>Используйте Google Chrome для лучшей работы</small>
   </div>
 </div>
 
@@ -258,13 +255,13 @@ const SCENES = {
   mcdonalds: {
     panels: [
       { img:"IMG_7558", zh:"欢迎光临！请问需要点什么？", py:"Huānyíng guānglín! Qǐngwèn xūyào diǎn shénme?", ru:"Добро пожаловать! Что будете заказывать?", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7559", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7560", zh:"好的，饮料要大杯还是中杯？", py:"Hǎo de, yǐnliào yào dà bēi háishì zhōng bēi?", ru:"Хорошо, напиток большой или средний?", who:"w", speaker:"🧑‍ Персонал" },
-      { img:"IMG_7561", zh:"大杯可乐，加冰。还要一份大份薯条。", py:"Dà bēi kělè, jiā bīng. Hái yào yí fèn dà fèn shǔtiáo.", ru:"Большую колу со льдом. И большую картошку.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7559", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"好的，饮料要大杯还是中杯？", py:"Hǎo de, yǐnliào yào dà bēi háishì zhōng bēi?", ru:"Хорошо, напиток большой или средний?", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7561", zh:"大杯可乐，加冰。还要一份大份薯条。", py:"Dà bēi kělè, jiā bīng. Hái yào yí fèn dà fèn shǔtiáo.", ru:"Большую колу со льдом. И большую картошку.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěy sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7563", zh:"当然可以。一共四十二元。", py:"Dāngrán kěyǐ. Yígòng sìshí'èr yuán.", ru:"Конечно. Итого 42 юаня.", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7564", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"‍🍳 Персонал" },
-      { img:"IMG_7565", zh:"谢谢！嗯…真好吃！", py:"Xièxie! Ńg… zhēn hǎo chī!", ru:"Спасибо! Ммм… очень вкусно!", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7564", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7565", zh:"谢谢！嗯…真好吃！", py:"Xièxie! Ńg… zhēn hǎo chī!", ru:"Спасибо! Ммм… очень вкусно!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7566", zh:"再来一个冰淇淋！好香滑啊！", py:"Zài lái yí gè bīngqílín! Hǎo xiāng huá a!", ru:"Ещё одно мороженое! Такое нежное!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7567", zh:"谢谢光临！欢迎下次再来！", py:"Xièxie guānglín! Huānyíng xià cì zài lái!", ru:"Спасибо за посещение! Приходите ещё!", who:"w", speaker:"🧑‍🍳 Персонал" }
     ]
@@ -273,7 +270,12 @@ const SCENES = {
 
 let zhVoice = null;
 let ruVoice = null;
-let currentSpeed = 0.55; // Медленная скорость по умолчанию
+let currentSpeed = 0.55;
+let highlightTimer = null; // Таймер подсветки
+let currentZhChars = [];
+let currentRuWords = [];
+let currentZhIndex = 0;
+let currentRuIndex = 0;
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
@@ -283,7 +285,6 @@ function loadVoices() {
 speechSynthesis.onvoiceschanged = loadVoices;
 loadVoices();
 
-// Обработчик ползунка скорости
 const speedSlider = document.getElementById('speedSlider');
 const speedValue = document.getElementById('speedValue');
 speedSlider.addEventListener('input', (e) => {
@@ -291,6 +292,7 @@ speedSlider.addEventListener('input', (e) => {
   speedValue.textContent = currentSpeed.toFixed(2) + 'x';
 });
 
+// ===== РЕНДЕР =====
 function renderScene(key) {
   const data = SCENES[key];
   const container = document.getElementById(`panels-${key}`);
@@ -302,22 +304,14 @@ function renderScene(key) {
     const imgSrc = `img/${p.img}.png`;
 
     const zhChars = p.zh.split('').map((char, idx) => 
-      `<span class="zh-char" data-idx="${idx}">${char}</span>`
+      `<span class="zh-char" id="${key}-zh-${i}-${idx}">${char}</span>`
     ).join('');
 
-    let ruHtml = '';
-    let currentCharIndex = 0;
-    const ruTokens = p.ru.split(/(\s+)/); 
-    ruTokens.forEach(token => {
-      if (token.trim() === '') {
-        ruHtml += token;
-        currentCharIndex += token.length;
-      } else {
-        const endIdx = currentCharIndex + token.length;
-        ruHtml += `<span class="ru-word" data-start="${currentCharIndex}" data-end="${endIdx}">${token}</span>`;
-        currentCharIndex = endIdx;
-      }
-    });
+    // Разбиваем русский на слова (сохраняем знаки препинания вместе со словами)
+    const ruWords = p.ru.match(/\S+/g) || [];
+    const ruHtml = ruWords.map((word, idx) => 
+      `<span class="ru-word" id="${key}-ru-${i}-${idx}">${word}</span>`
+    ).join(' ');
 
     html += `
     <div class="panel" id="${key}-p${i}">
@@ -326,21 +320,24 @@ function renderScene(key) {
           <span class="panel-num-badge">${i+1}</span>
           ${p.speaker}
         </div>
-        <button class="speak-btn" id="${key}-btn${i}" onclick="speakPanel('${key}',${i})" title="Озвучить"></button>
+        <div class="speak-buttons">
+          <button class="speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="speakChinese('${key}',${i})" title="Китайский">🇨🇳</button>
+          <button class="speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="speakRussian('${key}',${i})" title="Русский">🇷🇺</button>
+        </div>
       </div>
       <div class="panel-img-wrap" id="${key}-wrap${i}">
         <img class="panel-img" src="${imgSrc}" alt="Панель ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
         <div class="img-error-msg">
-          <div class="big">️</div>
-          <div><b>${p.img}.png</b> не найден<br><small>Проверьте путь: Bejdialog/img/${p.img}.png</small></div>
+          <div class="big">🖼️</div>
+          <div><b>${p.img}.png</b> не найден</div>
         </div>
       </div>
       <div class="dialogue">
         <div class="bubble ${bubbleClass}" id="${key}-bub${i}">
           <div class="speaker-tag ${speakerClass}">${p.speaker}</div>
-          <div class="zh-text" id="${key}-zh${i}">${zhChars}</div>
+          <div class="zh-text" id="${key}-zh-text${i}">${zhChars}</div>
           <div class="py-text">${p.py}</div>
-          <div class="ru-text" id="${key}-ru${i}">${ruHtml}</div>
+          <div class="ru-text" id="${key}-ru-text${i}">${ruHtml}</div>
         </div>
         <div class="now-playing-bar" id="${key}-np${i}">
           <div class="bars"><span></span><span></span><span></span><span></span></div>
@@ -352,21 +349,87 @@ function renderScene(key) {
   container.innerHTML = html;
 }
 
-function clearHighlights(key, idx) {
+// ===== ОЧИСТКА ПОДСВЕТКИ =====
+function clearAllHighlights(key, idx) {
   const panel = document.getElementById(`${key}-p${idx}`);
-  if(panel) {
-    panel.querySelectorAll('.zh-char').forEach(el => el.classList.remove('active'));
-    panel.querySelectorAll('.ru-word').forEach(el => el.classList.remove('active'));
+  if (!panel) return;
+  panel.querySelectorAll('.zh-char').forEach(el => {
+    el.classList.remove('active', 'spoken');
+  });
+  panel.querySelectorAll('.ru-word').forEach(el => {
+    el.classList.remove('active', 'spoken');
+  });
+  if (highlightTimer) {
+    clearInterval(highlightTimer);
+    highlightTimer = null;
   }
 }
 
-function speakPanel(key, idx) {
+// ===== ПОДСВЕТКА КИТАЙСКОГО (по таймеру) =====
+function startZhHighlight(key, idx, totalChars) {
+  clearAllHighlights(key, idx);
+  currentZhIndex = 0;
+  const chars = [];
+  for (let i = 0; i < totalChars; i++) {
+    const el = document.getElementById(`${key}-zh-${idx}-${i}`);
+    if (el) chars.push(el);
+  }
+  
+  // Базовое время на иероглиф при rate=1.0 ≈ 220мс
+  // При меньшей скорости — больше
+  const msPerChar = (220 / currentSpeed);
+  
+  highlightTimer = setInterval(() => {
+    if (currentZhIndex >= chars.length) {
+      clearInterval(highlightTimer);
+      highlightTimer = null;
+      return;
+    }
+    // Снимаем active с предыдущего, помечаем как spoken
+    if (currentZhIndex > 0) {
+      chars[currentZhIndex - 1].classList.remove('active');
+      chars[currentZhIndex - 1].classList.add('spoken');
+    }
+    chars[currentZhIndex].classList.add('active');
+    currentZhIndex++;
+  }, msPerChar);
+}
+
+// ===== ПОДСВЕТКА РУССКОГО (по таймеру) =====
+function startRuHighlight(key, idx, totalWords) {
+  const words = [];
+  for (let i = 0; i < totalWords; i++) {
+    const el = document.getElementById(`${key}-ru-${idx}-${i}`);
+    if (el) words.push(el);
+  }
+  
+  // Базовое время на слово при rate=1.0 ≈ 350мс
+  const msPerWord = (350 / currentSpeed);
+  
+  let wordIdx = 0;
+  highlightTimer = setInterval(() => {
+    if (wordIdx >= words.length) {
+      clearInterval(highlightTimer);
+      highlightTimer = null;
+      return;
+    }
+    if (wordIdx > 0) {
+      words[wordIdx - 1].classList.remove('active');
+      words[wordIdx - 1].classList.add('spoken');
+    }
+    words[wordIdx].classList.add('active');
+    wordIdx++;
+  }, msPerWord);
+}
+
+// ===== ОЗВУЧКА КИТАЙСКОГО =====
+function speakChinese(key, idx) {
   speechSynthesis.cancel();
-  clearHighlights(key, idx);
+  clearAllHighlights(key, idx);
 
   const panelEl = document.getElementById(`${key}-p${idx}`);
   const bubEl = document.getElementById(`${key}-bub${idx}`);
-  const btnEl = document.getElementById(`${key}-btn${idx}`);
+  const btnEl = document.getElementById(`${key}-btn-zh-${idx}`);
   const npEl = document.getElementById(`${key}-np${idx}`);
   const npText = document.getElementById(`${key}-np-text${idx}`);
 
@@ -374,68 +437,91 @@ function speakPanel(key, idx) {
   bubEl.classList.add("highlight");
   btnEl.classList.add("speaking");
   npEl.classList.add("visible");
+  npText.textContent = "🇨 Китайский...";
   panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
 
   const p = SCENES[key].panels[idx];
-
   const zhUtterance = new SpeechSynthesisUtterance(p.zh);
   zhUtterance.lang = "zh-CN";
-  zhUtterance.rate = currentSpeed; // Используем скорость из ползунка
+  zhUtterance.rate = currentSpeed;
   zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
   if (zhVoice) zhUtterance.voice = zhVoice;
 
-  npText.textContent = "🇨🇳 Китайский...";
-
-  zhUtterance.onboundary = (event) => {
-    if (event.name === 'word' || event.name === 'sentence') {
-      const chars = panelEl.querySelectorAll('.zh-char');
-      chars.forEach(c => c.classList.remove('active'));
-      if (event.charIndex < chars.length) {
-        chars[event.charIndex].classList.add('active');
-      }
-    }
-  };
+  // Считаем количество иероглифов (без знаков препинания для таймера)
+  const zhCharsCount = p.zh.replace(/[!！?？,，。.、…]/g, '').length;
+  
+  // Запускаем подсветку через таймер
+  startZhHighlight(key, idx, zhCharsCount);
 
   zhUtterance.onend = () => {
-    npText.textContent = "🇷🇺 Русский...";
-    setTimeout(() => {
-      const ruUtterance = new SpeechSynthesisUtterance(p.ru);
-      ruUtterance.lang = "ru-RU";
-      ruUtterance.rate = currentSpeed * 1.15; // Русский чуть быстрее, но всё равно медленно
-      if (ruVoice) ruUtterance.voice = ruVoice;
-
-      const ruWords = panelEl.querySelectorAll('.ru-word');
-      
-      ruUtterance.onboundary = (event) => {
-        if (event.name === 'word') {
-          ruWords.forEach(w => w.classList.remove('active'));
-          const wordStart = event.charIndex;
-          const wordEnd = event.charIndex + event.charLength;
-          ruWords.forEach(w => {
-            const start = parseInt(w.dataset.start);
-            const end = parseInt(w.dataset.end);
-            if (start >= wordStart && end <= wordEnd + 10) {
-              w.classList.add('active');
-            }
-          });
-        }
-      };
-
-      ruUtterance.onend = () => {
-        clearHighlights(key, idx);
-        panelEl.classList.remove("active-panel");
-        bubEl.classList.remove("highlight");
-        btnEl.classList.remove("speaking");
-        npEl.classList.remove("visible");
-      };
-
-      speechSynthesis.speak(ruUtterance);
-    }, 300);
+    if (highlightTimer) {
+      clearInterval(highlightTimer);
+      highlightTimer = null;
+    }
+    // Помечаем все как spoken
+    panelEl.querySelectorAll('.zh-char').forEach(el => {
+      el.classList.remove('active');
+      el.classList.add('spoken');
+    });
+    btnEl.classList.remove("speaking");
+    npEl.classList.remove("visible");
+    panelEl.classList.remove("active-panel");
+    bubEl.classList.remove("highlight");
   };
+
+  zhUtterance.onerror = zhUtterance.onend;
 
   speechSynthesis.speak(zhUtterance);
 }
 
+// ===== ОЗВУЧКА РУССКОГО =====
+function speakRussian(key, idx) {
+  speechSynthesis.cancel();
+  clearAllHighlights(key, idx);
+
+  const panelEl = document.getElementById(`${key}-p${idx}`);
+  const bubEl = document.getElementById(`${key}-bub${idx}`);
+  const btnEl = document.getElementById(`${key}-btn-ru-${idx}`);
+  const npEl = document.getElementById(`${key}-np${idx}`);
+  const npText = document.getElementById(`${key}-np-text${idx}`);
+
+  panelEl.classList.add("active-panel");
+  bubEl.classList.add("highlight");
+  btnEl.classList.add("speaking");
+  npEl.classList.add("visible");
+  npText.textContent = "🇷🇺 Русский...";
+  panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
+
+  const p = SCENES[key].panels[idx];
+  const ruUtterance = new SpeechSynthesisUtterance(p.ru);
+  ruUtterance.lang = "ru-RU";
+  ruUtterance.rate = currentSpeed * 1.1;
+  if (ruVoice) ruUtterance.voice = ruVoice;
+
+  const ruWordsCount = (p.ru.match(/\S+/g) || []).length;
+  startRuHighlight(key, idx, ruWordsCount);
+
+  ruUtterance.onend = () => {
+    if (highlightTimer) {
+      clearInterval(highlightTimer);
+      highlightTimer = null;
+    }
+    panelEl.querySelectorAll('.ru-word').forEach(el => {
+      el.classList.remove('active');
+      el.classList.add('spoken');
+    });
+    btnEl.classList.remove("speaking");
+    npEl.classList.remove("visible");
+    panelEl.classList.remove("active-panel");
+    bubEl.classList.remove("highlight");
+  };
+
+  ruUtterance.onerror = ruUtterance.onend;
+
+  speechSynthesis.speak(ruUtterance);
+}
+
+// ===== ОЗВУЧКА ВСЕГО ДИАЛОГА =====
 const playingState = {};
 
 function playAll(key) {
@@ -460,17 +546,21 @@ function playAll(key) {
 
     const panelEl = document.getElementById(`${key}-p${idx}`);
     const bubEl = document.getElementById(`${key}-bub${idx}`);
-    const btnEl = document.getElementById(`${key}-btn${idx}`);
+    const btnZh = document.getElementById(`${key}-btn-zh-${idx}`);
+    const btnRu = document.getElementById(`${key}-btn-ru-${idx}`);
     const npEl = document.getElementById(`${key}-np${idx}`);
     const npText = document.getElementById(`${key}-np-text${idx}`);
 
     panelEl.classList.add("active-panel");
     bubEl.classList.add("highlight");
-    btnEl.classList.add("speaking");
     npEl.classList.add("visible");
     panelEl.scrollIntoView({ behavior:"smooth", block:"center" });
 
     const p = panels[idx];
+
+    // Китайский
+    npText.textContent = "🇨🇳 Китайский...";
+    btnZh.classList.add("speaking");
 
     const zhUtterance = new SpeechSynthesisUtterance(p.zh);
     zhUtterance.lang = "zh-CN";
@@ -478,57 +568,46 @@ function playAll(key) {
     zhUtterance.pitch = p.who === "s" ? 1.15 : 0.9;
     if (zhVoice) zhUtterance.voice = zhVoice;
 
-    npText.textContent = "🇳 Китайский...";
-
-    zhUtterance.onboundary = (event) => {
-      if (event.name === 'word' || event.name === 'sentence') {
-        const chars = panelEl.querySelectorAll('.zh-char');
-        chars.forEach(c => c.classList.remove('active'));
-        if (event.charIndex < chars.length) {
-          chars[event.charIndex].classList.add('active');
-        }
-      }
-    };
+    const zhCharsCount = p.zh.replace(/[!！?？,，。.、…]/g, '').length;
+    startZhHighlight(key, idx, zhCharsCount);
 
     zhUtterance.onend = () => {
-      npText.textContent = "🇷 Русский...";
+      if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
+      panelEl.querySelectorAll('.zh-char').forEach(el => { el.classList.remove('active'); el.classList.add('spoken'); });
+      btnZh.classList.remove("speaking");
+
+      // Пауза, потом русский
       setTimeout(() => {
+        if (!playingState[key]) return;
+        
+        npText.textContent = "🇺 Русский...";
+        btnRu.classList.add("speaking");
+
         const ruUtterance = new SpeechSynthesisUtterance(p.ru);
         ruUtterance.lang = "ru-RU";
-        ruUtterance.rate = currentSpeed * 1.15;
+        ruUtterance.rate = currentSpeed * 1.1;
         if (ruVoice) ruUtterance.voice = ruVoice;
 
-        const ruWords = panelEl.querySelectorAll('.ru-word');
-        
-        ruUtterance.onboundary = (event) => {
-          if (event.name === 'word') {
-            ruWords.forEach(w => w.classList.remove('active'));
-            const wordStart = event.charIndex;
-            const wordEnd = event.charIndex + event.charLength;
-            ruWords.forEach(w => {
-              const start = parseInt(w.dataset.start);
-              const end = parseInt(w.dataset.end);
-              if (start >= wordStart && end <= wordEnd + 10) {
-                w.classList.add('active');
-              }
-            });
-          }
-        };
+        const ruWordsCount = (p.ru.match(/\S+/g) || []).length;
+        startRuHighlight(key, idx, ruWordsCount);
 
         ruUtterance.onend = () => {
-          clearHighlights(key, idx);
+          if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
+          panelEl.querySelectorAll('.ru-word').forEach(el => { el.classList.remove('active'); el.classList.add('spoken'); });
+          btnRu.classList.remove("speaking");
+          npEl.classList.remove("visible");
           panelEl.classList.remove("active-panel");
           bubEl.classList.remove("highlight");
-          btnEl.classList.remove("speaking");
-          npEl.classList.remove("visible");
           idx++;
-          setTimeout(next, 600);
+          setTimeout(next, 500);
         };
 
+        ruUtterance.onerror = ruUtterance.onend;
         speechSynthesis.speak(ruUtterance);
-      }, 300);
+      }, 400);
     };
 
+    zhUtterance.onerror = zhUtterance.onend;
     speechSynthesis.speak(zhUtterance);
   }
   next();
@@ -537,12 +616,13 @@ function playAll(key) {
 function stopScene(key) {
   speechSynthesis.cancel();
   playingState[key] = false;
+  if (highlightTimer) { clearInterval(highlightTimer); highlightTimer = null; }
+  
   document.querySelectorAll(".panel").forEach(p => p.classList.remove("active-panel"));
   document.querySelectorAll(".bubble").forEach(b => b.classList.remove("highlight"));
   document.querySelectorAll(".speak-btn").forEach(b => b.classList.remove("speaking"));
   document.querySelectorAll(".now-playing-bar").forEach(n => n.classList.remove("visible"));
-  document.querySelectorAll('.zh-char').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.ru-word').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.zh-char, .ru-word').forEach(el => el.classList.remove('active', 'spoken'));
   
   const btn = document.getElementById(`playBtn-${key}`);
   if (btn) {
@@ -553,9 +633,8 @@ function stopScene(key) {
 
 window.addEventListener("load", () => {
   renderScene("mcdonalds");
-  
   if (!("speechSynthesis" in window)) {
-    alert("⚠️ Ваш браузер не поддерживает озвучку! Используйте Google Chrome.");
+    alert("⚠️ Используйте Google Chrome для озвучки!");
   }
 });
 </script>
