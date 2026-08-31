@@ -1,1 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Китайский в Макдональдсе - Учим с озвучкой</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #ffe6e6 0%, #fff5e6 100%);
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    color: #da291c;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .scene-selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .scene-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    background: #ffc72c;
+    color: #da291c;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1em;
+  }
+
+  .scene-btn:hover, .scene-btn.active {
+    background: #da291c;
+    color: white;
+    transform: scale(1.05);
+  }
+
+  .card-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .card-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 15px;
+    margin: 0 auto 30px;
+    display: block;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .text-display {
+    background: linear-gradient(135deg, #fff9e6, #fff);
+    border: 3px solid #ffc72c;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+
+  .chinese-display {
+    font-size: 3.5em;
+    margin: 20px 0;
+    line-height: 1.6;
+    color: #da291c;
+    font-weight: bold;
+  }
+
+  .chinese-display .char {
+    display: inline-block;
+    padding: 5px 12px;
+    margin: 3px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: white;
+    color: #333;
+  }
+
+  .chinese-display .char.active {
+    background: #ffc72c;
+    color: #da291c;
+    transform: scale(1.3);
+    box-shadow: 0 4px 12px rgba(255, 199, 44, 0.6);
+    font-weight: bold;
+  }
+
+  .chinese-display .char.spoken {
+    background: #4CAF50;
+    color: white;
+  }
+
+  .pinyin-display {
+    font-size: 1.8em;
+    color: #666;
+    margin: 20px 0;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .pinyin-display .word {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 3px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .pinyin-display .word.active {
+    background: #ffc72c;
+    color: #da291c;
+    transform: scale(1.15);
+    box-shadow: 0 3px 10px rgba(255, 199, 44, 0.5);
+  }
+
+  .russian-display {
+    font-size: 1.5em;
+    color: #333;
+    margin: 20px 0;
+    line-height: 1.5;
+  }
+
+  .russian-display .word {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 3px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .russian-display .word.active {
+    background: #2196F3;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 3px 10px rgba(33, 150, 243, 0.5);
+  }
+
+  .controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+
+  .btn {
+    padding: 15px 35px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+
+  .btn-play {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+  }
+
+  .btn-record {
+    background: linear-gradient(135deg, #da291c, #b71c1c);
+    color: white;
+  }
+
+  .btn-record.recording {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    animation: pulse 1s infinite;
+  }
+
+  .btn-stop {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(218, 41, 28, 0.7); }
+    50% { box-shadow: 0 0 0 25px rgba(218, 41, 28, 0); }
+  }
+
+  .status {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #e3f2fd;
+    color: #1976d2;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
+  }
+
+  .progress-container {
+    margin-top: 20px;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #ffc72c, #da291c);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  .video-container {
+    margin-top: 20px;
+    text-align: center;
+    display: none;
+  }
+
+  .video-container video {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  }
+
+  .instructions {
+    background: #fff3cd;
+    border-left: 5px solid #ffc72c;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #856404;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1> Китайский в Макдональдсе</h1>
+    <p>Слушайте → Повторяйте → Записывайте видео</p>
+  </div>
+
+  <div class="instructions">
+    <strong>📚 Как учиться:</strong> 
+    1. Нажмите "▶ Воспроизвести" - услышите китайский (пиньинь) → русский<br>
+    2. Следите за подсветкой иероглифов и слов<br>
+    3. Нажмите "🔴 Записать" для записи вашего произношения
+  </div>
+
+  <div class="scene-selector">
+    <button class="scene-btn active" onclick="loadCard(0)"> 1. Вход</button>
+    <button class="scene-btn" onclick="loadCard(1)">🎴 2. Меню</button>
+    <button class="scene-btn" onclick="loadCard(2)"> 3. Заказ</button>
+    <button class="scene-btn" onclick="loadCard(3)">🎴 4. Вопросы</button>
+    <button class="scene-btn" onclick="loadCard(4)">🎴 5. Оплата</button>
+    <button class="scene-btn" onclick="loadCard(5)">🎴 6. Получение</button>
+    <button class="scene-btn" onclick="loadCard(6)"> 7. Место</button>
+    <button class="scene-btn" onclick="loadCard(7)">🎴 8. Вкусно</button>
+    <button class="scene-btn" onclick="loadCard(8)">🎴 9. Десерт</button>
+    <button class="scene-btn" onclick="loadCard(9)">🎴 10. Выход</button>
+  </div>
+
+  <div class="card-container">
+    <img id="cardImage" src="img/card1.jpg" alt="Карточка" class="card-image">
+    
+    <div class="text-display">
+      <div id="chineseText" class="chinese-display"></div>
+      <div id="pinyinText" class="pinyin-display"></div>
+      <div id="russianText" class="russian-display"></div>
+    </div>
+
+    <div class="controls">
+      <button class="btn btn-play" onclick="playAudio()">
+        <span>▶</span> Воспроизвести
+      </button>
+      <button class="btn btn-record" id="recordBtn" onclick="toggleRecording()">
+        <span>🔴</span> Записать видео
+      </button>
+      <button class="btn btn-stop" onclick="stopRecording()" style="display:none;" id="stopBtn">
+        <span>⏹</span> Остановить
+      </button>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="status" id="status">Нажмите "Воспроизвести" для прослушивания</div>
+
+    <div class="video-container" id="videoContainer">
+      <h3>📹 Ваша запись:</h3>
+      <video id="videoPreview" controls></video>
+    </div>
+  </div>
+</div>
+
+<script>
+const cards = [
+  {
+    image: "img/card1.jpg",
+    chinese: "你好！我要一份巨无霸套餐。",
+    pinyin: "Nǐ ho! Wǒ yào yī fèn jùwúbà tàocān.",
+    russian: "Привет! Мне набор Биг Мак, пожалуйста."
+  },
+  {
+    image: "img/card2.jpg",
+    chinese: "嗯…选哪个好呢？",
+    pinyin: "Ńg... xuǎn nǎge hǎo ne?",
+    russian: "Хм… что же выбрать?"
+  },
+  {
+    image: "img/card3.jpg",
+    chinese: "请给我一个芝士汉堡和大份薯条。",
+    pinyin: "Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shtiáo.",
+    russian: "Один чизбургер и большую картошку, пожалуйста."
+  },
+  {
+    image: "img/card4.jpg",
+    chinese: "请问今天有素食选项吗？",
+    pinyin: "Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?",
+    russian: "Подскажите, есть сегодня вегетарианские блюда?"
+  },
+  {
+    image: "img/card5.jpg",
+    chinese: "我可以扫码支付吗？",
+    pinyin: "Wǒ kěyǐ sǎo mǎ zhīfù ma?",
+    russian: "Можно оплатить по QR-коду?"
+  },
+  {
+    image: "img/card6.jpg",
+    chinese: "这是您的餐，请慢用！",
+    pinyin: "Zhè shì nín de cān, qng màn yòng!",
+    russian: "Вот ваш заказ, приятного аппетита!"
+  },
+  {
+    image: "img/card7.jpg",
+    chinese: "哪里有座位？",
+    pinyin: "Nǎlǐ yǒu zuòwèi?",
+    russian: "Где есть свободные места?"
+  },
+  {
+    image: "img/card8.jpg",
+    chinese: "真好吃！",
+    pinyin: "Zhēn hǎochī!",
+    russian: "Очень вкусно!"
+  },
+  {
+    image: "img/card9.jpg",
+    chinese: "好香滑啊！",
+    pinyin: "Hǎo xiāng huá a!",
+    russian: "Такое нежное и сливочное!"
+  },
+  {
+    image: "img/card10.jpg",
+    chinese: "再见！谢谢光临！欢迎下次再来！",
+    pinyin: "Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!",
+    russian: "До свидания! Спасибо, приходите ещё!"
+  }
+];
+
+let currentCard = 0;
+let mediaRecorder;
+let recordedChunks = [];
+let isRecording = false;
+let synth = window.speechSynthesis;
+
+function loadCard(index) {
+  currentCard = index;
+  const card = cards[index];
+  
+  document.getElementById('cardImage').src = card.image;
+  document.getElementById('chineseText').innerHTML = '';
+  document.getElementById('pinyinText').innerHTML = '';
+  document.getElementById('russianText').innerHTML = '';
+  
+  // Разбиваем китайский текст на иероглифы
+  const chineseChars = card.chinese.split('');
+  chineseChars.forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    span.textContent = char;
+    span.dataset.index = i;
+    document.getElementById('chineseText').appendChild(span);
+  });
+  
+  // Разбиваем пиньинь на слова
+  const pinyinWords = card.pinyin.split(' ');
+  pinyinWords.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = word + ' ';
+    span.dataset.index = i;
+    document.getElementById('pinyinText').appendChild(span);
+  });
+  
+  // Разбиваем русский текст на слова
+  const russianWords = card.russian.split(' ');
+  russianWords.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = word + ' ';
+    span.dataset.index = i;
+    document.getElementById('russianText').appendChild(span);
+  });
+  
+  // Обновляем активную кнопку
+  document.querySelectorAll('.scene-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === index);
+  });
+  
+  document.getElementById('status').textContent = 'Карточка ' + (index + 1) + ' из 10. Нажмите "Воспроизвести"';
+  document.getElementById('progressFill').style.width = '0%';
+}
+
+async function playAudio() {
+  const card = cards[currentCard];
+  const status = document.getElementById('status');
+  
+  // Очищаем подсветку
+  document.querySelectorAll('.char, .word').forEach(el => {
+    el.classList.remove('active', 'spoken');
+  });
+  
+  status.textContent = '🔊 Воспроизведение: Китайский...';
+  
+  // Озвучиваем китайский (пиньинь) с подсветкой
+  await speakWithHighlight(card.pinyin, 'zh-CN', highlightPinyin);
+  
+  status.textContent = '🔊 Воспроизведение: Русский...';
+  
+  // Озвучиваем русский с подсветкой
+  await speakWithHighlight(card.russian, 'ru-RU', highlightRussian);
+  
+  status.textContent = '✅ Готово! Теперь запишите ваше произношение';
+}
+
+function speakWithHighlight(text, lang, highlightFn) {
+  return new Promise((resolve) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 0.8;
+    utterance.pitch = 1;
+    
+    // Приблизительная синхронизация
+    const words = text.split(' ');
+    const duration = (text.length * 150); // примерная длительность в мс
+    
+    utterance.onstart = () => {
+      const progressBar = document.getElementById('progressFill');
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 2;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) clearInterval(interval);
+      }, duration / 50);
+      
+      // Подсвечиваем постепенно
+      if (highlightFn) {
+        let wordIndex = 0;
+        const wordInterval = setInterval(() => {
+          if (wordIndex < words.length) {
+            highlightFn(wordIndex);
+            wordIndex++;
+          } else {
+            clearInterval(wordInterval);
+          }
+        }, duration / words.length);
+      }
+    };
+    
+    utterance.onend = () => {
+      setTimeout(resolve, 500);
+    };
+    
+    synth.speak(utterance);
+  });
+}
+
+function highlightPinyin(index) {
+  document.querySelectorAll('.pinyin-display .word').forEach((el, i) => {
+    if (i === index) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+}
+
+function highlightRussian(index) {
+  document.querySelectorAll('.russian-display .word').forEach((el, i) => {
+    if (i === index) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+}
+
+async function toggleRecording() {
+  const recordBtn = document.getElementById('recordBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const status = document.getElementById('status');
+  
+  if (!isRecording) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: true, 
+        audio: true 
+      });
+      
+      mediaRecorder = new MediaRecorder(stream);
+      recordedChunks = [];
+      
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          recordedChunks.push(event.data);
+        }
+      };
+      
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const video = document.getElementById('videoPreview');
+        video.src = url;
+        document.getElementById('videoContainer').style.display = 'block';
+        
+        // Автосохранение
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `chinese-card${currentCard + 1}-${Date.now()}.webm`;
+        a.click();
+        
+        status.textContent = '✅ Видео сохранено!';
+      };
+      
+      mediaRecorder.start();
+      isRecording = true;
+      recordBtn.classList.add('recording');
+      stopBtn.style.display = 'inline-flex';
+      status.textContent = '🔴 Запись идёт... Произносите фразу!';
+      
+      // Прогресс бар (30 секунд)
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 1;
+        document.getElementById('progressFill').style.width = progress + '%';
+        if (progress >= 100) {
+          clearInterval(interval);
+          stopRecording();
+        }
+      }, 300);
+      
+    } catch (err) {
+      alert('Ошибка доступа к камере: ' + err.message);
+    }
+  }
+}
+
+function stopRecording() {
+  const recordBtn = document.getElementById('recordBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  
+  if (mediaRecorder && isRecording) {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    isRecording = false;
+    recordBtn.classList.remove('recording');
+    stopBtn.style.display = 'none';
+    document.getElementById('progressFill').style.width = '0%';
+  }
+}
+
+// Загружаем первую карточку при старте
+loadCard(0);
+</script>
+</body>
+</html>
+
 
