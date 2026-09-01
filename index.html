@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>🍔 McDonald's — Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
@@ -11,25 +11,20 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      position: fixed;
-      width: 100%;
     }
     
     body {
       background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 50%, #ffd6b3 100%);
       font-family: 'Comfortaa', 'Noto Sans SC', sans-serif;
       overscroll-behavior: none;
-      -webkit-text-size-adjust: 100%;
     }
     
     .manga-container {
       max-width: 100%;
       height: 100vh;
-      height: -webkit-fill-available;
       overflow-y: auto;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-      position: relative;
     }
     
     .scene-title {
@@ -39,7 +34,7 @@
       right: 0;
       z-index: 100;
       background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
-      padding: env(safe-area-inset-top, 12px) 18px 12px;
+      padding: 12px 18px;
       text-align: center;
       color: white;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -54,7 +49,7 @@
       right: 0;
       z-index: 100;
       background: rgba(255,255,255,0.98);
-      padding: 10px 18px env(safe-area-inset-bottom, 10px);
+      padding: 10px 18px;
       box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
       display: flex;
       align-items: center;
@@ -82,8 +77,7 @@
     }
 
     .panel {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -150,9 +144,6 @@
       transition: opacity 0.2s ease;
       color: white;
       position: relative;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
     }
     .action-btn:active { opacity: 0.7; }
     
@@ -287,9 +278,6 @@
       transition: all 0.3s ease;
       font-family: inherit;
       opacity: 0.6;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
     }
     .next-card-btn:hover {
       opacity: 1;
@@ -336,7 +324,7 @@
 
     .toast {
       position: fixed;
-      bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
       background: rgba(40,15,50,0.95);
@@ -354,43 +342,9 @@
     
     .manga-container::-webkit-scrollbar { display: none; }
     .manga-container { -ms-overflow-style: none; scrollbar-width: none; }
-    
-    /* Кнопка активации звука для iOS */
-    .ios-audio-unlock {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 20px;
-      color: white;
-      font-family: inherit;
-    }
-    .ios-audio-unlock.hidden { display: none; }
-    .ios-audio-unlock button {
-      background: linear-gradient(135deg, #da291c, #ffc72c);
-      color: white;
-      border: none;
-      padding: 20px 40px;
-      border-radius: 30px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-    }
   </style>
 </head>
 <body>
-
-<!-- Экран активации звука для iOS -->
-<div class="ios-audio-unlock" id="iosUnlock">
-  <div style="font-size: 60px;">🔊</div>
-  <div style="font-size: 18px; text-align: center; padding: 0 20px;">Нажмите кнопку, чтобы активировать звук</div>
-  <button onclick="unlockAudio()">Активировать звук</button>
-</div>
 
 <div class="scene-title">
   <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
@@ -407,9 +361,6 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- Единый аудио-элемент для всех записей -->
-<audio id="globalAudio" playsinline webkit-playsinline style="display:none;"></audio>
-
 <script>
 const SCENES = {
   mcdonalds: {
@@ -418,7 +369,7 @@ const SCENES = {
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍ Персонал" },
       { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
@@ -436,77 +387,25 @@ let zhVoice = null;
 let ruVoice = null;
 let currentSpeed = 0.55;
 let db = null;
-let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 let activeRecorder = null;
 let activeStream = null;
 let activeRecordingKey = null;
 let recordingTimeout = null;
-let audioUnlocked = false;
-let globalAudio = null;
-
-// Активация звука для iOS
-function unlockAudio() {
-  if (audioUnlocked) return;
-  
-  // Создаём и проигрываем пустой звук для разблокировки
-  const audio = new Audio();
-  audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-  audio.play().then(() => {
-    audio.pause();
-    audioUnlocked = true;
-    document.getElementById('iosUnlock').classList.add('hidden');
-    
-    // Инициализируем speechSynthesis
-    if ('speechSynthesis' in window) {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance('');
-      utterance.volume = 0;
-      speechSynthesis.speak(utterance);
-    }
-  }).catch(() => {
-    audioUnlocked = true;
-    document.getElementById('iosUnlock').classList.add('hidden');
-  });
-}
-
-// Проверяем, нужна ли активация
-function checkAudioUnlock() {
-  if (!isIOS) {
-    document.getElementById('iosUnlock').classList.add('hidden');
-    audioUnlocked = true;
-    return;
-  }
-  
-  // На iOS показываем экран активации
-  const audio = new Audio();
-  audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-  audio.play().then(() => {
-    audio.pause();
-    audioUnlocked = true;
-    document.getElementById('iosUnlock').classList.add('hidden');
-  }).catch(() => {
-    // Нужна активация
-  });
-}
 
 function wakeUpSpeechSynthesis() {
-  if (!('speechSynthesis' in window)) return Promise.resolve();
-  
-  return new Promise(resolve => {
-    speechSynthesis.cancel();
-    
-    if (isIOS) {
-      speechSynthesis.resume();
-    }
-    
-    // Не используем dummy speak на iOS - он может блокировать
-    setTimeout(resolve, 50);
-  });
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  if (isIOS) speechSynthesis.resume();
+  const dummy = new SpeechSynthesisUtterance(' ');
+  dummy.volume = 0; dummy.rate = 2;
+  speechSynthesis.speak(dummy);
+  return new Promise(resolve => setTimeout(resolve, 150));
 }
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v17', 1);
+    const request = indexedDB.open('McDonaldsAudio_v16', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
@@ -548,11 +447,8 @@ function loadVoices() {
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
   ruVoice = voices.find(v => v.lang.includes('ru-RU')) || voices[0];
 }
-
-if ('speechSynthesis' in window) {
-  speechSynthesis.onvoiceschanged = loadVoices;
-  loadVoices();
-}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
 
 document.getElementById('speedSlider').addEventListener('input', (e) => {
   currentSpeed = parseFloat(e.target.value);
@@ -641,11 +537,6 @@ async function checkRecordings(key) {
 }
 
 async function toggleRecording(key, idx, lang) {
-  if (!audioUnlocked) {
-    showToast('⚠️ Сначала активируйте звук!');
-    return;
-  }
-  
   const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${key}-p${idx}`);
   
@@ -660,23 +551,11 @@ async function toggleRecording(key, idx, lang) {
   
   try {
     resetAllRecordButtons();
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { 
-        echoCancellation: true, 
-        noiseSuppression: true,
-        sampleRate: 44100
-      } 
-    });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
     activeStream = stream;
     
     let mimeType = 'audio/webm';
-    if (isIOS) {
-      if (MediaRecorder.isTypeSupported('audio/mp4')) {
-        mimeType = 'audio/mp4';
-      } else if (MediaRecorder.isTypeSupported('audio/wav')) {
-        mimeType = 'audio/wav';
-      }
-    }
+    if (isIOS && MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
     
     const recorder = new MediaRecorder(stream, { mimeType });
     activeRecorder = recorder;
@@ -703,11 +582,7 @@ async function toggleRecording(key, idx, lang) {
     recorder.start();
     showToast('🔴 Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
-  } catch (err) { 
-    console.error(err);
-    showToast('⚠️ Нет доступа к микрофону'); 
-    cleanupRecording(); 
-  }
+  } catch (err) { showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
 }
 
 function stopCurrentRecording() {
@@ -753,50 +628,21 @@ function playTTSRobust(key, idx, lang) {
     utterance.onerror = () => { clearTimeout(safetyTimeout); finish(); };
     
     await wakeUpSpeechSynthesis();
-    
-    setTimeout(() => { 
-      if (!finished) {
-        try {
-          speechSynthesis.speak(utterance);
-        } catch(e) {
-          finish();
-        }
-      }
-    }, 100);
+    setTimeout(() => { if (!finished) speechSynthesis.speak(utterance); }, 100);
   });
 }
 
 function playRecordingRobust(blob, key, idx, lang) {
   return new Promise((resolve) => {
-    if (!globalAudio) {
-      globalAudio = document.getElementById('globalAudio');
-    }
-    
-    const audioUrl = URL.createObjectURL(blob);
-    globalAudio.src = audioUrl;
-    globalAudio.playsInline = true;
-    globalAudio.webkitPlaysInline = true;
-    
+    const audio = new Audio(URL.createObjectURL(blob));
+    audio.playsInline = true;
     highlightText(key, idx, lang);
     let finished = false;
-    
-    const finish = () => { 
-      if(finished) return; 
-      finished=true; 
-      clearHighlight(key, idx, lang); 
-      URL.revokeObjectURL(audioUrl);
-      resolve(); 
-    };
-    
+    const finish = () => { if(finished) return; finished=true; clearHighlight(key, idx, lang); resolve(); };
     const safetyTimeout = setTimeout(finish, 10000);
-    
-    globalAudio.onended = () => { clearTimeout(safetyTimeout); finish(); };
-    globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
-    
-    globalAudio.play().catch(() => { 
-      clearTimeout(safetyTimeout); 
-      finish(); 
-    });
+    audio.onended = () => { clearTimeout(safetyTimeout); finish(); };
+    audio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
+    audio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
   });
 }
 
@@ -815,7 +661,7 @@ function highlightText(key, idx, lang) {
   if(replayBtn) replayBtn.classList.add('playing');
   if(nextBtn) nextBtn.classList.add('playing');
   if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇺 Русский...';
+  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
 }
 
 function clearHighlight(key, idx, lang) {
@@ -835,11 +681,6 @@ function clearHighlight(key, idx, lang) {
 }
 
 async function handleSpeak(key, idx, lang) {
-  if (!audioUnlocked) {
-    showToast('⚠️ Сначала активируйте звук!');
-    return;
-  }
-  
   await wakeUpSpeechSynthesis();
   if (lang === 'zh') await playTTSRobust(key, idx, 'zh');
   else {
@@ -852,11 +693,6 @@ async function handleSpeak(key, idx, lang) {
 }
 
 async function playCard(key, idx) {
-  if (!audioUnlocked) {
-    showToast('⚠️ Сначала активируйте звук!');
-    return;
-  }
-  
   const btn = document.getElementById(`${key}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
   
@@ -879,11 +715,6 @@ async function playCard(key, idx) {
 }
 
 async function playAndNext(key, idx) {
-  if (!audioUnlocked) {
-    showToast('⚠️ Сначала активируйте звук!');
-    return;
-  }
-  
   const panels = SCENES[key].panels;
   await playCard(key, idx);
   
@@ -904,24 +735,10 @@ async function playAndNext(key, idx) {
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 window.addEventListener('load', async () => {
-  globalAudio = document.getElementById('globalAudio');
   await initDB();
   renderScene('mcdonalds');
-  checkAudioUnlock();
-  
-  if (!('speechSynthesis' in window)) {
-    showToast('⚠️ Используйте Chrome/Safari');
-  }
-});
-
-// Обработка visibility change для iOS
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    speechSynthesis.cancel();
-    if (globalAudio) globalAudio.pause();
-  }
+  if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
 </script>
 </body>
 </html>
-
