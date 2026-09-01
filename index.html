@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>🍔 McDonald's — Учим китайский</title>
+  <title>🍔 Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -20,6 +20,11 @@
       font-family: 'Comfortaa', 'Noto Sans SC', sans-serif;
       overscroll-behavior: none;
       -webkit-text-size-adjust: 100%;
+      transition: background 0.5s ease;
+    }
+    
+    body.help-theme {
+      background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 50%, #ffd699 100%);
     }
     
     .manga-container {
@@ -43,9 +48,63 @@
       text-align: center;
       color: white;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background 0.5s ease;
     }
+    
+    body.help-theme .scene-title {
+      background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b);
+      color: #5d4037;
+    }
+    
     .scene-title h1 { font-size: 16px; margin-bottom: 2px; }
     .scene-title p { font-size: 11px; opacity: 0.9; }
+    
+    .controls-bar {
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 12px) + 50px);
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 8px 18px;
+      pointer-events: none;
+    }
+    
+    .control-btn {
+      pointer-events: auto;
+      background: rgba(255,255,255,0.95);
+      border: 2px solid #da291c;
+      color: #da291c;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    body.help-theme .control-btn {
+      border-color: #ff9800;
+      color: #ff9800;
+    }
+    
+    .control-btn:active { transform: scale(0.95); opacity: 0.8; }
+    
+    .control-btn.stop-btn {
+      background: rgba(244,67,54,0.95);
+      border-color: #f44336;
+      color: white;
+      display: none;
+    }
+    
+    .control-btn.stop-btn.visible { display: block; }
     
     .speed-control {
       position: fixed;
@@ -62,12 +121,16 @@
       flex-wrap: wrap;
     }
     .speed-label { font-weight: 700; color: #da291c; font-size: 11px; }
+    body.help-theme .speed-label { color: #ff9800; }
     .speed-slider {
       flex: 1;
       -webkit-appearance: none;
       height: 6px;
       border-radius: 3px;
       background: linear-gradient(90deg, #da291c, #ffc72c);
+    }
+    body.help-theme .speed-slider {
+      background: linear-gradient(90deg, #ff9800, #ffc107);
     }
     .speed-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -76,10 +139,14 @@
       background: white;
       border: 3px solid #da291c;
     }
+    body.help-theme .speed-slider::-webkit-slider-thumb {
+      border-color: #ff9800;
+    }
     .speed-value {
       font-weight: 700; color: #da291c; font-size: 12px;
       min-width: 45px; text-align: center;
     }
+    body.help-theme .speed-value { color: #ff9800; }
 
     .panel {
       min-height: 100vh;
@@ -88,9 +155,14 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 70px 20px 80px;
+      padding: 100px 20px 80px;
       background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 100%);
       position: relative;
+      transition: background 0.5s ease;
+    }
+    
+    body.help-theme .panel {
+      background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 100%);
     }
     
     .panel-inner {
@@ -104,9 +176,19 @@
       transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
     
+    body.help-theme .panel-inner {
+      box-shadow: 0 8px 32px rgba(255,152,0,0.12);
+      border-color: #ffe0b2;
+    }
+    
     .panel.active-panel .panel-inner {
       border-color: #da291c;
       box-shadow: 0 8px 32px rgba(218,41,28,0.2);
+    }
+    
+    body.help-theme .panel.active-panel .panel-inner {
+      border-color: #ff9800;
+      box-shadow: 0 8px 32px rgba(255,152,0,0.25);
     }
     
     .panel.recording-panel .panel-inner {
@@ -121,10 +203,19 @@
       background: #fffaf8;
       border-bottom: 1px dashed #ffd6b3;
     }
+    
+    body.help-theme .panel-header {
+      background: #fffaf0;
+      border-bottom-color: #ffe0b2;
+    }
+    
     .panel-num {
       font-weight: 700; color: #da291c; font-size: 14px;
       display: flex; align-items: center; gap: 8px;
     }
+    
+    body.help-theme .panel-num { color: #ff9800; }
+    
     .panel-num-badge {
       background: linear-gradient(135deg, #da291c, #ffc72c);
       color: white;
@@ -134,6 +225,10 @@
       align-items: center;
       justify-content: center;
       font-size: 13px;
+    }
+    
+    body.help-theme .panel-num-badge {
+      background: linear-gradient(135deg, #ff9800, #ffc107);
     }
 
     .speak-buttons { display: flex; gap: 8px; align-items: center; }
@@ -157,6 +252,8 @@
     .action-btn:active { opacity: 0.7; }
     
     .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
+    body.help-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
+    
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
     
     .speak-btn.speaking { 
@@ -195,6 +292,12 @@
       border-top: 1px dashed #ffd6b3;
       border-bottom: 1px dashed #ffd6b3;
     }
+    
+    body.help-theme .panel-img-wrap {
+      background: linear-gradient(135deg, #fff8e8, #ffe8c0);
+      border-color: #ffe0b2;
+    }
+    
     .panel-img { 
       width: 100%; 
       display: block;
@@ -248,6 +351,10 @@
       background: #ffc72c;
       color: #da291c;
     }
+    body.help-theme .zh-text.active {
+      background: #ffc107;
+      color: #ff9800;
+    }
     .py-text {
       font-size: 17px;
       color: #888;
@@ -266,6 +373,9 @@
       transition: background-color 0.4s ease, color 0.4s ease;
       background: white;
       text-align: center;
+    }
+    body.help-theme .ru-text {
+      border-left-color: #ffe0b2;
     }
     .ru-text.active {
       background: #4a90e2;
@@ -297,6 +407,11 @@
       border-color: #ffc72c;
       color: #da291c;
     }
+    body.help-theme .next-card-btn:hover {
+      background: #fff8e8;
+      border-color: #ffc107;
+      color: #ff9800;
+    }
     .next-card-btn:active { opacity: 0.5; }
     .next-card-btn.playing {
       opacity: 0.3;
@@ -316,6 +431,10 @@
       margin-top: 12px;
       justify-content: center;
     }
+    body.help-theme .now-playing-bar {
+      color: #ff9800;
+      background: #fff8e8;
+    }
     .now-playing-bar.visible { display: inline-flex; }
     
     .bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; }
@@ -325,6 +444,7 @@
       border-radius: 2px;
       animation: barAnim 1.2s ease-in-out infinite;
     }
+    body.help-theme .bars span { background: #ff9800; }
     .bars span:nth-child(1){height:5px;animation-delay:0s}
     .bars span:nth-child(2){height:10px;animation-delay:.2s}
     .bars span:nth-child(3){height:6px;animation-delay:.4s}
@@ -359,11 +479,16 @@
 <body>
 
 <div class="scene-title">
-  <h1>🍔 在麦当劳 — Диалог в McDonald's</h1>
-  <p>Листайте вниз для перехода между карточками</p>
+  <h1 id="sceneTitle">🍔 在麦当劳 — Диалог в McDonald's</h1>
+  <p id="sceneSubtitle">Листайте вниз для перехода между карточками</p>
 </div>
 
-<div class="manga-container" id="panels-mcdonalds"></div>
+<div class="controls-bar">
+  <button class="control-btn" id="switchBtn" onclick="switchScene()">🤝 Просьба о помощи</button>
+  <button class="control-btn stop-btn" id="stopBtn" onclick="stopPlayback()">⏹ Стоп</button>
+</div>
+
+<div class="manga-container" id="panelsContainer"></div>
 
 <div class="speed-control">
   <div class="speed-label"> Скорость:</div>
@@ -378,25 +503,42 @@
 <script>
 const SCENES = {
   mcdonalds: {
+    title: "🍔 在麦当劳 — Диалог в McDonald's",
+    subtitle: "Листайте вниз для перехода между карточками",
+    switchLabel: "🤝 Просьба о помощи",
     panels: [
       { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Покупатель" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍ Персонал" },
+      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"‍🍳 Персонал" },
       { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:" Покупатель" },
       { img:"IMG_7591", zh:"再来一个冰淇淋！", py:"Zài lái yīgè bīngqílín!", ru:"Ещё одно мороженое!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:" Покупатель" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
+    ]
+  },
+  help: {
+    title: "🤝 帮我个忙 — Просьба о помощи",
+    subtitle: "Диалог на улице Беверли-Хиллз",
+    switchLabel: "🍔 McDonald's",
+    panels: [
+      { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:" Девушка" },
+      { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:" Парень" },
+      { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:"👧 Девушка" },
+      { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Без проблем, не волнуйся!", who:"w", speaker:"👦 Парень" },
+      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:" Девушка" },
+      { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:"👦 Парень" }
     ]
   }
 };
 
+let currentScene = 'mcdonalds';
 let zhVoice = null;
 let ruVoice = null;
 let currentSpeed = 0.55;
@@ -408,19 +550,17 @@ let activeRecordingKey = null;
 let recordingTimeout = null;
 let audioUnlocked = false;
 let globalAudio = null;
+let isPlaying = false;
 
-// Автоматическая активация звука при первом взаимодействии
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
   
-  // Разблокируем аудио
   const audio = new Audio();
   audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
   audio.play().then(() => {
     audio.pause();
     audioUnlocked = true;
     
-    // Инициализируем speechSynthesis
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance('');
@@ -432,7 +572,6 @@ function unlockAudioOnInteraction() {
   });
 }
 
-// Добавляем обработчик на первое взаимодействие
 document.addEventListener('touchstart', unlockAudioOnInteraction, { once: true });
 document.addEventListener('click', unlockAudioOnInteraction, { once: true });
 
@@ -452,7 +591,7 @@ function wakeUpSpeechSynthesis() {
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('McDonaldsAudio_v18', 1);
+    const request = indexedDB.open('ChineseLearningAudio_v1', 1);
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
@@ -519,10 +658,22 @@ function resetAllRecordButtons() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
-async function renderScene(key) {
-  const data = SCENES[key];
-  const container = document.getElementById(`panels-${key}`);
+async function renderScene(sceneKey) {
+  const data = SCENES[sceneKey];
+  const container = document.getElementById('panelsContainer');
   let html = "";
+
+  // Обновляем заголовок
+  document.getElementById('sceneTitle').textContent = data.title;
+  document.getElementById('sceneSubtitle').textContent = data.subtitle;
+  document.getElementById('switchBtn').textContent = data.switchLabel;
+  
+  // Обновляем тему
+  if (sceneKey === 'help') {
+    document.body.classList.add('help-theme');
+  } else {
+    document.body.classList.remove('help-theme');
+  }
 
   data.panels.forEach((p, i) => {
     const bubbleClass = p.who === "w" ? "waiter" : "sailor";
@@ -531,7 +682,7 @@ async function renderScene(key) {
     const isLast = i === data.panels.length - 1;
 
     html += `
-    <div class="panel" id="${key}-p${i}">
+    <div class="panel" id="${sceneKey}-p${i}">
       <div class="panel-inner">
         <div class="panel-header">
           <div class="panel-num">
@@ -539,30 +690,30 @@ async function renderScene(key) {
             ${p.speaker}
           </div>
           <div class="speak-buttons">
-            <button class="action-btn replay-btn" id="${key}-replay-${i}" onclick="playCard('${key}',${i})" title="Повторить">🔊</button>
-            <button class="action-btn speak-btn speak-btn-zh" id="${key}-btn-zh-${i}" onclick="handleSpeak('${key}',${i},'zh')" title="Только китайский">🇨🇳</button>
-            <button class="action-btn speak-btn speak-btn-ru" id="${key}-btn-ru-${i}" onclick="handleSpeak('${key}',${i},'ru')" title="Только русский">🇷🇺</button>
-            <button class="action-btn record-btn" id="${key}-rec-ru-${i}" onclick="toggleRecording('${key}',${i},'ru')" title="Записать русский">
-              🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${key}',${i},'ru')">✕</span>
+            <button class="action-btn replay-btn" id="${sceneKey}-replay-${i}" onclick="playCard('${sceneKey}',${i})" title="Повторить">🔊</button>
+            <button class="action-btn speak-btn speak-btn-zh" id="${sceneKey}-btn-zh-${i}" onclick="handleSpeak('${sceneKey}',${i},'zh')" title="Только китайский">🇨🇳</button>
+            <button class="action-btn speak-btn speak-btn-ru" id="${sceneKey}-btn-ru-${i}" onclick="handleSpeak('${sceneKey}',${i},'ru')" title="Только русский">🇷🇺</button>
+            <button class="action-btn record-btn" id="${sceneKey}-rec-ru-${i}" onclick="toggleRecording('${sceneKey}',${i},'ru')" title="Записать русский">
+              🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${sceneKey}',${i},'ru')">✕</span>
             </button>
           </div>
         </div>
-        <div class="panel-img-wrap" id="${key}-wrap${i}">
+        <div class="panel-img-wrap" id="${sceneKey}-wrap${i}">
           <img class="panel-img" src="${imgSrc}" alt="Panel ${i+1}" onerror="this.parentElement.classList.add('has-error')" />
           <div class="img-error-msg"><div class="big">🖼️</div><div><b>${p.img}.png</b> не найден</div></div>
         </div>
         <div class="dialogue">
-          <div class="bubble ${bubbleClass}" id="${key}-bub${i}">
+          <div class="bubble ${bubbleClass}" id="${sceneKey}-bub${i}">
             <div class="speaker-tag ${speakerClass}">${p.speaker}</div>
-            <div class="zh-text" id="${key}-zh-${i}">${p.zh}</div>
+            <div class="zh-text" id="${sceneKey}-zh-${i}">${p.zh}</div>
             <div class="py-text">${p.py}</div>
-            <div class="ru-text" id="${key}-ru-${i}">${p.ru}</div>
+            <div class="ru-text" id="${sceneKey}-ru-${i}">${p.ru}</div>
           </div>
-          <div class="now-playing-bar" id="${key}-np${i}">
+          <div class="now-playing-bar" id="${sceneKey}-np${i}">
             <div class="bars"><span></span><span></span><span></span><span></span></div>
-            <span id="${key}-np-text${i}">Идёт озвучка...</span>
+            <span id="${sceneKey}-np-text${i}">Идёт озвучка...</span>
           </div>
-          <button class="next-card-btn" id="${key}-next-${i}" onclick="playAndNext('${key}',${i})">
+          <button class="next-card-btn" id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">
             ${isLast ? '↻ в начало' : '→ далее'}
           </button>
         </div>
@@ -570,27 +721,53 @@ async function renderScene(key) {
     </div>`;
   });
   container.innerHTML = html;
-  await checkRecordings(key);
+  container.scrollTop = 0;
+  await checkRecordings(sceneKey);
 }
 
-async function checkRecordings(key) {
-  const data = SCENES[key];
+async function checkRecordings(sceneKey) {
+  const data = SCENES[sceneKey];
   for (let i = 0; i < data.panels.length; i++) {
     try {
-      const blob = await getFromDB(`${key}_ru_${i}`);
+      const blob = await getFromDB(`${sceneKey}_ru_${i}`);
       if (blob) {
-        const recBtn = document.getElementById(`${key}-rec-ru-${i}`);
+        const recBtn = document.getElementById(`${sceneKey}-rec-ru-${i}`);
         if (recBtn) recBtn.classList.add('has-recording');
       }
     } catch(e) {}
   }
 }
 
-async function toggleRecording(key, idx, lang) {
-  const recBtn = document.getElementById(`${key}-rec-${lang}-${idx}`);
-  const panelEl = document.getElementById(`${key}-p${idx}`);
+function switchScene() {
+  stopPlayback();
+  currentScene = currentScene === 'mcdonalds' ? 'help' : 'mcdonalds';
+  renderScene(currentScene);
+  showToast(currentScene === 'mcdonalds' ? '🍔 McDonald\'s' : '🤝 Просьба о помощи');
+}
+
+function stopPlayback() {
+  isPlaying = false;
+  speechSynthesis.cancel();
+  if (globalAudio) {
+    globalAudio.pause();
+    globalAudio.currentTime = 0;
+  }
   
-  if (activeRecordingKey && activeRecordingKey.key === key && activeRecordingKey.idx === idx) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+  document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
+  document.querySelectorAll('.replay-btn').forEach(b => b.classList.remove('playing'));
+  document.querySelectorAll('.next-card-btn').forEach(b => b.classList.remove('playing'));
+  document.querySelectorAll('.now-playing-bar').forEach(n => n.classList.remove('visible'));
+  document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById('stopBtn').classList.remove('visible');
+}
+
+async function toggleRecording(sceneKey, idx, lang) {
+  const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
+  const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
+  
+  if (activeRecordingKey && activeRecordingKey.key === sceneKey && activeRecordingKey.idx === idx) {
     stopCurrentRecording();
     return;
   }
@@ -621,15 +798,15 @@ async function toggleRecording(key, idx, lang) {
     
     const recorder = new MediaRecorder(stream, { mimeType });
     activeRecorder = recorder;
-    activeRecordingKey = { key, idx, lang };
+    activeRecordingKey = { key: sceneKey, idx, lang };
     const chunks = [];
     
     recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: mimeType });
       try {
-        await saveToDB(`${key}_${lang}_${idx}`, blob);
-        document.getElementById(`${key}-rec-${lang}-${idx}`).classList.add('has-recording');
+        await saveToDB(`${sceneKey}_${lang}_${idx}`, blob);
+        document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.add('has-recording');
         showToast('✅ Сохранено!');
       } catch(e) { showToast('❌ Ошибка'); }
       if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
@@ -642,7 +819,7 @@ async function toggleRecording(key, idx, lang) {
     if (panelEl) panelEl.classList.add('recording-panel');
     
     recorder.start();
-    showToast(' Запись...');
+    showToast('🔴 Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
   } catch (err) { 
     console.error(err);
@@ -665,18 +842,20 @@ function cleanupRecording() {
   resetAllRecordButtons();
 }
 
-async function handleDelete(key, idx, lang) {
+async function handleDelete(sceneKey, idx, lang) {
   try {
-    await deleteFromDB(`${key}_${lang}_${idx}`);
-    document.getElementById(`${key}-rec-${lang}-${idx}`).classList.remove('has-recording');
+    await deleteFromDB(`${sceneKey}_${lang}_${idx}`);
+    document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.remove('has-recording');
     showToast('🗑️ Удалено');
   } catch(e) {}
 }
 
-function playTTSRobust(key, idx, lang) {
+function playTTSRobust(sceneKey, idx, lang) {
   return new Promise(async (resolve) => {
-    highlightText(key, idx, lang);
-    const p = SCENES[key].panels[idx];
+    if (!isPlaying) { resolve(); return; }
+    
+    highlightText(sceneKey, idx, lang);
+    const p = SCENES[sceneKey].panels[idx];
     const text = lang === 'zh' ? p.zh : p.ru;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
@@ -686,7 +865,7 @@ function playTTSRobust(key, idx, lang) {
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     
     let finished = false;
-    const finish = () => { if(finished) return; finished=true; clearHighlight(key, idx, lang); resolve(); };
+    const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); resolve(); };
     
     const maxDuration = Math.min((text.length * 400) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.1) + 3000, 20000);
     const safetyTimeout = setTimeout(finish, maxDuration);
@@ -696,19 +875,23 @@ function playTTSRobust(key, idx, lang) {
     await wakeUpSpeechSynthesis();
     
     setTimeout(() => { 
-      if (!finished) {
+      if (!finished && isPlaying) {
         try {
           speechSynthesis.speak(utterance);
         } catch(e) {
           finish();
         }
+      } else if (!isPlaying) {
+        finish();
       }
     }, 100);
   });
 }
 
-function playRecordingRobust(blob, key, idx, lang) {
+function playRecordingRobust(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
+    if (!isPlaying) { resolve(); return; }
+    
     if (!globalAudio) {
       globalAudio = document.getElementById('globalAudio');
     }
@@ -718,13 +901,13 @@ function playRecordingRobust(blob, key, idx, lang) {
     globalAudio.playsInline = true;
     globalAudio.webkitPlaysInline = true;
     
-    highlightText(key, idx, lang);
+    highlightText(sceneKey, idx, lang);
     let finished = false;
     
     const finish = () => { 
       if(finished) return; 
       finished=true; 
-      clearHighlight(key, idx, lang); 
+      clearHighlight(sceneKey, idx, lang); 
       URL.revokeObjectURL(audioUrl);
       resolve(); 
     };
@@ -741,14 +924,14 @@ function playRecordingRobust(blob, key, idx, lang) {
   });
 }
 
-function highlightText(key, idx, lang) {
-  const el = document.getElementById(`${key}-${lang}-${idx}`);
-  const panel = document.getElementById(`${key}-p${idx}`);
-  const btn = document.getElementById(`${key}-btn-${lang}-${idx}`);
-  const np = document.getElementById(`${key}-np${idx}`);
-  const npT = document.getElementById(`${key}-np-text${idx}`);
-  const replayBtn = document.getElementById(`${key}-replay-${idx}`);
-  const nextBtn = document.getElementById(`${key}-next-${idx}`);
+function highlightText(sceneKey, idx, lang) {
+  const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
+  const panel = document.getElementById(`${sceneKey}-p${idx}`);
+  const btn = document.getElementById(`${sceneKey}-btn-${lang}-${idx}`);
+  const np = document.getElementById(`${sceneKey}-np${idx}`);
+  const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
+  const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
+  const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
   
   if(el) el.classList.add('active');
   if(panel) panel.classList.add('active-panel');
@@ -759,13 +942,13 @@ function highlightText(key, idx, lang) {
   if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷 Русский...';
 }
 
-function clearHighlight(key, idx, lang) {
-  const el = document.getElementById(`${key}-${lang}-${idx}`);
-  const panel = document.getElementById(`${key}-p${idx}`);
-  const btn = document.getElementById(`${key}-btn-${lang}-${idx}`);
-  const np = document.getElementById(`${key}-np${idx}`);
-  const replayBtn = document.getElementById(`${key}-replay-${idx}`);
-  const nextBtn = document.getElementById(`${key}-next-${idx}`);
+function clearHighlight(sceneKey, idx, lang) {
+  const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
+  const panel = document.getElementById(`${sceneKey}-p${idx}`);
+  const btn = document.getElementById(`${sceneKey}-btn-${lang}-${idx}`);
+  const np = document.getElementById(`${sceneKey}-np${idx}`);
+  const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
+  const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
   
   if(el) el.classList.remove('active');
   if(panel) panel.classList.remove('active-panel');
@@ -775,43 +958,62 @@ function clearHighlight(key, idx, lang) {
   if(np) np.classList.remove('visible');
 }
 
-async function handleSpeak(key, idx, lang) {
+async function handleSpeak(sceneKey, idx, lang) {
+  isPlaying = true;
+  document.getElementById('stopBtn').classList.add('visible');
+  
   await wakeUpSpeechSynthesis();
-  if (lang === 'zh') await playTTSRobust(key, idx, 'zh');
+  if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
   else {
     try {
-      const blob = await getFromDB(`${key}_ru_${idx}`);
-      if (blob) await playRecordingRobust(blob, key, idx, 'ru');
-      else await playTTSRobust(key, idx, 'ru');
-    } catch(e) { await playTTSRobust(key, idx, 'ru'); }
+      const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
+      if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
+      else await playTTSRobust(sceneKey, idx, 'ru');
+    } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
   }
+  
+  isPlaying = false;
+  document.getElementById('stopBtn').classList.remove('visible');
 }
 
-async function playCard(key, idx) {
-  const btn = document.getElementById(`${key}-replay-${idx}`);
+async function playCard(sceneKey, idx) {
+  isPlaying = true;
+  document.getElementById('stopBtn').classList.add('visible');
+  
+  const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
   
   await wakeUpSpeechSynthesis();
-  await playTTSRobust(key, idx, 'zh');
+  await playTTSRobust(sceneKey, idx, 'zh');
+  if (!isPlaying) return;
   await sleep(500);
+  if (!isPlaying) return;
   await wakeUpSpeechSynthesis();
   
   try {
-    const blob = await getFromDB(`${key}_ru_${idx}`);
+    const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
     if (blob) {
-      await playRecordingRobust(blob, key, idx, 'ru');
+      await playRecordingRobust(blob, sceneKey, idx, 'ru');
+      if (!isPlaying) return;
       await wakeUpSpeechSynthesis();
     } else {
-      await playTTSRobust(key, idx, 'ru');
+      await playTTSRobust(sceneKey, idx, 'ru');
     }
-  } catch(e) { await playTTSRobust(key, idx, 'ru'); }
+  } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
   
   if (btn) btn.classList.remove('playing');
+  isPlaying = false;
+  document.getElementById('stopBtn').classList.remove('visible');
 }
 
-async function playAndNext(key, idx) {
-  const panels = SCENES[key].panels;
-  await playCard(key, idx);
+async function playAndNext(sceneKey, idx) {
+  isPlaying = true;
+  document.getElementById('stopBtn').classList.add('visible');
+  
+  const panels = SCENES[sceneKey].panels;
+  await playCard(sceneKey, idx);
+  
+  if (!isPlaying) return;
   
   let nextIdx = idx + 1;
   if (nextIdx >= panels.length) {
@@ -819,12 +1021,15 @@ async function playAndNext(key, idx) {
     showToast('🔄 Начинаем сначала');
   }
   
-  const nextPanel = document.getElementById(`${key}-p${nextIdx}`);
+  const nextPanel = document.getElementById(`${sceneKey}-p${nextIdx}`);
   if (nextPanel) {
     setTimeout(() => {
       nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
   }
+  
+  isPlaying = false;
+  document.getElementById('stopBtn').classList.remove('visible');
 }
 
 function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
@@ -832,7 +1037,7 @@ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 window.addEventListener('load', async () => {
   globalAudio = document.getElementById('globalAudio');
   await initDB();
-  renderScene('mcdonalds');
+  renderScene(currentScene);
   
   if (!('speechSynthesis' in window)) {
     showToast('⚠️ Используйте Chrome/Safari');
@@ -841,8 +1046,7 @@ window.addEventListener('load', async () => {
 
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
-    speechSynthesis.cancel();
-    if (globalAudio) globalAudio.pause();
+    stopPlayback();
   }
 });
 </script>
