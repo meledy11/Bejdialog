@@ -21,6 +21,7 @@
     body.job-theme { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 50%, #ffe999 100%); }
     body.wallet-theme { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 50%, #b3ffb3 100%); }
     body.birthday-theme { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 50%, #ffb3dd 100%); }
+    body.battery-theme { background: linear-gradient(180deg, #fff8e0 0%, #ffe8a0 50%, #ffd660 100%); }
 
     .manga-container {
       max-width: 100%;
@@ -44,6 +45,7 @@
     body.job-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
     body.wallet-theme .scene-title { background: linear-gradient(135deg, #4caf50, #8bc34a, #cddc39); }
     body.birthday-theme .scene-title { background: linear-gradient(135deg, #e91e63, #f06292, #f8bbd0); }
+    body.battery-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
     .scene-title h1 { font-size: 16px; margin-bottom: 2px; }
     .scene-title p { font-size: 11px; opacity: 0.9; }
 
@@ -70,6 +72,7 @@
     body.job-theme .control-btn { border-color: #ff9800; color: #ff9800; }
     body.wallet-theme .control-btn { border-color: #4caf50; color: #4caf50; }
     body.birthday-theme .control-btn { border-color: #e91e63; color: #e91e63; }
+    body.battery-theme .control-btn { border-color: #ff9800; color: #ff9800; }
     .control-btn:active { transform: scale(0.95); opacity: 0.8; }
     .control-btn.stop-btn {
       background: rgba(244,67,54,0.95);
@@ -92,6 +95,7 @@
     body.job-theme .speed-label { color: #ff9800; }
     body.wallet-theme .speed-label { color: #4caf50; }
     body.birthday-theme .speed-label { color: #e91e63; }
+    body.battery-theme .speed-label { color: #ff9800; }
     .speed-slider {
       flex: 1; -webkit-appearance: none;
       height: 6px; border-radius: 3px;
@@ -103,6 +107,7 @@
     body.job-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
     body.wallet-theme .speed-slider { background: linear-gradient(90deg, #4caf50, #8bc34a); }
     body.birthday-theme .speed-slider { background: linear-gradient(90deg, #e91e63, #f06292); }
+    body.battery-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
     .speed-slider::-webkit-slider-thumb {
       -webkit-appearance: none; width: 20px; height: 20px;
       border-radius: 50%; background: white;
@@ -114,6 +119,7 @@
     body.job-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
     body.wallet-theme .speed-slider::-webkit-slider-thumb { border-color: #4caf50; }
     body.birthday-theme .speed-slider::-webkit-slider-thumb { border-color: #e91e63; }
+    body.battery-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
     .speed-value { font-weight: 700; color: #da291c; font-size: 12px; min-width: 45px; text-align: center; }
     body.help-theme .speed-value { color: #ff9800; }
     body.late-theme .speed-value { color: #9c27b0; }
@@ -121,6 +127,7 @@
     body.job-theme .speed-value { color: #ff9800; }
     body.wallet-theme .speed-value { color: #4caf50; }
     body.birthday-theme .speed-value { color: #e91e63; }
+    body.battery-theme .speed-value { color: #ff9800; }
 
     .panel {
       min-height: 100vh; min-height: -webkit-fill-available;
@@ -136,6 +143,7 @@
     body.job-theme .panel { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 100%); }
     body.wallet-theme .panel { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 100%); }
     body.birthday-theme .panel { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 100%); }
+    body.battery-theme .panel { background: linear-gradient(180deg, #fff8e0 0%, #ffe8a0 100%); }
 
     .panel-inner {
       background: white; border-radius: 20px;
@@ -150,6 +158,7 @@
     body.job-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
     body.wallet-theme .panel-inner { box-shadow: 0 8px 32px rgba(76,175,80,0.12); border-color: #c8e6c9; }
     body.birthday-theme .panel-inner { box-shadow: 0 8px 32px rgba(233,30,99,0.12); border-color: #f8bbd0; }
+    body.battery-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
 
     .panel.active-panel .panel-inner { border-color: #da291c; box-shadow: 0 8px 32px rgba(218,41,28,0.2); }
     body.help-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
@@ -158,6 +167,7 @@
     body.job-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
     body.wallet-theme .panel.active-panel .panel-inner { border-color: #4caf50; box-shadow: 0 8px 32px rgba(76,175,80,0.25); }
     body.birthday-theme .panel.active-panel .panel-inner { border-color: #e91e63; box-shadow: 0 8px 32px rgba(233,30,99,0.25); }
+    body.battery-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
 
     .panel-header {
       display: flex; justify-content: space-between; align-items: center;
@@ -170,6 +180,7 @@
     body.job-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
     body.wallet-theme .panel-header { background: #f0fff0; border-bottom-color: #c8e6c9; }
     body.birthday-theme .panel-header { background: #fff0f8; border-bottom-color: #f8bbd0; }
+    body.battery-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
 
     .panel-num { font-weight: 700; color: #da291c; font-size: 14px; display: flex; align-items: center; gap: 8px; }
     body.help-theme .panel-num { color: #ff9800; }
@@ -178,6 +189,7 @@
     body.job-theme .panel-num { color: #ff9800; }
     body.wallet-theme .panel-num { color: #4caf50; }
     body.birthday-theme .panel-num { color: #e91e63; }
+    body.battery-theme .panel-num { color: #ff9800; }
 
     .panel-num-badge {
       background: linear-gradient(135deg, #da291c, #ffc72c);
@@ -191,6 +203,7 @@
     body.job-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
     body.wallet-theme .panel-num-badge { background: linear-gradient(135deg, #4caf50, #8bc34a); }
     body.birthday-theme .panel-num-badge { background: linear-gradient(135deg, #e91e63, #f06292); }
+    body.battery-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
 
     .speak-buttons { display: flex; gap: 8px; align-items: center; }
     .action-btn {
@@ -208,6 +221,7 @@
     body.job-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
     body.wallet-theme .speak-btn-zh { background: linear-gradient(135deg, #4caf50, #8bc34a); }
     body.birthday-theme .speak-btn-zh { background: linear-gradient(135deg, #e91e63, #f06292); }
+    body.battery-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
     .speak-btn.speaking { opacity: 0.8; }
     .record-btn { background: linear-gradient(135deg, #ff9800, #f57c00); }
@@ -237,6 +251,7 @@
     body.job-theme .panel-img-wrap { background: linear-gradient(135deg, #fffbe8, #fff5c0); border-color: #ffe0b2; }
     body.wallet-theme .panel-img-wrap { background: linear-gradient(135deg, #e8ffe8, #d6ffd6); border-color: #c8e6c9; }
     body.birthday-theme .panel-img-wrap { background: linear-gradient(135deg, #ffe8f5, #ffd6ee); border-color: #f8bbd0; }
+    body.battery-theme .panel-img-wrap { background: linear-gradient(135deg, #fff8e0, #ffe8a0); border-color: #ffe0b2; }
     .panel-img { width: 100%; display: block; max-height: 45vh; object-fit: contain; }
     .img-error-msg {
       position: absolute; inset: 0; display: none;
@@ -270,6 +285,7 @@
     body.job-theme .zh-text.active { background: #ffc107; color: #ff9800; }
     body.wallet-theme .zh-text.active { background: #a5d6a7; color: #2e7d32; }
     body.birthday-theme .zh-text.active { background: #f48fb1; color: #c2185b; }
+    body.battery-theme .zh-text.active { background: #ffc107; color: #ff9800; }
     .py-text { font-size: 17px; color: #888; font-style: italic; margin-bottom: 12px; font-weight: 600; text-align: center; }
     .ru-text {
       font-size: 18px; color: #555; line-height: 1.5;
@@ -283,6 +299,7 @@
     body.job-theme .ru-text { border-left-color: #ffe0b2; }
     body.wallet-theme .ru-text { border-left-color: #c8e6c9; }
     body.birthday-theme .ru-text { border-left-color: #f8bbd0; }
+    body.battery-theme .ru-text { border-left-color: #ffe0b2; }
     .ru-text.active { background: #4a90e2; color: white; border-left-color: #2c5aa0; }
 
     .next-card-btn {
@@ -300,6 +317,7 @@
     body.job-theme .next-card-btn:hover { background: #fffbe8; border-color: #ffc107; color: #ff9800; }
     body.wallet-theme .next-card-btn:hover { background: #e8ffe8; border-color: #a5d6a7; color: #2e7d32; }
     body.birthday-theme .next-card-btn:hover { background: #ffe8f5; border-color: #f48fb1; color: #c2185b; }
+    body.battery-theme .next-card-btn:hover { background: #fff8e0; border-color: #ffc107; color: #ff9800; }
     .next-card-btn:active { opacity: 0.5; }
     .next-card-btn.playing { opacity: 0.3; pointer-events: none; }
 
@@ -315,6 +333,7 @@
     body.job-theme .now-playing-bar { color: #ff9800; background: #fffbe8; }
     body.wallet-theme .now-playing-bar { color: #2e7d32; background: #e8ffe8; }
     body.birthday-theme .now-playing-bar { color: #c2185b; background: #ffe8f5; }
+    body.battery-theme .now-playing-bar { color: #ff9800; background: #fff8e0; }
     .now-playing-bar.visible { display: inline-flex; }
     .bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; }
     .bars span { width: 4px; background: #da291c; border-radius: 2px; animation: barAnim 1.2s ease-in-out infinite; }
@@ -324,6 +343,7 @@
     body.job-theme .bars span { background: #ff9800; }
     body.wallet-theme .bars span { background: #4caf50; }
     body.birthday-theme .bars span { background: #e91e63; }
+    body.battery-theme .bars span { background: #ff9800; }
     .bars span:nth-child(1){height:5px;animation-delay:0s}
     .bars span:nth-child(2){height:10px;animation-delay:.2s}
     .bars span:nth-child(3){height:6px;animation-delay:.4s}
@@ -375,14 +395,14 @@ const SCENES = {
     subtitle: "Листайте вниз для перехода между карточками",
     switchLabel: "🤝 Просьба о помощи",
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"N hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"‍🍳 Персонал" },
       { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěy, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍ Персонал" },
+      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěy, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑🍳 Персонал" },
       { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
@@ -410,10 +430,10 @@ const SCENES = {
     switchLabel: "📱 Что делать?",
     panels: [
       { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuqǐ, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Девушка" },
-      { img:"late_02", zh:"没关系，我也刚到。", py:"Méiguānxi, wǒ yě gāng dào.", ru:"Ничего, я тоже только пришёл.", who:"w", speaker:"👦 Парень" },
+      { img:"late_02", zh:"没关系，我也刚到。", py:"Méiguānxi, wǒ yě gāng dào.", ru:"Ничего, я тоже только пришёл.", who:"w", speaker:" Парень" },
       { img:"late_03", zh:"久等了，不好意思。", py:"Jiǔ děng le, bù hǎoyìsi.", ru:"Заставила ждать, извини.", who:"s", speaker:"👧 Девушка" },
-      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:" Парень" },
-      { img:"late_05", zh:"不赶，我们慢慢聊。", py:"Bù gǎn, wmen mànmàn liáo.", ru:"Не спешу, поболтаем не торопясь.", who:"s", speaker:"👧 Девушка" }
+      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:"👦 Парень" },
+      { img:"late_05", zh:"不赶，我们慢慢聊。", py:"Bù gǎn, wǒmen mànmàn liáo.", ru:"Не спешу, поболтаем не торопясь.", who:"s", speaker:"👧 Девушка" }
     ]
   },
   phone: {
@@ -421,35 +441,35 @@ const SCENES = {
     subtitle: "Диалог в кафе о сломанном телефоне",
     switchLabel: "💼 Новая работа",
     panels: [
-      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shǒujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Девушка" },
+      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"W de shǒujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:" Девушка" },
       { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
       { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Девушка" },
-      { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yǒu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:"👦 Друг" },
-      { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:" Девушка" }
+      { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèl bù yuǎn yǒu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng ho.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:" Друг" },
+      { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:"👧 Девушка" }
     ]
   },
   job: {
-    title: " 我找到新工作了！ — Новая работа!",
+    title: "💼 我找到新工作了！ — Новая работа!",
     subtitle: "Диалог с подругой на улице",
     switchLabel: "👛 Потерянный кошелёк",
     panels: [
       { img:"job_01", zh:"我找到新工作了！", py:"Wǒ zhǎodào xīn gōngzuò le!", ru:"Я нашла новую работу!", who:"s", speaker:"👧 Девушка" },
-      { img:"job_02", zh:"真的吗？太棒了！", py:"Zhēn de ma? Tài bàng le!", ru:"Правда? Потрясающе!", who:"w", speaker:"👱‍♀️ Подруга" },
-      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:"👧 Девушка" },
-      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱♀️ Подруга" },
-      { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wǒmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:" Девушка" },
+      { img:"job_02", zh:"真的吗？太棒了！", py:"Zhēn de ma? Tài bàng le!", ru:"Правда? Потрясающе!", who:"w", speaker:"👱♀️ Подруга" },
+      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:" Девушка" },
+      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱‍♀️ Подруга" },
+      { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:"👧 Девушка" },
       { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Подруга" }
     ]
   },
   wallet: {
     title: "👛 我的钱包不见了！ — Потерянный кошелёк",
     subtitle: "Диалог на улице и в кафе",
-    switchLabel: " День рождения",
+    switchLabel: "🎂 День рождения",
     panels: [
       { img:"wallet_01", zh:"我的钱包不见了！", py:"Wǒ de qiánbāo bù jiàn le!", ru:"Мой кошелёк пропал!", who:"s", speaker:"👧 Девушка" },
-      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zhǎo.", ru:"Не паникуй, вместе найдём.", who:"w", speaker:"‍♀️ Подруга" },
+      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wmen yīqǐ zhǎo.", ru:"Не паникуй, вместе найдём.", who:"w", speaker:"👱‍♀️ Подруга" },
       { img:"wallet_03", zh:"我刚才还在咖啡馆的。", py:"Wǒ gāngcái hái zài kāfēiguǎn de.", ru:"Он только что был в кафе.", who:"s", speaker:"👧 Девушка" },
-      { img:"wallet_04", zh:"我们回去看看吧！", py:"Wmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Подруга" },
+      { img:"wallet_04", zh:"我们回去看看吧！", py:"Wǒmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Подруга" },
       { img:"wallet_05", zh:"找到了！在这里！", py:"Zhǎodào le! Zài zhèlǐ!", ru:"Нашла! Вот он!", who:"s", speaker:"👧 Девушка" },
       { img:"wallet_06", zh:"太好了！下次要小心！", py:"Tài hǎo le! Xiàcì yào xiǎoxīn!", ru:"Отлично! В следующий раз будь осторожнее!", who:"w", speaker:"👱‍♀️ Подруга" }
     ]
@@ -457,23 +477,35 @@ const SCENES = {
   birthday: {
     title: "🎂 生日快乐！ — С днём рождения!",
     subtitle: "Праздничный сюрприз для подруги",
+    switchLabel: " Разрядился телефон",
+    panels: [
+      { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù wǒ!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:" Девушка (омбре)" },
+      { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:" Девушка (омбре)" },
+      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"👩‍ Брюнетка-именинница" }
+    ]
+  },
+  battery: {
+    title: "🔋 我的手机没电了 — Разрядился телефон",
+    subtitle: "Диалог на улице о павербанке",
     switchLabel: "🍔 McDonald's",
     panels: [
-      { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:" Девушка (омбре)" },
-      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù wǒ!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"👩‍ Брюнетка-именинница" }
+      { img:"battery_01", zh:"我的手机没电了！", py:"Wǒ de shǒujī méi diàn le!", ru:"У меня телефон разрядился!", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"battery_02", zh:"怎么办？", py:"Zěnme bàn?", ru:"Что делать?", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"battery_03", zh:"你有充电宝吗？", py:"Nǐ yǒu chōngdiànbǎo ma?", ru:"У тебя есть павербанк?", who:"s", speaker:" Девушка (омбре)" },
+      { img:"battery_04", zh:"有！给你。", py:"Yǒu! Gěi nǐ.", ru:"Есть! Держи.", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"battery_05", zh:"太好了，谢谢！", py:"Tài hǎo le, xièxie!", ru:"Отлично, спасибо!", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"battery_06", zh:"不用客气！", py:"Búyòng kèqi!", ru:"Не за что!", who:"w", speaker:"👱‍♀️ Блондинка" }
     ]
   }
 };
 
-const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday'];
-const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme' };
-const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения' };
+const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday', 'battery'];
+const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme', battery: 'battery-theme' };
+const SCENE_NAMES = { mcdonalds: ' McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения', battery: '🔋 Разрядился телефон' };
 
-// ⏱️ ПАУЗА ДЛЯ ПОВТОРЕНИЯ ФРАЗЫ (в миллисекундах)
 const REPEAT_PAUSE = 2500;
 
 let currentScene = 'mcdonalds';
@@ -558,8 +590,8 @@ async function renderScene(sceneKey) {
           <div class="speak-buttons">
             <button class="action-btn replay-btn" id="${sceneKey}-replay-${i}" onclick="playCard('${sceneKey}',${i})" title="Повторить">🔊</button>
             <button class="action-btn speak-btn speak-btn-zh" id="${sceneKey}-btn-zh-${i}" onclick="handleSpeak('${sceneKey}',${i},'zh')" title="Только китайский">🇨🇳</button>
-            <button class="action-btn speak-btn speak-btn-ru" id="${sceneKey}-btn-ru-${i}" onclick="handleSpeak('${sceneKey}',${i},'ru')" title="Только русский">🇺</button>
-            <button class="action-btn record-btn" id="${sceneKey}-rec-ru-${i}" onclick="toggleRecording('${sceneKey}',${i},'ru')" title="Записать русский">🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${sceneKey}',${i},'ru')">✕</span></button>
+            <button class="action-btn speak-btn speak-btn-ru" id="${sceneKey}-btn-ru-${i}" onclick="handleSpeak('${sceneKey}',${i},'ru')" title="Только русский">🇷</button>
+            <button class="action-btn record-btn" id="${sceneKey}-rec-ru-${i}" onclick="toggleRecording('${sceneKey}',${i},'ru')" title="Записать русский"><span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${sceneKey}',${i},'ru')">✕</span></button>
           </div>
         </div>
         <div class="panel-img-wrap" id="${sceneKey}-wrap${i}">
@@ -645,7 +677,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     recBtn.classList.add('recording');
     if (panelEl) panelEl.classList.add('recording-panel');
     recorder.start();
-    showToast('🔴 Запись...');
+    showToast(' Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
   } catch (err) { console.error(err); showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
 }
@@ -706,7 +738,7 @@ function highlightText(sceneKey, idx, lang) {
   if(replayBtn) replayBtn.classList.add('playing');
   if(nextBtn) nextBtn.classList.add('playing');
   if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
+  if(npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇷 Русский...';
 }
 function clearHighlight(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
@@ -723,7 +755,6 @@ function clearHighlight(sceneKey, idx, lang) {
   if(np) np.classList.remove('visible');
 }
 
-// 🎯 Показать паузу для повторения
 function showRepeatPause(sceneKey, idx) {
   const np = document.getElementById(`${sceneKey}-np${idx}`);
   const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
@@ -755,7 +786,6 @@ async function playCardInternal(sceneKey, idx) {
     if (blob) { await playRecordingRobust(blob, sceneKey, idx, 'ru'); if (!isPlaying) return; await wakeUpSpeechSynthesis(); }
     else { await playTTSRobust(sceneKey, idx, 'ru'); }
   } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
-  // ⏱️ ПАУЗА ДЛЯ ПОВТОРЕНИЯ ФРАЗЫ
   if (!isPlaying) return;
   showRepeatPause(sceneKey, idx);
   await sleep(REPEAT_PAUSE);
