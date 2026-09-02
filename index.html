@@ -3,18 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title> Учим китайский</title>
+  <title>🇨🇳 Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
-    html, body {
-      height: 100%;
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-    }
-    
+    html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
     body {
       background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 50%, #ffd6b3 100%);
       font-family: 'Comfortaa', 'Noto Sans SC', sans-serif;
@@ -22,12 +15,13 @@
       -webkit-text-size-adjust: 100%;
       transition: background 0.5s ease;
     }
-    
     body.help-theme { background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 50%, #ffd699 100%); }
     body.late-theme { background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 50%, #ffd6d6 100%); }
     body.phone-theme { background: linear-gradient(180deg, #e8f5ff 0%, #d6eeff 50%, #b3ddff 100%); }
     body.job-theme { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 50%, #ffe999 100%); }
-    
+    body.wallet-theme { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 50%, #b3ffb3 100%); }
+    body.birthday-theme { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 50%, #ffb3dd 100%); }
+
     .manga-container {
       max-width: 100%;
       height: 100vh;
@@ -35,260 +29,198 @@
       overflow-y: auto;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-      position: relative;
     }
-    
     .scene-title {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
       padding: env(safe-area-inset-top, 12px) 18px 12px;
-      text-align: center;
-      color: white;
+      text-align: center; color: white;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       transition: background 0.5s ease;
     }
-    
     body.help-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
-    body.late-theme .scene-title { background: linear-gradient(135deg, #9c27b0, #e91e63, #f48fb1); color: white; }
-    body.phone-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #2196f3, #64b5f6); color: white; }
+    body.late-theme .scene-title { background: linear-gradient(135deg, #9c27b0, #e91e63, #f48fb1); }
+    body.phone-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #2196f3, #64b5f6); }
     body.job-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
-    
+    body.wallet-theme .scene-title { background: linear-gradient(135deg, #4caf50, #8bc34a, #cddc39); }
+    body.birthday-theme .scene-title { background: linear-gradient(135deg, #e91e63, #f06292, #f8bbd0); }
     .scene-title h1 { font-size: 16px; margin-bottom: 2px; }
     .scene-title p { font-size: 11px; opacity: 0.9; }
-    
+
     .controls-bar {
       position: fixed;
       top: calc(env(safe-area-inset-top, 12px) + 50px);
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 8px 18px;
-      pointer-events: none;
+      left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: center; gap: 10px;
+      padding: 8px 18px; pointer-events: none;
     }
-    
     .control-btn {
       pointer-events: auto;
       background: rgba(255,255,255,0.95);
-      border: 2px solid #da291c;
-      color: #da291c;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
+      border: 2px solid #da291c; color: #da291c;
+      padding: 8px 16px; border-radius: 20px;
+      font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
       transition: all 0.2s ease;
       backdrop-filter: blur(10px);
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
     }
-    
     body.help-theme .control-btn { border-color: #ff9800; color: #ff9800; }
     body.late-theme .control-btn { border-color: #9c27b0; color: #9c27b0; }
     body.phone-theme .control-btn { border-color: #00bcd4; color: #00bcd4; }
     body.job-theme .control-btn { border-color: #ff9800; color: #ff9800; }
-    
+    body.wallet-theme .control-btn { border-color: #4caf50; color: #4caf50; }
+    body.birthday-theme .control-btn { border-color: #e91e63; color: #e91e63; }
     .control-btn:active { transform: scale(0.95); opacity: 0.8; }
-    
     .control-btn.stop-btn {
       background: rgba(244,67,54,0.95);
-      border-color: #f44336;
-      color: white;
+      border-color: #f44336; color: white;
       display: none;
     }
     .control-btn.stop-btn.visible { display: block; }
-    
+
     .speed-control {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
       background: rgba(255,255,255,0.98);
       padding: 10px 18px env(safe-area-inset-bottom, 10px);
       box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; gap: 10px;
     }
     .speed-label { font-weight: 700; color: #da291c; font-size: 11px; }
     body.help-theme .speed-label { color: #ff9800; }
     body.late-theme .speed-label { color: #9c27b0; }
     body.phone-theme .speed-label { color: #00bcd4; }
     body.job-theme .speed-label { color: #ff9800; }
-    
+    body.wallet-theme .speed-label { color: #4caf50; }
+    body.birthday-theme .speed-label { color: #e91e63; }
     .speed-slider {
-      flex: 1;
-      -webkit-appearance: none;
-      height: 6px;
-      border-radius: 3px;
+      flex: 1; -webkit-appearance: none;
+      height: 6px; border-radius: 3px;
       background: linear-gradient(90deg, #da291c, #ffc72c);
     }
     body.help-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
     body.late-theme .speed-slider { background: linear-gradient(90deg, #9c27b0, #e91e63); }
     body.phone-theme .speed-slider { background: linear-gradient(90deg, #00bcd4, #2196f3); }
     body.job-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
-    
+    body.wallet-theme .speed-slider { background: linear-gradient(90deg, #4caf50, #8bc34a); }
+    body.birthday-theme .speed-slider { background: linear-gradient(90deg, #e91e63, #f06292); }
     .speed-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      background: white;
+      -webkit-appearance: none; width: 20px; height: 20px;
+      border-radius: 50%; background: white;
       border: 3px solid #da291c;
     }
     body.help-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
     body.late-theme .speed-slider::-webkit-slider-thumb { border-color: #9c27b0; }
     body.phone-theme .speed-slider::-webkit-slider-thumb { border-color: #00bcd4; }
     body.job-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
-    
-    .speed-value {
-      font-weight: 700; color: #da291c; font-size: 12px;
-      min-width: 45px; text-align: center;
-    }
+    body.wallet-theme .speed-slider::-webkit-slider-thumb { border-color: #4caf50; }
+    body.birthday-theme .speed-slider::-webkit-slider-thumb { border-color: #e91e63; }
+    .speed-value { font-weight: 700; color: #da291c; font-size: 12px; min-width: 45px; text-align: center; }
     body.help-theme .speed-value { color: #ff9800; }
     body.late-theme .speed-value { color: #9c27b0; }
     body.phone-theme .speed-value { color: #00bcd4; }
     body.job-theme .speed-value { color: #ff9800; }
+    body.wallet-theme .speed-value { color: #4caf50; }
+    body.birthday-theme .speed-value { color: #e91e63; }
 
     .panel {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      min-height: 100vh; min-height: -webkit-fill-available;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
       padding: 100px 20px 80px;
       background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 100%);
-      position: relative;
-      transition: background 0.5s ease;
+      position: relative; transition: background 0.5s ease;
     }
-    
     body.help-theme .panel { background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 100%); }
     body.late-theme .panel { background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 100%); }
     body.phone-theme .panel { background: linear-gradient(180deg, #e8f5ff 0%, #d6eeff 100%); }
     body.job-theme .panel { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 100%); }
-    
+    body.wallet-theme .panel { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 100%); }
+    body.birthday-theme .panel { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 100%); }
+
     .panel-inner {
-      background: white;
-      border-radius: 20px;
+      background: white; border-radius: 20px;
       box-shadow: 0 8px 32px rgba(218,41,28,0.12);
       border: 2px solid #ffd6b3;
-      max-width: 600px;
-      width: 100%;
-      overflow: hidden;
+      max-width: 600px; width: 100%; overflow: hidden;
       transition: border-color 0.4s ease, box-shadow 0.4s ease;
     }
-    
     body.help-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
     body.late-theme .panel-inner { box-shadow: 0 8px 32px rgba(156,39,176,0.12); border-color: #f8bbd9; }
     body.phone-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,188,212,0.12); border-color: #b3e5fc; }
     body.job-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
-    
-    .panel.active-panel .panel-inner {
-      border-color: #da291c;
-      box-shadow: 0 8px 32px rgba(218,41,28,0.2);
-    }
+    body.wallet-theme .panel-inner { box-shadow: 0 8px 32px rgba(76,175,80,0.12); border-color: #c8e6c9; }
+    body.birthday-theme .panel-inner { box-shadow: 0 8px 32px rgba(233,30,99,0.12); border-color: #f8bbd0; }
+
+    .panel.active-panel .panel-inner { border-color: #da291c; box-shadow: 0 8px 32px rgba(218,41,28,0.2); }
     body.help-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
     body.late-theme .panel.active-panel .panel-inner { border-color: #9c27b0; box-shadow: 0 8px 32px rgba(156,39,176,0.25); }
     body.phone-theme .panel.active-panel .panel-inner { border-color: #00bcd4; box-shadow: 0 8px 32px rgba(0,188,212,0.25); }
     body.job-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
-    
-    .panel.recording-panel .panel-inner { border-color: #f44336; }
+    body.wallet-theme .panel.active-panel .panel-inner { border-color: #4caf50; box-shadow: 0 8px 32px rgba(76,175,80,0.25); }
+    body.birthday-theme .panel.active-panel .panel-inner { border-color: #e91e63; box-shadow: 0 8px 32px rgba(233,30,99,0.25); }
 
     .panel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: #fffaf8;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #fffaf8;
       border-bottom: 1px dashed #ffd6b3;
     }
     body.help-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
     body.late-theme .panel-header { background: #fff5f8; border-bottom-color: #f8bbd9; }
     body.phone-theme .panel-header { background: #f0faff; border-bottom-color: #b3e5fc; }
     body.job-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
-    
-    .panel-num {
-      font-weight: 700; color: #da291c; font-size: 14px;
-      display: flex; align-items: center; gap: 8px;
-    }
+    body.wallet-theme .panel-header { background: #f0fff0; border-bottom-color: #c8e6c9; }
+    body.birthday-theme .panel-header { background: #fff0f8; border-bottom-color: #f8bbd0; }
+
+    .panel-num { font-weight: 700; color: #da291c; font-size: 14px; display: flex; align-items: center; gap: 8px; }
     body.help-theme .panel-num { color: #ff9800; }
     body.late-theme .panel-num { color: #9c27b0; }
     body.phone-theme .panel-num { color: #00bcd4; }
     body.job-theme .panel-num { color: #ff9800; }
-    
+    body.wallet-theme .panel-num { color: #4caf50; }
+    body.birthday-theme .panel-num { color: #e91e63; }
+
     .panel-num-badge {
       background: linear-gradient(135deg, #da291c, #ffc72c);
-      color: white;
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
+      color: white; width: 28px; height: 28px;
+      border-radius: 50%; display: inline-flex;
+      align-items: center; justify-content: center; font-size: 13px;
     }
     body.help-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
     body.late-theme .panel-num-badge { background: linear-gradient(135deg, #9c27b0, #e91e63); }
     body.phone-theme .panel-num-badge { background: linear-gradient(135deg, #00bcd4, #2196f3); }
     body.job-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
+    body.wallet-theme .panel-num-badge { background: linear-gradient(135deg, #4caf50, #8bc34a); }
+    body.birthday-theme .panel-num-badge { background: linear-gradient(135deg, #e91e63, #f06292); }
 
     .speak-buttons { display: flex; gap: 8px; align-items: center; }
-    
     .action-btn {
-      border: none;
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      transition: opacity 0.2s ease;
-      color: white;
-      position: relative;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
+      border: none; width: 38px; height: 38px;
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; transition: opacity 0.2s ease;
+      color: white; position: relative;
     }
     .action-btn:active { opacity: 0.7; }
-    
     .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
     body.help-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
     body.late-theme .speak-btn-zh { background: linear-gradient(135deg, #9c27b0, #e91e63); }
     body.phone-theme .speak-btn-zh { background: linear-gradient(135deg, #00bcd4, #2196f3); }
     body.job-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
-    
+    body.wallet-theme .speak-btn-zh { background: linear-gradient(135deg, #4caf50, #8bc34a); }
+    body.birthday-theme .speak-btn-zh { background: linear-gradient(135deg, #e91e63, #f06292); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
-    .speak-btn.speaking { opacity: 0.8; transition: opacity 0.3s ease; }
-    
+    .speak-btn.speaking { opacity: 0.8; }
     .record-btn { background: linear-gradient(135deg, #ff9800, #f57c00); }
     .record-btn.recording { opacity: 0.8; }
     .record-btn.has-recording { background: linear-gradient(135deg, #4CAF50, #67b26f); }
-    
     .replay-btn { background: #eee; color: #888; border: 1px solid #ddd; }
     .replay-btn.playing { opacity: 0.7; }
-
     .delete-overlay {
-      position: absolute;
-      top: -2px; right: -2px;
-      width: 16px; height: 16px;
-      background: #f44336;
-      border: 2px solid white;
-      border-radius: 50%;
-      font-size: 9px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      color: white;
+      position: absolute; top: -2px; right: -2px;
+      width: 16px; height: 16px; background: #f44336;
+      border: 2px solid white; border-radius: 50%;
+      font-size: 9px; display: none;
+      align-items: center; justify-content: center; color: white;
     }
     .record-btn.has-recording .delete-overlay { display: flex; }
 
@@ -303,169 +235,112 @@
     body.late-theme .panel-img-wrap { background: linear-gradient(135deg, #fff5f5, #ffe8e8); border-color: #f8bbd9; }
     body.phone-theme .panel-img-wrap { background: linear-gradient(135deg, #e8f5ff, #d6eeff); border-color: #b3e5fc; }
     body.job-theme .panel-img-wrap { background: linear-gradient(135deg, #fffbe8, #fff5c0); border-color: #ffe0b2; }
-    
+    body.wallet-theme .panel-img-wrap { background: linear-gradient(135deg, #e8ffe8, #d6ffd6); border-color: #c8e6c9; }
+    body.birthday-theme .panel-img-wrap { background: linear-gradient(135deg, #ffe8f5, #ffd6ee); border-color: #f8bbd0; }
     .panel-img { width: 100%; display: block; max-height: 45vh; object-fit: contain; }
     .img-error-msg {
-      position: absolute;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 8px;
-      color: #cc6644;
-      text-align: center;
-      padding: 20px;
+      position: absolute; inset: 0; display: none;
+      align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      color: #cc6644; text-align: center; padding: 20px;
     }
     .img-error-msg .big { font-size: 50px; }
     .panel-img-wrap.has-error .panel-img { display: none; }
     .panel-img-wrap.has-error .img-error-msg { display: flex; }
 
     .dialogue { padding: 20px 18px; }
-    .bubble {
-      padding: 18px;
-      border-radius: 16px;
-      margin-bottom: 16px;
-      border: 2px solid transparent;
-    }
+    .bubble { padding: 18px; border-radius: 16px; margin-bottom: 16px; border: 2px solid transparent; }
     .bubble.waiter { background: linear-gradient(135deg, #f0f8ff, #fff); border-color: #99ccff; }
     .bubble.sailor { background: linear-gradient(135deg, #fff5f8, #fff); border-color: #ffb3cc; }
     .speaker-tag { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
     .speaker-tag.w { color: #4488cc; }
     .speaker-tag.s { color: #cc4488; }
-    
     .zh-text {
-      font-family: 'Noto Sans SC', sans-serif; 
-      font-size: 32px;
-      font-weight: 700;
-      color: #2a2a2a; 
-      margin-bottom: 10px;
-      line-height: 1.5;
-      letter-spacing: 2px;
-      padding: 10px 14px;
-      border-radius: 12px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 32px; font-weight: 700; color: #2a2a2a;
+      margin-bottom: 10px; line-height: 1.5; letter-spacing: 2px;
+      padding: 10px 14px; border-radius: 12px;
       transition: background-color 0.4s ease, color 0.4s ease;
-      background: white;
-      text-align: center;
+      background: white; text-align: center;
     }
     .zh-text.active { background: #ffc72c; color: #da291c; }
     body.help-theme .zh-text.active { background: #ffc107; color: #ff9800; }
     body.late-theme .zh-text.active { background: #f48fb1; color: #9c27b0; }
     body.phone-theme .zh-text.active { background: #81d4fa; color: #00838f; }
     body.job-theme .zh-text.active { background: #ffc107; color: #ff9800; }
-    
-    .py-text {
-      font-size: 17px;
-      color: #888;
-      font-style: italic;
-      margin-bottom: 12px;
-      font-weight: 600;
-      text-align: center;
-    }
+    body.wallet-theme .zh-text.active { background: #a5d6a7; color: #2e7d32; }
+    body.birthday-theme .zh-text.active { background: #f48fb1; color: #c2185b; }
+    .py-text { font-size: 17px; color: #888; font-style: italic; margin-bottom: 12px; font-weight: 600; text-align: center; }
     .ru-text {
-      font-size: 18px;
-      color: #555;
-      line-height: 1.5;
-      padding: 10px 14px;
-      border-left: 4px solid #ffd6b3;
-      border-radius: 12px;
-      transition: background-color 0.4s ease, color 0.4s ease;
-      background: white;
-      text-align: center;
+      font-size: 18px; color: #555; line-height: 1.5;
+      padding: 10px 14px; border-left: 4px solid #ffd6b3;
+      border-radius: 12px; transition: background-color 0.4s ease, color 0.4s ease;
+      background: white; text-align: center;
     }
     body.help-theme .ru-text { border-left-color: #ffe0b2; }
     body.late-theme .ru-text { border-left-color: #f8bbd9; }
     body.phone-theme .ru-text { border-left-color: #b3e5fc; }
     body.job-theme .ru-text { border-left-color: #ffe0b2; }
-    .ru-text.active {
-      background: #4a90e2;
-      color: white;
-      border-left-color: #2c5aa0;
-    }
+    body.wallet-theme .ru-text { border-left-color: #c8e6c9; }
+    body.birthday-theme .ru-text { border-left-color: #f8bbd0; }
+    .ru-text.active { background: #4a90e2; color: white; border-left-color: #2c5aa0; }
 
     .next-card-btn {
-      display: block;
-      margin: 10px auto 0;
-      padding: 8px 18px;
-      background: transparent;
-      color: #bbb;
-      border: 1px solid #e0e0e0;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: inherit;
-      opacity: 0.6;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
+      display: block; margin: 10px auto 0;
+      padding: 8px 18px; background: transparent;
+      color: #bbb; border: 1px solid #e0e0e0;
+      border-radius: 20px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s ease;
+      font-family: inherit; opacity: 0.6;
     }
     .next-card-btn:hover { opacity: 1; background: #fff8f0; border-color: #ffc72c; color: #da291c; }
     body.help-theme .next-card-btn:hover { background: #fff8e8; border-color: #ffc107; color: #ff9800; }
     body.late-theme .next-card-btn:hover { background: #fff5f5; border-color: #f48fb1; color: #9c27b0; }
     body.phone-theme .next-card-btn:hover { background: #e8f5ff; border-color: #81d4fa; color: #00838f; }
     body.job-theme .next-card-btn:hover { background: #fffbe8; border-color: #ffc107; color: #ff9800; }
+    body.wallet-theme .next-card-btn:hover { background: #e8ffe8; border-color: #a5d6a7; color: #2e7d32; }
+    body.birthday-theme .next-card-btn:hover { background: #ffe8f5; border-color: #f48fb1; color: #c2185b; }
     .next-card-btn:active { opacity: 0.5; }
     .next-card-btn.playing { opacity: 0.3; pointer-events: none; }
 
     .now-playing-bar {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: #da291c;
-      font-weight: 700;
-      padding: 6px 14px;
-      background: #fff0f0;
-      border-radius: 20px;
-      margin-top: 12px;
-      justify-content: center;
+      display: none; align-items: center; gap: 8px;
+      font-size: 12px; color: #da291c; font-weight: 700;
+      padding: 6px 14px; background: #fff0f0;
+      border-radius: 20px; margin-top: 12px; justify-content: center;
     }
     body.help-theme .now-playing-bar { color: #ff9800; background: #fff8e8; }
     body.late-theme .now-playing-bar { color: #9c27b0; background: #fff5f8; }
     body.phone-theme .now-playing-bar { color: #00838f; background: #e8f5ff; }
     body.job-theme .now-playing-bar { color: #ff9800; background: #fffbe8; }
+    body.wallet-theme .now-playing-bar { color: #2e7d32; background: #e8ffe8; }
+    body.birthday-theme .now-playing-bar { color: #c2185b; background: #ffe8f5; }
     .now-playing-bar.visible { display: inline-flex; }
-    
     .bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; }
-    .bars span {
-      width: 4px;
-      background: #da291c;
-      border-radius: 2px;
-      animation: barAnim 1.2s ease-in-out infinite;
-    }
+    .bars span { width: 4px; background: #da291c; border-radius: 2px; animation: barAnim 1.2s ease-in-out infinite; }
     body.help-theme .bars span { background: #ff9800; }
     body.late-theme .bars span { background: #9c27b0; }
     body.phone-theme .bars span { background: #00bcd4; }
     body.job-theme .bars span { background: #ff9800; }
+    body.wallet-theme .bars span { background: #4caf50; }
+    body.birthday-theme .bars span { background: #e91e63; }
     .bars span:nth-child(1){height:5px;animation-delay:0s}
     .bars span:nth-child(2){height:10px;animation-delay:.2s}
     .bars span:nth-child(3){height:6px;animation-delay:.4s}
     .bars span:nth-child(4){height:12px;animation-delay:.1s}
-    @keyframes barAnim { 
-      0%,100%{transform:scaleY(1)} 
-      50%{transform:scaleY(0.5)} 
-    }
+    @keyframes barAnim { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.5)} }
 
     .toast {
       position: fixed;
       bottom: calc(80px + env(safe-area-inset-bottom, 0px));
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: rgba(40,15,50,0.95);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-family: inherit;
-      z-index: 999;
-      transition: transform 0.4s ease;
-      pointer-events: none;
+      left: 50%; transform: translateX(-50%) translateY(80px);
+      background: rgba(40,15,50,0.95); color: white;
+      padding: 12px 24px; border-radius: 30px;
+      font-size: 14px; font-family: inherit; z-index: 999;
+      transition: transform 0.4s ease; pointer-events: none;
       white-space: nowrap;
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
-    
     .manga-container::-webkit-scrollbar { display: none; }
     .manga-container { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -473,7 +348,7 @@
 <body>
 
 <div class="scene-title">
-  <h1 id="sceneTitle">🍔 在麦当劳 — Диалог в McDonald's</h1>
+  <h1 id="sceneTitle"> 在麦当劳 — Диалог в McDonald's</h1>
   <p id="sceneSubtitle">Листайте вниз для перехода между карточками</p>
 </div>
 
@@ -485,13 +360,12 @@
 <div class="manga-container" id="panelsContainer"></div>
 
 <div class="speed-control">
-  <div class="speed-label">🐢 Скорость:</div>
+  <div class="speed-label"> Скорость:</div>
   <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
   <div class="speed-value" id="speedValue">0.55x</div>
 </div>
 
 <div class="toast" id="toast"></div>
-
 <audio id="globalAudio" playsinline webkit-playsinline style="display:none;"></audio>
 
 <script>
@@ -502,13 +376,13 @@ const SCENES = {
     switchLabel: "🤝 Просьба о помощи",
     panels: [
       { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"g... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:" Покупатель" },
+      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
+      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
@@ -524,21 +398,21 @@ const SCENES = {
     panels: [
       { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:"👧 Девушка" },
       { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:"👦 Парень" },
-      { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:"👧 Девушка" },
+      { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng w bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:" Девушка" },
       { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Без проблем, не волнуйся!", who:"w", speaker:"👦 Парень" },
-      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie n! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:"👧 Девушка" },
+      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:"👧 Девушка" },
       { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:"👦 Парень" }
     ]
   },
   late: {
     title: "⏰ 对不起，迟到了 — Опоздание на встречу",
     subtitle: "Диалог в ресторане",
-    switchLabel: "📱 Что делать?",
+    switchLabel: " Что делать?",
     panels: [
       { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuqǐ, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Девушка" },
       { img:"late_02", zh:"没关系，我也刚到。", py:"Méiguānxi, wǒ yě gāng dào.", ru:"Ничего, я тоже только пришёл.", who:"w", speaker:"👦 Парень" },
       { img:"late_03", zh:"久等了，不好意思。", py:"Jiǔ děng le, bù hǎoyìsi.", ru:"Заставила ждать, извини.", who:"s", speaker:"👧 Девушка" },
-      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:" Парень" },
+      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:"👦 Парень" },
       { img:"late_05", zh:"不赶，我们慢慢聊。", py:"Bù gǎn, wǒmen mànmàn liáo.", ru:"Не спешу, поболтаем не торопясь.", who:"s", speaker:"👧 Девушка" }
     ]
   },
@@ -547,195 +421,142 @@ const SCENES = {
     subtitle: "Диалог в кафе о сломанном телефоне",
     switchLabel: "💼 Новая работа",
     panels: [
-      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Девушка" },
-      { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngq shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
-      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngq méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:" Девушка" },
+      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shǒujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Девушка" },
+      { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
+      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Девушка" },
       { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yǒu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:"👦 Друг" },
       { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:" Девушка" }
     ]
   },
   job: {
-    title: " 我找到新工作了！ — Новая работа!",
+    title: "💼 我找到新工作了！ — Новая работа!",
     subtitle: "Диалог с подругой на улице",
-    switchLabel: " McDonald's",
+    switchLabel: " Потерянный кошелёк",
     panels: [
-      { img:"job_01", zh:"我找到新工作了！", py:"Wǒ zhǎodào xīn gōngzuò le!", ru:"Я нашла новую работу!", who:"s", speaker:"👧 Девушка" },
+      { img:"job_01", zh:"我找到新工作了！", py:"Wǒ zhǎodào xīn gōngzuò le!", ru:"Я нашла новую работу!", who:"s", speaker:" Девушка" },
       { img:"job_02", zh:"真的吗？太棒了！", py:"Zhēn de ma? Tài bàng le!", ru:"Правда? Потрясающе!", who:"w", speaker:"👱‍♀️ Подруга" },
-      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:"👧 Девушка" },
-      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱♀️ Подруга" },
+      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:" Девушка" },
+      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱‍♀️ Подруга" },
       { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wǒmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:"👧 Девушка" },
-      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīq chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Подруга" }
+      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Подруга" }
+    ]
+  },
+  wallet: {
+    title: "👛 我的钱包不见了！ — Потерянный кошелёк",
+    subtitle: "Диалог на улице и в кафе",
+    switchLabel: "🎂 День рождения",
+    panels: [
+      { img:"wallet_01", zh:"我的钱包不见了！", py:"Wǒ de qiánbāo bù jiàn le!", ru:"Мой кошелёк пропал!", who:"s", speaker:" Девушка" },
+      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zhǎo.", ru:"Не паникуй, вместе найдём.", who:"w", speaker:"‍♀️ Подруга" },
+      { img:"wallet_03", zh:"我刚才还在咖啡馆的。", py:"Wǒ gāngcái hái zài kāfēiguǎn de.", ru:"Он только что был в кафе.", who:"s", speaker:"👧 Девушка" },
+      { img:"wallet_04", zh:"我们回去看看吧！", py:"Wmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Подруга" },
+      { img:"wallet_05", zh:"找到了！在这里！", py:"Zhǎodào le! Zài zhèlǐ!", ru:"Нашла! Вот он!", who:"s", speaker:"👧 Девушка" },
+      { img:"wallet_06", zh:"太好了！下次要小心！", py:"Tài hǎo le! Xiàcì yào xiǎoxīn!", ru:"Отлично! В следующий раз будь осторожнее!", who:"w", speaker:"👱‍♀️ Подруга" }
+    ]
+  },
+  birthday: {
+    title: "🎂 生日快乐！ — С днём рождения!",
+    subtitle: "Праздничный сюрприз для подруги",
+    switchLabel: "🍔 McDonald's",
+    panels: [
+      { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù w!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Блондинка" },
+      { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:"👧 Девушка (омбре)" },
+      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gǎndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"‍🦰 Брюнетка-именинница" }
     ]
   }
 };
 
-// Порядок переключения диалогов
-const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job'];
+const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday'];
+const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme' };
+const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: ' Просьба о помощи', late: ' Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения' };
 
 let currentScene = 'mcdonalds';
-let zhVoice = null;
-let ruVoice = null;
-let currentSpeed = 0.55;
-let db = null;
+let zhVoice = null, ruVoice = null, currentSpeed = 0.55, db = null;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-let activeRecorder = null;
-let activeStream = null;
-let activeRecordingKey = null;
-let recordingTimeout = null;
-let audioUnlocked = false;
-let globalAudio = null;
-let isPlaying = false;
+let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
+let audioUnlocked = false, globalAudio = null, isPlaying = false;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
-  
   const audio = new Audio();
   audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
   audio.play().then(() => {
-    audio.pause();
-    audioUnlocked = true;
-    
-    if ('speechSynthesis' in window) {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance('');
-      utterance.volume = 0;
-      speechSynthesis.speak(utterance);
-    }
-  }).catch(() => {
-    audioUnlocked = true;
-  });
+    audio.pause(); audioUnlocked = true;
+    if ('speechSynthesis' in window) { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(''); u.volume = 0; speechSynthesis.speak(u); }
+  }).catch(() => { audioUnlocked = true; });
 }
-
 document.addEventListener('touchstart', unlockAudioOnInteraction, { once: true });
 document.addEventListener('click', unlockAudioOnInteraction, { once: true });
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return Promise.resolve();
-  
   return new Promise(resolve => {
     speechSynthesis.cancel();
-    
-    if (isIOS) {
-      speechSynthesis.resume();
-    }
-    
+    if (isIOS) speechSynthesis.resume();
     setTimeout(resolve, 50);
   });
 }
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('ChineseLearningAudio_v4', 1);
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings');
-    };
+    const request = indexedDB.open('ChineseLearningAudio_v5', 1);
+    request.onupgradeneeded = (event) => { const db = event.target.result; if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings'); };
     request.onsuccess = (event) => { db = event.target.result; resolve(db); };
     request.onerror = (event) => reject(event.target.error);
   });
 }
-
-function saveToDB(key, blob) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(['recordings'], 'readwrite');
-    const req = tx.objectStore('recordings').put(blob, key);
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
-  });
-}
-
-function getFromDB(key) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(['recordings'], 'readonly');
-    const req = tx.objectStore('recordings').get(key);
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-
-function deleteFromDB(key) {
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(['recordings'], 'readwrite');
-    const req = tx.objectStore('recordings').delete(key);
-    req.onsuccess = () => resolve();
-    req.onerror = () => reject(req.error);
-  });
-}
+function saveToDB(key, blob) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readwrite'); const req = tx.objectStore('recordings').put(blob, key); req.onsuccess = () => resolve(); req.onerror = () => reject(req.error); }); }
+function getFromDB(key) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readonly'); const req = tx.objectStore('recordings').get(key); req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error); }); }
+function deleteFromDB(key) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readwrite'); const req = tx.objectStore('recordings').delete(key); req.onsuccess = () => resolve(); req.onerror = () => reject(req.error); }); }
 
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
   ruVoice = voices.find(v => v.lang.includes('ru-RU')) || voices[0];
 }
-
-if ('speechSynthesis' in window) {
-  speechSynthesis.onvoiceschanged = loadVoices;
-  loadVoices();
-}
+if ('speechSynthesis' in window) { speechSynthesis.onvoiceschanged = loadVoices; loadVoices(); }
 
 document.getElementById('speedSlider').addEventListener('input', (e) => {
   currentSpeed = parseFloat(e.target.value);
   document.getElementById('speedValue').textContent = currentSpeed.toFixed(2) + 'x';
 });
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
+function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
 
 function resetAllRecordButtons() {
-  document.querySelectorAll('.record-btn').forEach(btn => {
-    btn.classList.remove('recording');
-  });
+  document.querySelectorAll('.record-btn').forEach(btn => btn.classList.remove('recording'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
 async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
-  let html = "";
-
   document.getElementById('sceneTitle').textContent = data.title;
   document.getElementById('sceneSubtitle').textContent = data.subtitle;
   document.getElementById('switchBtn').textContent = data.switchLabel;
-  
-  // Сбрасываем все темы
-  document.body.classList.remove('help-theme', 'late-theme', 'phone-theme', 'job-theme');
-  
-  // Добавляем нужную тему
-  if (sceneKey === 'help') {
-    document.body.classList.add('help-theme');
-  } else if (sceneKey === 'late') {
-    document.body.classList.add('late-theme');
-  } else if (sceneKey === 'phone') {
-    document.body.classList.add('phone-theme');
-  } else if (sceneKey === 'job') {
-    document.body.classList.add('job-theme');
-  }
+  document.body.className = '';
+  const theme = THEME_MAP[sceneKey];
+  if (theme) document.body.classList.add(theme);
 
+  let html = "";
   data.panels.forEach((p, i) => {
     const bubbleClass = p.who === "w" ? "waiter" : "sailor";
     const speakerClass = p.who === "w" ? "w" : "s";
     const imgSrc = `img/${p.img}.png`;
     const isLast = i === data.panels.length - 1;
-
     html += `
     <div class="panel" id="${sceneKey}-p${i}">
       <div class="panel-inner">
         <div class="panel-header">
-          <div class="panel-num">
-            <span class="panel-num-badge">${i+1}</span>
-            ${p.speaker}
-          </div>
+          <div class="panel-num"><span class="panel-num-badge">${i+1}</span>${p.speaker}</div>
           <div class="speak-buttons">
             <button class="action-btn replay-btn" id="${sceneKey}-replay-${i}" onclick="playCard('${sceneKey}',${i})" title="Повторить">🔊</button>
-            <button class="action-btn speak-btn speak-btn-zh" id="${sceneKey}-btn-zh-${i}" onclick="handleSpeak('${sceneKey}',${i},'zh')" title="Только китайский">🇨</button>
+            <button class="action-btn speak-btn speak-btn-zh" id="${sceneKey}-btn-zh-${i}" onclick="handleSpeak('${sceneKey}',${i},'zh')" title="Только китайский">🇨🇳</button>
             <button class="action-btn speak-btn speak-btn-ru" id="${sceneKey}-btn-ru-${i}" onclick="handleSpeak('${sceneKey}',${i},'ru')" title="Только русский">🇷🇺</button>
-            <button class="action-btn record-btn" id="${sceneKey}-rec-ru-${i}" onclick="toggleRecording('${sceneKey}',${i},'ru')" title="Записать русский">
-              🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${sceneKey}',${i},'ru')">✕</span>
-            </button>
+            <button class="action-btn record-btn" id="${sceneKey}-rec-ru-${i}" onclick="toggleRecording('${sceneKey}',${i},'ru')" title="Записать русский">🎤<span class="delete-overlay" onclick="event.stopPropagation(); handleDelete('${sceneKey}',${i},'ru')">✕</span></button>
           </div>
         </div>
         <div class="panel-img-wrap" id="${sceneKey}-wrap${i}">
@@ -753,9 +574,7 @@ async function renderScene(sceneKey) {
             <div class="bars"><span></span><span></span><span></span><span></span></div>
             <span id="${sceneKey}-np-text${i}">Идёт озвучка...</span>
           </div>
-          <button class="next-card-btn" id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">
-            ${isLast ? '↻ в начало' : '→ далее'}
-          </button>
+          <button class="next-card-btn" id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">${isLast ? '↻ в начало' : '→ далее'}</button>
         </div>
       </div>
     </div>`;
@@ -770,10 +589,7 @@ async function checkRecordings(sceneKey) {
   for (let i = 0; i < data.panels.length; i++) {
     try {
       const blob = await getFromDB(`${sceneKey}_ru_${i}`);
-      if (blob) {
-        const recBtn = document.getElementById(`${sceneKey}-rec-ru-${i}`);
-        if (recBtn) recBtn.classList.add('has-recording');
-      }
+      if (blob) { const recBtn = document.getElementById(`${sceneKey}-rec-ru-${i}`); if (recBtn) recBtn.classList.add('has-recording'); }
     } catch(e) {}
   }
 }
@@ -784,126 +600,59 @@ function switchScene() {
   const nextIndex = (currentIndex + 1) % SCENE_ORDER.length;
   currentScene = SCENE_ORDER[nextIndex];
   renderScene(currentScene);
-  
-  const sceneNames = {
-    'mcdonalds': ' McDonald\'s',
-    'help': ' Просьба о помощи',
-    'late': '⏰ Опоздание',
-    'phone': '📱 Что делать?',
-    'job': '💼 Новая работа'
-  };
-  showToast(sceneNames[currentScene]);
+  showToast(SCENE_NAMES[currentScene]);
 }
 
 function stopPlayback() {
   isPlaying = false;
   speechSynthesis.cancel();
-  if (globalAudio) {
-    globalAudio.pause();
-    globalAudio.currentTime = 0;
-  }
-  
+  if (globalAudio) { globalAudio.pause(); globalAudio.currentTime = 0; }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
   document.querySelectorAll('.replay-btn').forEach(b => b.classList.remove('playing'));
   document.querySelectorAll('.next-card-btn').forEach(b => b.classList.remove('playing'));
   document.querySelectorAll('.now-playing-bar').forEach(n => n.classList.remove('visible'));
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
-  
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
-  
-  if (activeRecordingKey && activeRecordingKey.key === sceneKey && activeRecordingKey.idx === idx) {
-    stopCurrentRecording();
-    return;
-  }
-  if (activeRecordingKey) {
-    stopCurrentRecording();
-    await sleep(300);
-  }
-  
+  if (activeRecordingKey && activeRecordingKey.key === sceneKey && activeRecordingKey.idx === idx) { stopCurrentRecording(); return; }
+  if (activeRecordingKey) { stopCurrentRecording(); await sleep(300); }
   try {
     resetAllRecordButtons();
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { 
-        echoCancellation: true, 
-        noiseSuppression: true,
-        sampleRate: 44100
-      } 
-    });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, sampleRate: 44100 } });
     activeStream = stream;
-    
     let mimeType = 'audio/webm';
-    if (isIOS) {
-      if (MediaRecorder.isTypeSupported('audio/mp4')) {
-        mimeType = 'audio/mp4';
-      } else if (MediaRecorder.isTypeSupported('audio/wav')) {
-        mimeType = 'audio/wav';
-      }
-    }
-    
+    if (isIOS) { if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4'; else if (MediaRecorder.isTypeSupported('audio/wav')) mimeType = 'audio/wav'; }
     const recorder = new MediaRecorder(stream, { mimeType });
     activeRecorder = recorder;
     activeRecordingKey = { key: sceneKey, idx, lang };
     const chunks = [];
-    
     recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: mimeType });
-      try {
-        await saveToDB(`${sceneKey}_${lang}_${idx}`, blob);
-        document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.add('has-recording');
-        showToast('✅ Сохранено!');
-      } catch(e) { showToast('❌ Ошибка'); }
+      try { await saveToDB(`${sceneKey}_${lang}_${idx}`, blob); document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.add('has-recording'); showToast('✅ Сохранено!'); } catch(e) { showToast('❌ Ошибка'); }
       if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
-      activeRecorder = null; activeRecordingKey = null;
-      resetAllRecordButtons();
+      activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons();
     };
     recorder.onerror = () => { showToast('❌ Ошибка записи'); cleanupRecording(); };
-    
     recBtn.classList.add('recording');
     if (panelEl) panelEl.classList.add('recording-panel');
-    
     recorder.start();
     showToast('🔴 Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
-  } catch (err) { 
-    console.error(err);
-    showToast('⚠️ Нет доступа к микрофону'); 
-    cleanupRecording(); 
-  }
+  } catch (err) { console.error(err); showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
 }
-
-function stopCurrentRecording() {
-  if (recordingTimeout) clearTimeout(recordingTimeout);
-  if (activeRecorder && activeRecorder.state !== 'inactive') {
-    try { activeRecorder.stop(); } catch(e) { cleanupRecording(); }
-  } else { cleanupRecording(); }
-}
-
-function cleanupRecording() {
-  if (recordingTimeout) clearTimeout(recordingTimeout);
-  if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
-  activeRecorder = null; activeRecordingKey = null;
-  resetAllRecordButtons();
-}
-
-async function handleDelete(sceneKey, idx, lang) {
-  try {
-    await deleteFromDB(`${sceneKey}_${lang}_${idx}`);
-    document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.remove('has-recording');
-    showToast('🗑️ Удалено');
-  } catch(e) {}
-}
+function stopCurrentRecording() { if (recordingTimeout) clearTimeout(recordingTimeout); if (activeRecorder && activeRecorder.state !== 'inactive') { try { activeRecorder.stop(); } catch(e) { cleanupRecording(); } } else { cleanupRecording(); } }
+function cleanupRecording() { if (recordingTimeout) clearTimeout(recordingTimeout); if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; } activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons(); }
+async function handleDelete(sceneKey, idx, lang) { try { await deleteFromDB(`${sceneKey}_${lang}_${idx}`); document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.remove('has-recording'); showToast('🗑️ Удалено'); } catch(e) {} }
 
 function playTTSRobust(sceneKey, idx, lang) {
   return new Promise(async (resolve) => {
     if (!isPlaying) { resolve(); return; }
-    
     highlightText(sceneKey, idx, lang);
     const p = SCENES[sceneKey].panels[idx];
     const text = lang === 'zh' ? p.zh : p.ru;
@@ -913,64 +662,30 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
-    
     let finished = false;
     const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); resolve(); };
-    
     const maxDuration = Math.min((text.length * 400) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.1) + 3000, 20000);
     const safetyTimeout = setTimeout(finish, maxDuration);
     utterance.onend = () => { clearTimeout(safetyTimeout); finish(); };
     utterance.onerror = () => { clearTimeout(safetyTimeout); finish(); };
-    
     await wakeUpSpeechSynthesis();
-    
-    setTimeout(() => { 
-      if (!finished && isPlaying) {
-        try {
-          speechSynthesis.speak(utterance);
-        } catch(e) {
-          finish();
-        }
-      } else if (!isPlaying) {
-        finish();
-      }
-    }, 100);
+    setTimeout(() => { if (!finished && isPlaying) { try { speechSynthesis.speak(utterance); } catch(e) { finish(); } } else if (!isPlaying) { finish(); } }, 100);
   });
 }
 
 function playRecordingRobust(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     if (!isPlaying) { resolve(); return; }
-    
-    if (!globalAudio) {
-      globalAudio = document.getElementById('globalAudio');
-    }
-    
+    if (!globalAudio) globalAudio = document.getElementById('globalAudio');
     const audioUrl = URL.createObjectURL(blob);
-    globalAudio.src = audioUrl;
-    globalAudio.playsInline = true;
-    globalAudio.webkitPlaysInline = true;
-    
+    globalAudio.src = audioUrl; globalAudio.playsInline = true; globalAudio.webkitPlaysInline = true;
     highlightText(sceneKey, idx, lang);
     let finished = false;
-    
-    const finish = () => { 
-      if(finished) return; 
-      finished=true; 
-      clearHighlight(sceneKey, idx, lang); 
-      URL.revokeObjectURL(audioUrl);
-      resolve(); 
-    };
-    
+    const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); URL.revokeObjectURL(audioUrl); resolve(); };
     const safetyTimeout = setTimeout(finish, 10000);
-    
     globalAudio.onended = () => { clearTimeout(safetyTimeout); finish(); };
     globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
-    
-    globalAudio.play().catch(() => { 
-      clearTimeout(safetyTimeout); 
-      finish(); 
-    });
+    globalAudio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
   });
 }
 
@@ -982,16 +697,14 @@ function highlightText(sceneKey, idx, lang) {
   const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
   const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
   const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
-  
   if(el) el.classList.add('active');
   if(panel) panel.classList.add('active-panel');
   if(btn) btn.classList.add('speaking');
   if(replayBtn) replayBtn.classList.add('playing');
   if(nextBtn) nextBtn.classList.add('playing');
   if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
+  if(npT) npT.textContent = lang === 'zh' ? '🇳 Китайский...' : '🇺 Русский...';
 }
-
 function clearHighlight(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
   const panel = document.getElementById(`${sceneKey}-p${idx}`);
@@ -999,7 +712,6 @@ function clearHighlight(sceneKey, idx, lang) {
   const np = document.getElementById(`${sceneKey}-np${idx}`);
   const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
   const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
-  
   if(el) el.classList.remove('active');
   if(panel) panel.classList.remove('active-panel');
   if(btn) btn.classList.remove('speaking');
@@ -1011,17 +723,9 @@ function clearHighlight(sceneKey, idx, lang) {
 async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  
   await wakeUpSpeechSynthesis();
   if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
-  else {
-    try {
-      const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
-      if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
-      else await playTTSRobust(sceneKey, idx, 'ru');
-    } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
-  }
-  
+  else { try { const blob = await getFromDB(`${sceneKey}_ru_${idx}`); if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru'); else await playTTSRobust(sceneKey, idx, 'ru'); } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); } }
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
@@ -1029,34 +733,24 @@ async function handleSpeak(sceneKey, idx, lang) {
 async function playCardInternal(sceneKey, idx) {
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
-  
   await wakeUpSpeechSynthesis();
   await playTTSRobust(sceneKey, idx, 'zh');
   if (!isPlaying) return;
   await sleep(500);
   if (!isPlaying) return;
   await wakeUpSpeechSynthesis();
-  
   try {
     const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
-    if (blob) {
-      await playRecordingRobust(blob, sceneKey, idx, 'ru');
-      if (!isPlaying) return;
-      await wakeUpSpeechSynthesis();
-    } else {
-      await playTTSRobust(sceneKey, idx, 'ru');
-    }
+    if (blob) { await playRecordingRobust(blob, sceneKey, idx, 'ru'); if (!isPlaying) return; await wakeUpSpeechSynthesis(); }
+    else { await playTTSRobust(sceneKey, idx, 'ru'); }
   } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
-  
   if (btn) btn.classList.remove('playing');
 }
 
 async function playCard(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  
   await playCardInternal(sceneKey, idx);
-  
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
@@ -1064,26 +758,13 @@ async function playCard(sceneKey, idx) {
 async function playAndNext(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  
   const panels = SCENES[sceneKey].panels;
-  
   await playCardInternal(sceneKey, idx);
-  
   if (!isPlaying) return;
-  
   let nextIdx = idx + 1;
-  if (nextIdx >= panels.length) {
-    nextIdx = 0;
-    showToast('🔄 Начинаем сначала');
-  }
-  
+  if (nextIdx >= panels.length) { nextIdx = 0; showToast('🔄 Начинаем сначала'); }
   const nextPanel = document.getElementById(`${sceneKey}-p${nextIdx}`);
-  if (nextPanel) {
-    setTimeout(() => {
-      nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
-  }
-  
+  if (nextPanel) { setTimeout(() => { nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
@@ -1094,17 +775,10 @@ window.addEventListener('load', async () => {
   globalAudio = document.getElementById('globalAudio');
   await initDB();
   renderScene(currentScene);
-  
-  if (!('speechSynthesis' in window)) {
-    showToast('⚠️ Используйте Chrome/Safari');
-  }
+  if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
 
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    stopPlayback();
-  }
-});
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
 </script>
 </body>
 </html>
