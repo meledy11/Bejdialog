@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>🇨 Учим китайский</title>
+  <title>🇨🇳 Учим китайский</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -25,6 +25,7 @@
     body.directions-theme { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%); }
     body.sick-theme { background: linear-gradient(180deg, #fff5f0 0%, #ffe8e0 50%, #ffd6cc 100%); }
     body.glasses-theme { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%); }
+    body.beach-theme { background: linear-gradient(180deg, #e0f7fa 0%, #fff9c4 50%, #b2ebf2 100%); }
 
     .manga-container { max-width: 100%; height: 100vh; height: -webkit-fill-available; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
     .scene-title {
@@ -45,6 +46,7 @@
     body.directions-theme .scene-title { background: linear-gradient(135deg, #00acc1, #26c6da, #80deea); }
     body.sick-theme .scene-title { background: linear-gradient(135deg, #ff7043, #ff8a65, #ffab91); }
     body.glasses-theme .scene-title { background: linear-gradient(135deg, #8e24aa, #ab47bc, #ce93d8); }
+    body.beach-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #ffeb3b, #00acc1); color: #006064; }
     .scene-title h1 { font-size: 16px; margin-bottom: 2px; }
     .scene-title p { font-size: 11px; opacity: 0.9; }
 
@@ -71,6 +73,7 @@
     body.directions-theme .control-btn { border-color: #00acc1; color: #00acc1; }
     body.sick-theme .control-btn { border-color: #ff7043; color: #ff7043; }
     body.glasses-theme .control-btn { border-color: #8e24aa; color: #8e24aa; }
+    body.beach-theme .control-btn { border-color: #00bcd4; color: #00bcd4; }
     .control-btn:active { transform: scale(0.95); opacity: 0.8; }
     .control-btn.stop-btn { background: rgba(244,67,54,0.95); border-color: #f44336; color: white; display: none; }
     .control-btn.stop-btn.visible { display: block; }
@@ -93,6 +96,7 @@
     body.directions-theme .speed-label { color: #00acc1; }
     body.sick-theme .speed-label { color: #ff7043; }
     body.glasses-theme .speed-label { color: #8e24aa; }
+    body.beach-theme .speed-label { color: #00bcd4; }
     .speed-slider { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #da291c, #ffc72c); }
     body.help-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
     body.late-theme .speed-slider { background: linear-gradient(90deg, #9c27b0, #e91e63); }
@@ -104,6 +108,7 @@
     body.directions-theme .speed-slider { background: linear-gradient(90deg, #00acc1, #26c6da); }
     body.sick-theme .speed-slider { background: linear-gradient(90deg, #ff7043, #ff8a65); }
     body.glasses-theme .speed-slider { background: linear-gradient(90deg, #8e24aa, #ab47bc); }
+    body.beach-theme .speed-slider { background: linear-gradient(90deg, #00bcd4, #ffeb3b); }
     .speed-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: white; border: 3px solid #da291c; }
     body.help-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
     body.late-theme .speed-slider::-webkit-slider-thumb { border-color: #9c27b0; }
@@ -115,6 +120,7 @@
     body.directions-theme .speed-slider::-webkit-slider-thumb { border-color: #00acc1; }
     body.sick-theme .speed-slider::-webkit-slider-thumb { border-color: #ff7043; }
     body.glasses-theme .speed-slider::-webkit-slider-thumb { border-color: #8e24aa; }
+    body.beach-theme .speed-slider::-webkit-slider-thumb { border-color: #00bcd4; }
     .speed-value { font-weight: 700; color: #da291c; font-size: 12px; min-width: 45px; text-align: center; }
     body.help-theme .speed-value { color: #ff9800; }
     body.late-theme .speed-value { color: #9c27b0; }
@@ -126,6 +132,7 @@
     body.directions-theme .speed-value { color: #00acc1; }
     body.sick-theme .speed-value { color: #ff7043; }
     body.glasses-theme .speed-value { color: #8e24aa; }
+    body.beach-theme .speed-value { color: #00bcd4; }
 
     .panel {
       min-height: 100vh; min-height: -webkit-fill-available;
@@ -144,6 +151,7 @@
     body.directions-theme .panel { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 100%); }
     body.sick-theme .panel { background: linear-gradient(180deg, #fff5f0 0%, #ffe8e0 100%); }
     body.glasses-theme .panel { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 100%); }
+    body.beach-theme .panel { background: linear-gradient(180deg, #e0f7fa 0%, #fff9c4 100%); }
 
     .panel-inner {
       background: white; border-radius: 20px;
@@ -162,6 +170,7 @@
     body.directions-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,172,193,0.12); border-color: #b2ebf2; }
     body.sick-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,112,67,0.12); border-color: #ffccbc; }
     body.glasses-theme .panel-inner { box-shadow: 0 8px 32px rgba(142,36,170,0.12); border-color: #e1bee7; }
+    body.beach-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,188,212,0.12); border-color: #b2ebf2; }
 
     .panel.active-panel .panel-inner { border-color: #da291c; box-shadow: 0 8px 32px rgba(218,41,28,0.2); }
     body.help-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
@@ -174,6 +183,7 @@
     body.directions-theme .panel.active-panel .panel-inner { border-color: #00acc1; box-shadow: 0 8px 32px rgba(0,172,193,0.25); }
     body.sick-theme .panel.active-panel .panel-inner { border-color: #ff7043; box-shadow: 0 8px 32px rgba(255,112,67,0.25); }
     body.glasses-theme .panel.active-panel .panel-inner { border-color: #8e24aa; box-shadow: 0 8px 32px rgba(142,36,170,0.25); }
+    body.beach-theme .panel.active-panel .panel-inner { border-color: #00acc1; box-shadow: 0 8px 32px rgba(0,188,212,0.25); }
 
     .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fffaf8; border-bottom: 1px dashed #ffd6b3; }
     body.help-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
@@ -186,6 +196,7 @@
     body.directions-theme .panel-header { background: #f0fdff; border-bottom-color: #b2ebf2; }
     body.sick-theme .panel-header { background: #fff8f5; border-bottom-color: #ffccbc; }
     body.glasses-theme .panel-header { background: #faf0fc; border-bottom-color: #e1bee7; }
+    body.beach-theme .panel-header { background: #f0faff; border-bottom-color: #b2ebf2; }
 
     .panel-num { font-weight: 700; color: #da291c; font-size: 14px; display: flex; align-items: center; gap: 8px; }
     body.help-theme .panel-num { color: #ff9800; }
@@ -198,6 +209,7 @@
     body.directions-theme .panel-num { color: #00acc1; }
     body.sick-theme .panel-num { color: #ff7043; }
     body.glasses-theme .panel-num { color: #8e24aa; }
+    body.beach-theme .panel-num { color: #00acc1; }
 
     .panel-num-badge { background: linear-gradient(135deg, #da291c, #ffc72c); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; }
     body.help-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
@@ -210,6 +222,7 @@
     body.directions-theme .panel-num-badge { background: linear-gradient(135deg, #00acc1, #26c6da); }
     body.sick-theme .panel-num-badge { background: linear-gradient(135deg, #ff7043, #ff8a65); }
     body.glasses-theme .panel-num-badge { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
+    body.beach-theme .panel-num-badge { background: linear-gradient(135deg, #00acc1, #26c6da); }
 
     .speak-buttons { display: flex; gap: 8px; align-items: center; }
     .action-btn { border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 17px; transition: opacity 0.2s ease; color: white; position: relative; }
@@ -225,6 +238,7 @@
     body.directions-theme .speak-btn-zh { background: linear-gradient(135deg, #00acc1, #26c6da); }
     body.sick-theme .speak-btn-zh { background: linear-gradient(135deg, #ff7043, #ff8a65); }
     body.glasses-theme .speak-btn-zh { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
+    body.beach-theme .speak-btn-zh { background: linear-gradient(135deg, #00acc1, #26c6da); }
     .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
     .speak-btn.speaking { opacity: 0.8; }
     .record-btn { background: linear-gradient(135deg, #ff9800, #f57c00); }
@@ -246,6 +260,7 @@
     body.directions-theme .panel-img-wrap { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-color: #b2ebf2; }
     body.sick-theme .panel-img-wrap { background: linear-gradient(135deg, #fff5f0, #ffe8e0); border-color: #ffccbc; }
     body.glasses-theme .panel-img-wrap { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-color: #e1bee7; }
+    body.beach-theme .panel-img-wrap { background: linear-gradient(135deg, #e0f7fa, #fff9c4); border-color: #b2ebf2; }
     .panel-img { width: 100%; display: block; max-height: 45vh; object-fit: contain; }
     .img-error-msg { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: #cc6644; text-align: center; padding: 20px; }
     .img-error-msg .big { font-size: 50px; }
@@ -271,6 +286,7 @@
     body.directions-theme .zh-text.active { background: #80deea; color: #006064; }
     body.sick-theme .zh-text.active { background: #ffab91; color: #bf360c; }
     body.glasses-theme .zh-text.active { background: #ce93d8; color: #4a148c; }
+    body.beach-theme .zh-text.active { background: #80deea; color: #006064; }
     .py-text { font-size: 17px; color: #888; font-style: italic; margin-bottom: 12px; font-weight: 600; text-align: center; }
     .ru-text { font-size: 18px; color: #555; line-height: 1.5; padding: 10px 14px; border-left: 4px solid #ffd6b3; border-radius: 12px; transition: background-color 0.4s ease, color 0.4s ease; background: white; text-align: center; }
     body.help-theme .ru-text { border-left-color: #ffe0b2; }
@@ -283,6 +299,7 @@
     body.directions-theme .ru-text { border-left-color: #b2ebf2; }
     body.sick-theme .ru-text { border-left-color: #ffccbc; }
     body.glasses-theme .ru-text { border-left-color: #e1bee7; }
+    body.beach-theme .ru-text { border-left-color: #b2ebf2; }
     .ru-text.active { background: #4a90e2; color: white; border-left-color: #2c5aa0; }
 
     .next-card-btn { display: block; margin: 10px auto 0; padding: 8px 18px; background: transparent; color: #bbb; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: inherit; opacity: 0.6; }
@@ -297,6 +314,7 @@
     body.directions-theme .next-card-btn:hover { background: #e0f7fa; border-color: #80deea; color: #006064; }
     body.sick-theme .next-card-btn:hover { background: #fff5f0; border-color: #ffab91; color: #bf360c; }
     body.glasses-theme .next-card-btn:hover { background: #f3e5f5; border-color: #ce93d8; color: #4a148c; }
+    body.beach-theme .next-card-btn:hover { background: #e0f7fa; border-color: #80deea; color: #006064; }
     .next-card-btn:active { opacity: 0.5; }
     .next-card-btn.playing { opacity: 0.3; pointer-events: none; }
 
@@ -311,6 +329,7 @@
     body.directions-theme .now-playing-bar { color: #006064; background: #e0f7fa; }
     body.sick-theme .now-playing-bar { color: #bf360c; background: #fff5f0; }
     body.glasses-theme .now-playing-bar { color: #4a148c; background: #f3e5f5; }
+    body.beach-theme .now-playing-bar { color: #006064; background: #e0f7fa; }
     .now-playing-bar.visible { display: inline-flex; }
     .bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; }
     .bars span { width: 4px; background: #da291c; border-radius: 2px; animation: barAnim 1.2s ease-in-out infinite; }
@@ -324,6 +343,7 @@
     body.directions-theme .bars span { background: #00acc1; }
     body.sick-theme .bars span { background: #ff7043; }
     body.glasses-theme .bars span { background: #8e24aa; }
+    body.beach-theme .bars span { background: #00acc1; }
     .bars span:nth-child(1){height:5px;animation-delay:0s}
     .bars span:nth-child(2){height:10px;animation-delay:.2s}
     .bars span:nth-child(3){height:6px;animation-delay:.4s}
@@ -362,9 +382,9 @@
 <script>
 const SCENES = {
   mcdonalds: {
-    title: "🍔 在麦当劳 — Диалог в McDonald's", subtitle: "Листайте вниз для перехода между карточками", switchLabel: "🤝 Просьба о помощи",
+    title: "🍔 在麦当劳 — Диалог в McDonald's", subtitle: "Листайте вниз для перехода между карточками", switchLabel: " Просьба о помощи",
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ ho! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:" Nastya" },
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Nastya" },
@@ -372,9 +392,9 @@ const SCENES = {
       { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Nastya" },
-      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"‍🍳 Персонал" },
+      { img:"IMG_7590", zh:"哪里有座位？", py:"Nlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:" Nastya" },
       { img:"IMG_7591", zh:"再来一个冰淇淋！", py:"Zài lái yīgè bīngqílín!", ru:"Ещё одно мороженое!", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Nastya" },
       { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Nastya" }
@@ -383,18 +403,18 @@ const SCENES = {
   help: {
     title: "🤝 帮我个忙 — Просьба о помощи", subtitle: "Диалог на улице Беверли-Хиллз", switchLabel: "⏰ Опоздание",
     panels: [
-      { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:"👧 Nastya" },
-      { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:"👦 Парень" },
+      { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:" Nastya" },
+      { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:" Парень" },
       { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:"👧 Nastya" },
-      { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Без проблем, не волнуйся!", who:"w", speaker:"👦 Парень" },
-      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:"👧 Nastya" },
+      { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Без проблем, не волнуйся!", who:"w", speaker:" Парень" },
+      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie n! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:"👧 Nastya" },
       { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:"👦 Парень" }
     ]
   },
   late: {
     title: "⏰ 对不起，迟到了 — Опоздание на встречу", subtitle: "Диалог в ресторане", switchLabel: "📱 Что делать?",
     panels: [
-      { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuqǐ, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Nastya" },
+      { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuq, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Nastya" },
       { img:"late_02", zh:"没关系，我也刚到。", py:"Méiguānxi, wǒ yě gāng dào.", ru:"Ничего, я тоже только пришёл.", who:"w", speaker:"👦 Парень" },
       { img:"late_03", zh:"久等了，不好意思。", py:"Jiǔ děng le, bù hǎoyìsi.", ru:"Заставила ждать, извини.", who:"s", speaker:"👧 Nastya" },
       { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:"👦 Парень" },
@@ -404,10 +424,10 @@ const SCENES = {
   phone: {
     title: "📱 怎么办？ — Что делать?", subtitle: "Диалог в кафе о сломанном телефоне", switchLabel: "💼 Новая работа",
     panels: [
-      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Nastya" },
+      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shǒujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:" Nastya" },
       { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
       { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Nastya" },
-      { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:"👦 Друг" },
+      { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yǒu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:"👦 Друг" },
       { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:"👧 Nastya" }
     ]
   },
@@ -419,7 +439,7 @@ const SCENES = {
       { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:"👧 Nastya" },
       { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱‍♀️ Lena" },
       { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wǒmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:"👧 Nastya" },
-      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Lena" }
+      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   wallet: {
@@ -434,25 +454,25 @@ const SCENES = {
     ]
   },
   birthday: {
-    title: "🎂 生日快乐！ — С днём рождения!", subtitle: "Праздничный сюрприз для подруги", switchLabel: "🔋 Разрядился телефон",
+    title: "🎂 生日快乐！ — С днём рождения!", subtitle: "Праздничный сюрприз для подруги", switchLabel: " Разрядился телефон",
     panels: [
       { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:"👧 Nastya" },
-      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù wǒ!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù w!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Lena" },
       { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:"👧 Nastya" },
       { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Lena" },
       { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:"👧 Nastya" },
-      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gǎndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"👩‍🦰 Именинница" }
+      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gǎndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"‍🦰 Именинница" }
     ]
   },
   battery: {
     title: "🔋 我的手机没电了 — Разрядился телефон", subtitle: "Диалог на улице о павербанке", switchLabel: "🗺️ Как пройти?",
     panels: [
       { img:"battery_01", zh:"我的手机没电了！", py:"Wǒ de shǒujī méi diàn le!", ru:"У меня телефон разрядился!", who:"s", speaker:"👧 Nastya" },
-      { img:"battery_02", zh:"怎么办？", py:"Zěnme bàn?", ru:"Что делать?", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"battery_02", zh:"怎么办？", py:"Zěnme bàn?", ru:"Что делать?", who:"w", speaker:"👱♀️ Lena" },
       { img:"battery_03", zh:"你有充电宝吗？", py:"Nǐ yǒu chōngdiànbǎo ma?", ru:"У тебя есть павербанк?", who:"s", speaker:"👧 Nastya" },
       { img:"battery_04", zh:"有！给你。", py:"Yǒu! Gěi nǐ.", ru:"Есть! Держи.", who:"w", speaker:"👱‍♀️ Lena" },
-      { img:"battery_05", zh:"太好了，谢谢！", py:"Tài hǎo le, xièxie!", ru:"Отлично, спасибо!", who:"s", speaker:"👧 Nastya" },
-      { img:"battery_06", zh:"不用客气！", py:"Búyòng kèqi!", ru:"Не за что!", who:"w", speaker:"👱‍♀️ Lena" }
+      { img:"battery_05", zh:"太好了，谢谢！", py:"Tài hǎo le, xièxie!", ru:"Отлично, спасибо!", who:"s", speaker:" Nastya" },
+      { img:"battery_06", zh:"不用客气！", py:"Búyòng kèqi!", ru:"Не за что!", who:"w", speaker:"‍♀️ Lena" }
     ]
   },
   directions: {
@@ -461,8 +481,8 @@ const SCENES = {
       { img:"directions_01", zh:"请问，地铁站怎么走？", py:"Qǐngwèn, dìtiě zhàn zěnme zǒu?", ru:"Подскажите, как пройти до станции метро?", who:"s", speaker:"👧 Nastya" },
       { img:"directions_02", zh:"直走，然后左转。", py:"Zhí zǒu, ránhòu zuǒ zhuǎn.", ru:"Идите прямо, потом поверните налево.", who:"w", speaker:"👱‍♀️ Lena" },
       { img:"directions_03", zh:"远吗？要走多久？", py:"Yuǎn ma? Yào zǒu duōjiǔ?", ru:"Далеко? Сколько идти?", who:"s", speaker:"👧 Nastya" },
-      { img:"directions_04", zh:"不远，大概十分钟。", py:"Bù yuǎn, dàgài shí fēnzhōng.", ru:"Недалеко, примерно десять минут.", who:"w", speaker:"👱‍♀️ Lena" },
-      { img:"directions_05", zh:"谢谢你的帮助！", py:"Xièxie nǐ de bāngzhù!", ru:"Спасибо за помощь!", who:"s", speaker:"👧 Nastya" },
+      { img:"directions_04", zh:"不远，大概十分钟。", py:"Bù yuǎn, dàgài shí fēnzhōng.", ru:"Недалеко, примерно десять минут.", who:"w", speaker:"‍♀️ Lena" },
+      { img:"directions_05", zh:"谢谢你的帮助！", py:"Xièxie nǐ de bāngzhù!", ru:"Спасибо за помощь!", who:"s", speaker:" Nastya" },
       { img:"directions_06", zh:"不客气，路上小心！", py:"Bú kèqi, lùshang xiǎoxīn!", ru:"Не за что, осторожней на дороге!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
@@ -478,29 +498,48 @@ const SCENES = {
     ]
   },
   glasses: {
-    title: "👓 我们去买眼镜吧！ — Пошли за очками!", subtitle: "Диалог в магазине оптики", switchLabel: "🍔 McDonald's",
+    title: "👓 我们去买眼镜吧！ — Пошли за очками!", subtitle: "Диалог в магазине оптики", switchLabel: "️ Пошли на пляж!",
     panels: [
-      { img:"glasses_01", zh:"我们去买眼镜吧！", py:"Wǒmen qù mǎi yǎnjìng ba!", ru:"Пошли купим очки!", who:"s", speaker:"👧 Nastya" },
-      { img:"glasses_02", zh:"好主意！我需要新眼镜。", py:"Hǎo zhǔyì! Wǒ xūyào xīn yǎnjìng.", ru:"Отличная идея! Мне нужны новые очки.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_01", zh:"我们去买眼镜吧！", py:"Wmen qù mǎi yǎnjìng ba!", ru:"Пошли купим очки!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_02", zh:"好主意！我需要新眼镜。", py:"Hǎo zhǔyì! Wǒ xūyào xīn yǎnjìng.", ru:"Отличная идея! Мне нужны новые очки.", who:"w", speaker:"‍♀️ Lena" },
       { img:"glasses_03", zh:"看，这家店有很多款式！", py:"Kàn, zhè jiā diàn yǒu hěn duō kuǎnshì!", ru:"Смотри, в этом магазине много моделей!", who:"s", speaker:"👧 Nastya" },
       { img:"glasses_04", zh:"我试试这个黑色的。", py:"Wǒ shìshi zhège hēisè de.", ru:"Я примерю эти чёрные.", who:"w", speaker:"👱‍♀️ Lena" },
-      { img:"glasses_05", zh:"哈哈，你看起来像老师！", py:"Hāhā, nǐ kàn qǐlái xiàng lǎoshī!", ru:"Ха-ха, ты выглядишь как учительница!", who:"s", speaker:"👧 Nastya" },
-      { img:"glasses_06", zh:"你呢？试试这个粉色的！", py:"Nǐ ne? Shìshi zhège fěnsè de!", ru:"А ты? Примерь эти розовые!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_05", zh:"哈哈，你看起来像老师！", py:"Hāhā, n kàn qǐlái xiàng loshī!", ru:"Ха-ха, ты выглядишь как учительница!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_06", zh:"你呢？试试这个粉色的！", py:"Nǐ ne? Shìshi zhège fěnsè de!", ru:"А ты? Примерь эти розовые!", who:"w", speaker:"👱♀️ Lena" },
       { img:"glasses_07", zh:"哇，这个太可爱了！", py:"Wa, zhège tài kě'ài le!", ru:"Вау, эти такие милые!", who:"s", speaker:"👧 Nastya" },
-      { img:"glasses_08", zh:"我觉得这个最适合你。", py:"Wǒ juéde zhège zuì shìhé nǐ.", ru:"Мне кажется, эти тебе больше всего подходят.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_08", zh:"我觉得这个最适合你。", py:"Wǒ juéde zhège zuì shìhé nǐ.", ru:"Мне кажется, эти тебе больше всего подходят.", who:"w", speaker:"‍♀️ Lena" },
       { img:"glasses_09", zh:"好的，我买这个！", py:"Hǎo de, wǒ mǎi zhège!", ru:"Хорошо, беру эти!", who:"s", speaker:"👧 Nastya" },
       { img:"glasses_10", zh:"您好，一共三百块。", py:"Nín hǎo, yīgòng sānbǎi kuài.", ru:"Здравствуйте, итого триста юаней.", who:"w", speaker:"🧑‍💼 Продавец" },
       { img:"glasses_11", zh:"可以刷卡吗？", py:"Kěyǐ shuākǎ ma?", ru:"Можно оплатить картой?", who:"s", speaker:"👧 Nastya" },
-      { img:"glasses_12", zh:"可以，我们有POS机。", py:"Kěyǐ, wmen yǒu POS jī.", ru:"Да, у нас есть терминал.", who:"w", speaker:"🧑‍💼 Продавец" },
+      { img:"glasses_12", zh:"可以，我们有POS机。", py:"Kěyǐ, wǒmen yǒu POS jī.", ru:"Да, у нас есть терминал.", who:"w", speaker:"🧑‍💼 Продавец" },
       { img:"glasses_13", zh:"我有会员卡，可以打折吗？", py:"Wǒ yǒu huìyuán kǎ, kěyǐ dǎzhé ma?", ru:"У меня есть бонусная карта, можно скидку?", who:"w", speaker:"👱‍♀️ Lena" },
-      { img:"glasses_14", zh:"当然！打九折，二百七十块。", py:"Dāngrán! Dǎ jiǔ zhé, èrbǎi qīshí kuài.", ru:"Конечно! Скидка 10%, двести семьдесят юаней.", who:"w", speaker:"🧑‍💼 Продавец" }
+      { img:"glasses_14", zh:"当然！打九折，二百七十块。", py:"Dāngrán! Dǎ jiǔ zhé, èrbǎi qīshí kuài.", ru:"Конечно! Скидка 10%, двести семьдесят юаней.", who:"w", speaker:"‍💼 Продавец" }
+    ]
+  },
+  beach: {
+    title: "🏖️ 我们去海滩吧！ — Пошли на пляж!", subtitle: "Пляжный отдых с друзьями: пиво, рыбка, семечки, колонка", switchLabel: " McDonald's",
+    panels: [
+      { img:"beach_01", zh:"我们去海滩吧！", py:"Wǒmen qù hǎitān ba!", ru:"Пошли на пляж!", who:"w", speaker:" Roma" },
+      { img:"beach_02", zh:"好主意！天气真好。", py:"Hǎo zhǔyì! Tiānqì zhēn hǎo.", ru:"Отличная идея! Погода прекрасная.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"beach_03", zh:"我们带什么？", py:"Wǒmen dài shénme?", ru:"Что мы возьмём с собой?", who:"s", speaker:"👧 Nastya" },
+      { img:"beach_04", zh:"带一些啤酒和烤鱼。", py:"Dài yīxiē píjiǔ hé kǎoyú.", ru:"Возьмём пиво и копчёную рыбку.", who:"w", speaker:"👦 Roma" },
+      { img:"beach_05", zh:"还有瓜子和饮料。", py:"Hái yǒu guāzi hé yǐnliào.", ru:"А ещё семечки и напитки.", who:"w", speaker:"👦 Sergey" },
+      { img:"beach_06", zh:"别忘了带垫子和帐篷。", py:"Bié wàngle dài diànzi hé zhàngpéng.", ru:"Не забудьте взять коврики и тент.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"beach_07", zh:"我带音响！", py:"Wǒ dài yīnxiǎng!", ru:"Я возьму колонку!", who:"s", speaker:"👧 Nastya" },
+      { img:"beach_08", zh:"太好了，我们出发吧！", py:"Tài hǎo le, wǒmen chūfā ba!", ru:"Отлично, поехали!", who:"w", speaker:"👦 Sergey" },
+      { img:"beach_09", zh:"我们到了！", py:"Wǒmen dào le!", ru:"Мы приехали!", who:"w", speaker:"👦 Roma" },
+      { img:"beach_10", zh:"这里真美！", py:"Zhèlǐ zhēn měi!", ru:"Здесь так красиво!", who:"w", speaker:"‍♀️ Lena" },
+      { img:"beach_11", zh:"我们去游泳吧！", py:"Wǒmen qù yóuyǒng ba!", ru:"Пошли купаться!", who:"s", speaker:"👧 Nastya" },
+      { img:"beach_12", zh:"水真凉快！", py:"Shuǐ zhēn liángkuai!", ru:"Вода такая прохладная!", who:"w", speaker:"👦 Sergey" },
+      { img:"beach_13", zh:"来喝啤酒吃鱼！", py:"Lái hē píjiǔ chī yú!", ru:"Давайте пить пиво и есть рыбку!", who:"w", speaker:"👦 Roma" },
+      { img:"beach_14", zh:"今天真开心！", py:"Jīntiān zhēn kāixīn!", ru:"Сегодня так здорово!", who:"w", speaker:"‍♀️ Lena" }
     ]
   }
 };
 
-const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday', 'battery', 'directions', 'sick', 'glasses'];
-const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme', battery: 'battery-theme', directions: 'directions-theme', sick: 'sick-theme', glasses: 'glasses-theme' };
-const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения', battery: '🔋 Разрядился телефон', directions: '🗺️ Как пройти?', sick: '🤒 Я простудилась', glasses: '👓 Поход за очками' };
+const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday', 'battery', 'directions', 'sick', 'glasses', 'beach'];
+const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme', battery: 'battery-theme', directions: 'directions-theme', sick: 'sick-theme', glasses: 'glasses-theme', beach: 'beach-theme' };
+const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: ' Новая работа', wallet: '👛 Потерянный кошелёк', birthday: ' День рождения', battery: '🔋 Разрядился телефон', directions: '🗺️ Как пройти?', sick: '🤒 Я простудилась', glasses: '👓 Поход за очками', beach: '🏖️ Пошли на пляж!' };
 
 const REPEAT_PAUSE = 2500;
 
@@ -530,7 +569,7 @@ function wakeUpSpeechSynthesis() {
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('ChineseLearningAudio_v7', 1);
+    const request = indexedDB.open('ChineseLearningAudio_v8', 1);
     request.onupgradeneeded = (event) => { const db = event.target.result; if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings'); };
     request.onsuccess = (event) => { db = event.target.result; resolve(db); };
     request.onerror = (event) => reject(event.target.error);
@@ -568,8 +607,8 @@ async function renderScene(sceneKey) {
 
   let html = "";
   data.panels.forEach((p, i) => {
-    const bubbleClass = p.who === "w" ? "waiter" : "sailor";
-    const speakerClass = p.who === "w" ? "w" : "s";
+    const bubbleClass = p.who === "s" ? "sailor" : "waiter";
+    const speakerClass = p.who === "s" ? "s" : "w";
     const imgSrc = `img/${p.img}.png`;
     const isLast = i === data.panels.length - 1;
     html += `
@@ -669,7 +708,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     recBtn.classList.add('recording');
     if (panelEl) panelEl.classList.add('recording-panel');
     recorder.start();
-    showToast('🔴 Запись...');
+    showToast(' Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
   } catch (err) { console.error(err); showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
 }
