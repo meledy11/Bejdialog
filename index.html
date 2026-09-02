@@ -351,7 +351,7 @@
 <div class="manga-container" id="panelsContainer"></div>
 
 <div class="speed-control">
-  <div class="speed-label"> Скорость:</div>
+  <div class="speed-label">🐢 Скорость:</div>
   <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
   <div class="speed-value" id="speedValue">0.55x</div>
 </div>
@@ -364,143 +364,143 @@ const SCENES = {
   mcdonalds: {
     title: "🍔 在麦当劳 — Диалог в McDonald's", subtitle: "Листайте вниз для перехода между карточками", switchLabel: "🤝 Просьба о помощи",
     panels: [
-      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:" Покупатель" },
-      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"‍🍳 Персонал" },
-      { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7558", zh:"你好！我要一份巨无霸套餐。", py:"Nǐ hǎo! Wǒ yào yī fèn jùwúbà tàocān.", ru:"Привет! Мне набор Биг Мак, пожалуйста.", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм… что же выбрать?", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Один чизбургер и большую картошку, пожалуйста.", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Подскажите, есть сегодня вегетарианские блюда?", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда мне один овощной бургер!", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Можно оплатить по QR-коду?", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Да, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍🍳 Персонал" },
       { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Вот ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
-      { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7591", zh:"再来一个冰淇淋！", py:"Zài lái yīgè bīngqílín!", ru:"Ещё одно мороженое!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Покупатель" },
-      { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Покупатель" }
+      { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7591", zh:"再来一个冰淇淋！", py:"Zài lái yīgè bīngqílín!", ru:"Ещё одно мороженое!", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7566", zh:"好香滑啊！", py:"Hǎo xiāng huá a!", ru:"Такое нежное и сливочное!", who:"s", speaker:"👧 Nastya" },
+      { img:"IMG_7567", zh:"再见！谢谢光临！欢迎下次再来！", py:"Zàijiàn! Xièxie guānglín! Huānyíng xiàcì zài lái!", ru:"До свидания! Спасибо, приходите ещё!", who:"s", speaker:"👧 Nastya" }
     ]
   },
   help: {
-    title: "🤝 帮我个忙 — Просьба о помощи", subtitle: "Диалог на улице Беверли-Хиллз", switchLabel: " Опоздание",
+    title: "🤝 帮我个忙 — Просьба о помощи", subtitle: "Диалог на улице Беверли-Хиллз", switchLabel: "⏰ Опоздание",
     panels: [
-      { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:" Девушка" },
-      { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:" Парень" },
-      { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:"👧 Девушка" },
+      { img:"help_01", zh:"能帮我个忙吗？", py:"Néng bāng wǒ gè máng ma?", ru:"Можешь сделать мне одолжение?", who:"s", speaker:"👧 Nastya" },
+      { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какое? Говори.", who:"w", speaker:"👦 Парень" },
+      { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги перенести эту коробку.", who:"s", speaker:"👧 Nastya" },
       { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Без проблем, не волнуйся!", who:"w", speaker:"👦 Парень" },
-      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:" Девушка" },
-      { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:" Парень" }
+      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо! Обещаю угостить в следующий раз.", who:"s", speaker:"👧 Nastya" },
+      { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:"👦 Парень" }
     ]
   },
   late: {
-    title: "⏰ 对不起，迟到了 — Опоздание на встречу", subtitle: "Диалог в ресторане", switchLabel: " Что делать?",
+    title: "⏰ 对不起，迟到了 — Опоздание на встречу", subtitle: "Диалог в ресторане", switchLabel: "📱 Что делать?",
     panels: [
-      { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuqǐ, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Девушка" },
+      { img:"late_01", zh:"对不起，迟到了！路上堵车。", py:"Duìbuqǐ, chídào le! Lùshang dǔchē.", ru:"Извини, опоздала! В пробке стояла.", who:"s", speaker:"👧 Nastya" },
       { img:"late_02", zh:"没关系，我也刚到。", py:"Méiguānxi, wǒ yě gāng dào.", ru:"Ничего, я тоже только пришёл.", who:"w", speaker:"👦 Парень" },
-      { img:"late_03", zh:"久等了，不好意思。", py:"Jiǔ děng le, bù hǎoyìsi.", ru:"Заставила ждать, извини.", who:"s", speaker:"👧 Девушка" },
-      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:" Парень" },
-      { img:"late_05", zh:"不赶，我们慢慢聊。", py:"Bù gǎn, wǒmen mànmàn liáo.", ru:"Не спешу, поболтаем не торопясь.", who:"s", speaker:"👧 Девушка" }
+      { img:"late_03", zh:"久等了，不好意思。", py:"Jiǔ děng le, bù hǎoyìsi.", ru:"Заставила ждать, извини.", who:"s", speaker:"👧 Nastya" },
+      { img:"late_04", zh:"没事，你赶时间吗？", py:"Méi shì, nǐ gǎn shíjiān ma?", ru:"Ничего, ты спешишь?", who:"w", speaker:"👦 Парень" },
+      { img:"late_05", zh:"不赶，我们慢慢聊。", py:"Bù gǎn, wǒmen mànmàn liáo.", ru:"Не спешу, поболтаем не торопясь.", who:"s", speaker:"👧 Nastya" }
     ]
   },
   phone: {
-    title: "📱 怎么办？ — Что делать?", subtitle: "Диалог в кафе о сломанном телефоне", switchLabel: " Новая работа",
+    title: "📱 怎么办？ — Что делать?", subtitle: "Диалог в кафе о сломанном телефоне", switchLabel: "💼 Новая работа",
     panels: [
-      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Девушка" },
-      { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:" Друг" },
-      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Девушка" },
+      { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shujī huài le, zěnme bàn?", ru:"У меня телефон сломался, что делать?", who:"s", speaker:"👧 Nastya" },
+      { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
+      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Nastya" },
       { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко сервисный центр, недорого и качественно.", who:"w", speaker:"👦 Друг" },
-      { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:"👧 Девушка" }
+      { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:"👧 Nastya" }
     ]
   },
   job: {
     title: "💼 我找到新工作了！ — Новая работа!", subtitle: "Диалог с подругой на улице", switchLabel: "👛 Потерянный кошелёк",
     panels: [
-      { img:"job_01", zh:"我找到新工作了！", py:"Wǒ zhǎodào xīn gōngzuò le!", ru:"Я нашла новую работу!", who:"s", speaker:"👧 Девушка" },
-      { img:"job_02", zh:"真的吗？太棒了！", py:"Zhēn de ma? Tài bàng le!", ru:"Правда? Потрясающе!", who:"w", speaker:"👱♀️ Подруга" },
-      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:"👧 Девушка" },
-      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱‍♀️ Подруга" },
-      { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wǒmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:"👧 Девушка" },
-      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Подруга" }
+      { img:"job_01", zh:"我找到新工作了！", py:"Wǒ zhǎodào xīn gōngzuò le!", ru:"Я нашла новую работу!", who:"s", speaker:"👧 Nastya" },
+      { img:"job_02", zh:"真的吗？太棒了！", py:"Zhēn de ma? Tài bàng le!", ru:"Правда? Потрясающе!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"job_03", zh:"你确定是真的？", py:"Nǐ quèdìng shì zhēn de?", ru:"Ты уверена, что это правда?", who:"s", speaker:"👧 Nastya" },
+      { img:"job_04", zh:"千真万确！", py:"Qiān zhēn wàn què!", ru:"Абсолютно точно!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"job_05", zh:"你真厉害！我们庆祝一下！", py:"Nǐ zhēn lìhai! Wǒmen qìngzhù yīxià!", ru:"Ты крутая! Давай отметим!", who:"s", speaker:"👧 Nastya" },
+      { img:"job_06", zh:"好！今晚一起吃饭！太好了！", py:"Hǎo! Jīnwǎn yīqǐ chīfàn! Tài hǎo le!", ru:"Хорошо! Сегодня вместе поужинаем!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   wallet: {
     title: "👛 我的钱包不见了！ — Потерянный кошелёк", subtitle: "Диалог на улице и в кафе", switchLabel: "🎂 День рождения",
     panels: [
-      { img:"wallet_01", zh:"我的钱包不见了！", py:"Wǒ de qiánbāo bù jiàn le!", ru:"Мой кошелёк пропал!", who:"s", speaker:"👧 Девушка" },
-      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zhǎo.", ru:"Не паникуй, вместе найдём.", who:"w", speaker:"👱‍♀️ Подруга" },
-      { img:"wallet_03", zh:"我刚才还在咖啡馆的。", py:"Wǒ gāngcái hái zài kāfēiguǎn de.", ru:"Он только что был в кафе.", who:"s", speaker:"👧 Девушка" },
-      { img:"wallet_04", zh:"我们回去看看吧！", py:"Wǒmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Подруга" },
-      { img:"wallet_05", zh:"找到了！在这里！", py:"Zhǎodào le! Zài zhèlǐ!", ru:"Нашла! Вот он!", who:"s", speaker:"👧 Девушка" },
-      { img:"wallet_06", zh:"太好了！下次要小心！", py:"Tài hǎo le! Xiàcì yào xiǎoxīn!", ru:"Отлично! В следующий раз будь осторожнее!", who:"w", speaker:"👱‍♀️ Подруга" }
+      { img:"wallet_01", zh:"我的钱包不见了！", py:"Wǒ de qiánbāo bù jiàn le!", ru:"Мой кошелёк пропал!", who:"s", speaker:"👧 Nastya" },
+      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zhǎo.", ru:"Не паникуй, вместе найдём.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"wallet_03", zh:"我刚才还在咖啡馆的。", py:"Wǒ gāngcái hái zài kāfēiguǎn de.", ru:"Он только что был в кафе.", who:"s", speaker:"👧 Nastya" },
+      { img:"wallet_04", zh:"我们回去看看吧！", py:"Wǒmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"wallet_05", zh:"找到了！在这里！", py:"Zhǎodào le! Zài zhèlǐ!", ru:"Нашла! Вот он!", who:"s", speaker:"👧 Nastya" },
+      { img:"wallet_06", zh:"太好了！下次要小心！", py:"Tài hǎo le! Xiàcì yào xiǎoxīn!", ru:"Отлично! В следующий раз будь осторожнее!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   birthday: {
-    title: "🎂 生日快乐！ — С днём рождения!", subtitle: "Праздничный сюрприз для подруги", switchLabel: " Разрядился телефон",
+    title: "🎂 生日快乐！ — С днём рождения!", subtitle: "Праздничный сюрприз для подруги", switchLabel: "🔋 Разрядился телефон",
     panels: [
-      { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:" Девушка (омбре)" },
-      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù wǒ!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:" Девушка (омбре)" },
-      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gǎndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"👩‍ Брюнетка-именинница" }
+      { img:"birthday_01", zh:"我有一个秘密！", py:"Wǒ yǒu yīgè mìmì!", ru:"У меня есть секрет!", who:"s", speaker:"👧 Nastya" },
+      { img:"birthday_02", zh:"什么秘密？告诉我！", py:"Shénme mìmì? Gàosù wǒ!", ru:"Какой секрет? Расскажи!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"birthday_03", zh:"今天是她的生日。", py:"Jīntiān shì tā de shēngrì.", ru:"Сегодня её день рождения.", who:"s", speaker:"👧 Nastya" },
+      { img:"birthday_04", zh:"我们给她一个惊喜吧！", py:"Wǒmen gěi tā yīgè jīngxǐ ba!", ru:"Давай сделаем ей сюрприз!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"birthday_05", zh:"生日快乐！", py:"Shēngrì kuàilè!", ru:"С днём рождения!", who:"s", speaker:"👧 Nastya" },
+      { img:"birthday_06", zh:"太感动了！谢谢你们！", py:"Tài gǎndòng le! Xièxie nǐmen!", ru:"Так трогательно! Спасибо вам!", who:"w", speaker:"👩‍🦰 Именинница" }
     ]
   },
   battery: {
     title: "🔋 我的手机没电了 — Разрядился телефон", subtitle: "Диалог на улице о павербанке", switchLabel: "🗺️ Как пройти?",
     panels: [
-      { img:"battery_01", zh:"我的手机没电了！", py:"Wǒ de shǒujī méi diàn le!", ru:"У меня телефон разрядился!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"battery_02", zh:"怎么办？", py:"Zěnme bàn?", ru:"Что делать?", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"battery_03", zh:"你有充电宝吗？", py:"Nǐ yǒu chōngdiànbǎo ma?", ru:"У тебя есть павербанк?", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"battery_04", zh:"有！给你。", py:"Yǒu! Gěi nǐ.", ru:"Есть! Держи.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"battery_05", zh:"太好了，谢谢！", py:"Tài hǎo le, xièxie!", ru:"Отлично, спасибо!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"battery_06", zh:"不用客气！", py:"Búyòng kèqi!", ru:"Не за что!", who:"w", speaker:"👱‍♀️ Блондинка" }
+      { img:"battery_01", zh:"我的手机没电了！", py:"Wǒ de shǒujī méi diàn le!", ru:"У меня телефон разрядился!", who:"s", speaker:"👧 Nastya" },
+      { img:"battery_02", zh:"怎么办？", py:"Zěnme bàn?", ru:"Что делать?", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"battery_03", zh:"你有充电宝吗？", py:"Nǐ yǒu chōngdiànbǎo ma?", ru:"У тебя есть павербанк?", who:"s", speaker:"👧 Nastya" },
+      { img:"battery_04", zh:"有！给你。", py:"Yǒu! Gěi nǐ.", ru:"Есть! Держи.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"battery_05", zh:"太好了，谢谢！", py:"Tài hǎo le, xièxie!", ru:"Отлично, спасибо!", who:"s", speaker:"👧 Nastya" },
+      { img:"battery_06", zh:"不用客气！", py:"Búyòng kèqi!", ru:"Не за что!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   directions: {
-    title: "🗺️ 请问，怎么走？ — Как пройти?", subtitle: "Диалог на улице о дороге до метро", switchLabel: " Я простудилась",
+    title: "🗺️ 请问，怎么走？ — Как пройти?", subtitle: "Диалог на улице о дороге до метро", switchLabel: "🤒 Я простудилась",
     panels: [
-      { img:"directions_01", zh:"请问，地铁站怎么走？", py:"Qǐngwèn, dìtiě zhàn zěnme zǒu?", ru:"Подскажите, как пройти до станции метро?", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"directions_02", zh:"直走，然后左转。", py:"Zhí zǒu, ránhòu zuǒ zhuǎn.", ru:"Идите прямо, потом поверните налево.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"directions_03", zh:"远吗？要走多久？", py:"Yuǎn ma? Yào zǒu duōjiǔ?", ru:"Далеко? Сколько идти?", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"directions_04", zh:"不远，大概十分钟。", py:"Bù yuǎn, dàgài shí fēnzhōng.", ru:"Недалеко, примерно десять минут.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"directions_05", zh:"谢谢你的帮助！", py:"Xièxie nǐ de bāngzhù!", ru:"Спасибо за помощь!", who:"s", speaker:" Девушка (омбре)" },
-      { img:"directions_06", zh:"不客气，路上小心！", py:"Bú kèqi, lùshang xiǎoxīn!", ru:"Не за что, осторожней на дороге!", who:"w", speaker:"👱‍♀️ Блондинка" }
+      { img:"directions_01", zh:"请问，地铁站怎么走？", py:"Qǐngwèn, dìtiě zhàn zěnme zǒu?", ru:"Подскажите, как пройти до станции метро?", who:"s", speaker:"👧 Nastya" },
+      { img:"directions_02", zh:"直走，然后左转。", py:"Zhí zǒu, ránhòu zuǒ zhuǎn.", ru:"Идите прямо, потом поверните налево.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"directions_03", zh:"远吗？要走多久？", py:"Yuǎn ma? Yào zǒu duōjiǔ?", ru:"Далеко? Сколько идти?", who:"s", speaker:"👧 Nastya" },
+      { img:"directions_04", zh:"不远，大概十分钟。", py:"Bù yuǎn, dàgài shí fēnzhōng.", ru:"Недалеко, примерно десять минут.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"directions_05", zh:"谢谢你的帮助！", py:"Xièxie nǐ de bāngzhù!", ru:"Спасибо за помощь!", who:"s", speaker:"👧 Nastya" },
+      { img:"directions_06", zh:"不客气，路上小心！", py:"Bú kèqi, lùshang xiǎoxīn!", ru:"Не за что, осторожней на дороге!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   sick: {
     title: "🤒 我感冒了 — Я простудилась", subtitle: "Диалог дома о заботе и дружбе", switchLabel: "👓 Поход за очками",
     panels: [
-      { img:"sick_01", zh:"我感冒了，很难受。", py:"Wǒ gǎnmào le, hěn nánshòu.", ru:"Я простудилась, мне очень плохо.", who:"s", speaker:" Девушка (омбре)" },
-      { img:"sick_02", zh:"别担心，我来照顾你。", py:"Bié dānxīn, wǒ lái zhàogù nǐ.", ru:"Не волнуйся, я позабочусь о тебе.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"sick_03", zh:"谢谢你来看我。", py:"Xièxie nǐ lái kàn wǒ.", ru:"Спасибо, что пришла навестить.", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"sick_04", zh:"我给你买了药和热茶。", py:"Wǒ gěi nǐ mǎi le yào hé rè chá.", ru:"Я купила тебе лекарства и горячий чай.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"sick_05", zh:"你真好，我感觉好多了。", py:"Nǐ zhēn hǎo, wǒ gǎnjué hǎo duō le.", ru:"Ты такая хорошая, мне уже лучше.", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"sick_06", zh:"好好休息，明天会好的！", py:"Hǎohǎo xiūxi, míngtiān huì hǎo de!", ru:"Отдыхай хорошенько, завтра будет лучше!", who:"w", speaker:"👱‍♀️ Блондинка" }
+      { img:"sick_01", zh:"我感冒了，很难受。", py:"Wǒ gǎnmào le, hěn nánshòu.", ru:"Я простудилась, мне очень плохо.", who:"s", speaker:"👧 Nastya" },
+      { img:"sick_02", zh:"别担心，我来照顾你。", py:"Bié dānxīn, wǒ lái zhàogù nǐ.", ru:"Не волнуйся, я позабочусь о тебе.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"sick_03", zh:"谢谢你来看我。", py:"Xièxie nǐ lái kàn wǒ.", ru:"Спасибо, что пришла навестить.", who:"s", speaker:"👧 Nastya" },
+      { img:"sick_04", zh:"我给你买了药和热茶。", py:"Wǒ gěi nǐ mǎi le yào hé rè chá.", ru:"Я купила тебе лекарства и горячий чай.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"sick_05", zh:"你真好，我感觉好多了。", py:"Nǐ zhēn hǎo, wǒ gǎnjué hǎo duō le.", ru:"Ты такая хорошая, мне уже лучше.", who:"s", speaker:"👧 Nastya" },
+      { img:"sick_06", zh:"好好休息，明天会好的！", py:"Hǎohǎo xiūxi, míngtiān huì hǎo de!", ru:"Отдыхай хорошенько, завтра будет лучше!", who:"w", speaker:"👱‍♀️ Lena" }
     ]
   },
   glasses: {
     title: "👓 我们去买眼镜吧！ — Пошли за очками!", subtitle: "Диалог в магазине оптики", switchLabel: "🍔 McDonald's",
     panels: [
-      { img:"glasses_01", zh:"我们去买眼镜吧！", py:"Wǒmen qù mǎi yǎnjìng ba!", ru:"Пошли купим очки!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"glasses_02", zh:"好主意！我需要新眼镜。", py:"Hǎo zhyì! Wǒ xūyào xīn yǎnjìng.", ru:"Отличная идея! Мне нужны новые очки.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"glasses_03", zh:"看，这家店有很多款式！", py:"Kàn, zhè jiā diàn yǒu hěn duō kuǎnshì!", ru:"Смотри, в этом магазине много моделей!", who:"s", speaker:" Девушка (омбре)" },
-      { img:"glasses_04", zh:"我试试这个黑色的。", py:"Wǒ shìshi zhège hēisè de.", ru:"Я примерю эти чёрные.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"glasses_05", zh:"哈哈，你看起来像老师！", py:"Hāhā, nǐ kàn qǐlái xiàng lǎoshī!", ru:"Ха-ха, ты выглядишь как учительница!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"glasses_06", zh:"你呢？试试这个粉色的！", py:"Nǐ ne? Shìshi zhège fěnsè de!", ru:"А ты? Примерь эти розовые!", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"glasses_07", zh:"哇，这个太可爱了！", py:"Wa, zhège tài kě'ài le!", ru:"Вау, эти такие милые!", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"glasses_08", zh:"我觉得这个最适合你。", py:"Wǒ juéde zhège zuì shìhé nǐ.", ru:"Мне кажется, эти тебе больше всего подходят.", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"glasses_09", zh:"好的，我买这个！", py:"Hǎo de, wǒ mǎi zhège!", ru:"Хорошо, беру эти!", who:"s", speaker:" Девушка (омбре)" },
+      { img:"glasses_01", zh:"我们去买眼镜吧！", py:"Wǒmen qù mǎi yǎnjìng ba!", ru:"Пошли купим очки!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_02", zh:"好主意！我需要新眼镜。", py:"Hǎo zhǔyì! Wǒ xūyào xīn yǎnjìng.", ru:"Отличная идея! Мне нужны новые очки.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_03", zh:"看，这家店有很多款式！", py:"Kàn, zhè jiā diàn yǒu hěn duō kuǎnshì!", ru:"Смотри, в этом магазине много моделей!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_04", zh:"我试试这个黑色的。", py:"Wǒ shìshi zhège hēisè de.", ru:"Я примерю эти чёрные.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_05", zh:"哈哈，你看起来像老师！", py:"Hāhā, nǐ kàn qǐlái xiàng lǎoshī!", ru:"Ха-ха, ты выглядишь как учительница!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_06", zh:"你呢？试试这个粉色的！", py:"Nǐ ne? Shìshi zhège fěnsè de!", ru:"А ты? Примерь эти розовые!", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_07", zh:"哇，这个太可爱了！", py:"Wa, zhège tài kě'ài le!", ru:"Вау, эти такие милые!", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_08", zh:"我觉得这个最适合你。", py:"Wǒ juéde zhège zuì shìhé nǐ.", ru:"Мне кажется, эти тебе больше всего подходят.", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_09", zh:"好的，我买这个！", py:"Hǎo de, wǒ mǎi zhège!", ru:"Хорошо, беру эти!", who:"s", speaker:"👧 Nastya" },
       { img:"glasses_10", zh:"您好，一共三百块。", py:"Nín hǎo, yīgòng sānbǎi kuài.", ru:"Здравствуйте, итого триста юаней.", who:"w", speaker:"🧑‍💼 Продавец" },
-      { img:"glasses_11", zh:"可以刷卡吗？", py:"Kěyǐ shuākǎ ma?", ru:"Можно оплатить картой?", who:"s", speaker:"👧 Девушка (омбре)" },
-      { img:"glasses_12", zh:"可以，我们有POS机。", py:"Kěyǐ, wǒmen yǒu POS jī.", ru:"Да, у нас есть терминал.", who:"w", speaker:"🧑‍ Продавец" },
-      { img:"glasses_13", zh:"我有会员卡，可以打折吗？", py:"Wǒ yǒu huìyuán kǎ, kěyǐ dǎzhé ma?", ru:"У меня есть бонусная карта, можно скидку?", who:"w", speaker:"👱‍♀️ Блондинка" },
-      { img:"glasses_14", zh:"当然！打九折，二百七十块。", py:"Dāngrán! Dǎ jiǔ zhé, èrbǎi qīshí kuài.", ru:"Конечно! Скидка 10%, двести семьдесят юаней.", who:"w", speaker:"🧑‍ Продавец" }
+      { img:"glasses_11", zh:"可以刷卡吗？", py:"Kěyǐ shuākǎ ma?", ru:"Можно оплатить картой?", who:"s", speaker:"👧 Nastya" },
+      { img:"glasses_12", zh:"可以，我们有POS机。", py:"Kěyǐ, wmen yǒu POS jī.", ru:"Да, у нас есть терминал.", who:"w", speaker:"🧑‍💼 Продавец" },
+      { img:"glasses_13", zh:"我有会员卡，可以打折吗？", py:"Wǒ yǒu huìyuán kǎ, kěyǐ dǎzhé ma?", ru:"У меня есть бонусная карта, можно скидку?", who:"w", speaker:"👱‍♀️ Lena" },
+      { img:"glasses_14", zh:"当然！打九折，二百七十块。", py:"Dāngrán! Dǎ jiǔ zhé, èrbǎi qīshí kuài.", ru:"Конечно! Скидка 10%, двести семьдесят юаней.", who:"w", speaker:"🧑‍💼 Продавец" }
     ]
   }
 };
 
 const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday', 'battery', 'directions', 'sick', 'glasses'];
 const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme', battery: 'battery-theme', directions: 'directions-theme', sick: 'sick-theme', glasses: 'glasses-theme' };
-const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: ' Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения', battery: '🔋 Разрядился телефон', directions: '🗺️ Как пройти?', sick: '🤒 Я простудилась', glasses: '👓 Поход за очками' };
+const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения', battery: '🔋 Разрядился телефон', directions: '🗺️ Как пройти?', sick: '🤒 Я простудилась', glasses: '👓 Поход за очками' };
 
 const REPEAT_PAUSE = 2500;
 
@@ -530,7 +530,7 @@ function wakeUpSpeechSynthesis() {
 
 function initDB() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('ChineseLearningAudio_v6', 1);
+    const request = indexedDB.open('ChineseLearningAudio_v7', 1);
     request.onupgradeneeded = (event) => { const db = event.target.result; if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings'); };
     request.onsuccess = (event) => { db = event.target.result; resolve(db); };
     request.onerror = (event) => reject(event.target.error);
@@ -773,7 +773,7 @@ function highlightText(sceneKey, idx, lang) {
   if(replayBtn) replayBtn.classList.add('playing');
   if(nextBtn) nextBtn.classList.add('playing');
   if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇷 Русский...';
+  if(npT) npT.textContent = lang === 'zh' ? '🇨🇳 Китайский...' : '🇷🇺 Русский...';
 }
 function clearHighlight(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
