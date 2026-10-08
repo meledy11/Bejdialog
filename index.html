@@ -1,480 +1,118 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>🇨 Учим китайский</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { height: 100%; overflow: hidden; position: fixed; width: 100%; }
-    body {
-      background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 50%, #ffd6b3 100%);
-      font-family: 'Comfortaa', 'Noto Sans SC', sans-serif;
-      overscroll-behavior: none;
-      -webkit-text-size-adjust: 100%;
-      transition: background 0.5s ease;
-    }
-    body.help-theme { background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 50%, #ffd699 100%); }
-    body.late-theme { background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 50%, #ffd6d6 100%); }
-    body.phone-theme { background: linear-gradient(180deg, #e8f5ff 0%, #d6eeff 50%, #b3ddff 100%); }
-    body.job-theme { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 50%, #ffe999 100%); }
-    body.wallet-theme { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 50%, #b3ffb3 100%); }
-    body.birthday-theme { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 50%, #ffb3dd 100%); }
-    body.battery-theme { background: linear-gradient(180deg, #fff8e0 0%, #ffe8a0 50%, #ffd660 100%); }
-    body.directions-theme { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%); }
-    body.sick-theme { background: linear-gradient(180deg, #fff5f0 0%, #ffe8e0 50%, #ffd6cc 100%); }
-    body.glasses-theme { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%); }
-    body.beach-theme { background: linear-gradient(180deg, #e0f7fa 0%, #fff9c4 50%, #b2ebf2 100%); }
-    body.cosmetics-theme { background: linear-gradient(180deg, #fce4ec 0%, #e3f2fd 50%, #f8bbd0 100%); }
-    body.cinema-theme { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 50%, #ce93d8 100%); }
-    body.restaurant-theme { background: linear-gradient(180deg, #fff0f5 0%, #ffe4e1 50%, #ffdab9 100%); }
-    body.thailand-theme { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%); }
-    body.friends-theme { background: linear-gradient(180deg, #f0fff4 0%, #e8f5e9 50%, #c8e6c9 100%); }
-    body.guest-theme { background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 50%, #ffe082 100%); }
-
-    .manga-container { max-width: 100%; height: 100vh; height: -webkit-fill-available; overflow-y: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
-    .scene-title {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: linear-gradient(135deg, #da291c, #ff4b2b, #ffc72c);
-      padding: env(safe-area-inset-top, 12px) 18px 12px;
-      text-align: center; color: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: background 0.5s ease;
-    }
-    body.help-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
-    body.late-theme .scene-title { background: linear-gradient(135deg, #9c27b0, #e91e63, #f48fb1); }
-    body.phone-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #2196f3, #64b5f6); }
-    body.job-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
-    body.wallet-theme .scene-title { background: linear-gradient(135deg, #4caf50, #8bc34a, #cddc39); }
-    body.birthday-theme .scene-title { background: linear-gradient(135deg, #e91e63, #f06292, #f8bbd0); }
-    body.battery-theme .scene-title { background: linear-gradient(135deg, #ff9800, #ffc107, #ffeb3b); color: #5d4037; }
-    body.directions-theme .scene-title { background: linear-gradient(135deg, #00acc1, #26c6da, #80deea); }
-    body.sick-theme .scene-title { background: linear-gradient(135deg, #ff7043, #ff8a65, #ffab91); }
-    body.glasses-theme .scene-title { background: linear-gradient(135deg, #8e24aa, #ab47bc, #ce93d8); }
-    body.beach-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #ffeb3b, #00acc1); color: #006064; }
-    body.cosmetics-theme .scene-title { background: linear-gradient(135deg, #ec407a, #ab47bc, #42a5f5); }
-    body.cinema-theme .scene-title { background: linear-gradient(135deg, #8e24aa, #ba68c8, #f06292); }
-    body.restaurant-theme .scene-title { background: linear-gradient(135deg, #e91e63, #ff6f61, #ffc72c); }
-    body.thailand-theme .scene-title { background: linear-gradient(135deg, #00bcd4, #26c6da, #ffca28); color: #006064; }
-    body.friends-theme .scene-title { background: linear-gradient(135deg, #66bb6a, #aed581, #f48fb1); }
-    body.guest-theme .scene-title { background: linear-gradient(135deg, #ff8f00, #ffb300, #ffe082); color: #4e342e; }
-    .scene-title h1 { font-size: 16px; margin-bottom: 2px; }
-    .scene-title p { font-size: 11px; opacity: 0.9; }
-
-    .controls-bar {
-      position: fixed; top: calc(env(safe-area-inset-top, 12px) + 50px);
-      left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: center; gap: 10px;
-      padding: 8px 18px; pointer-events: none;
-    }
-    .control-btn {
-      pointer-events: auto; background: rgba(255,255,255,0.95);
-      border: 2px solid #da291c; color: #da291c;
-      padding: 8px 16px; border-radius: 20px;
-      font-size: 12px; font-weight: 700; cursor: pointer;
-      font-family: inherit; transition: all 0.2s ease; backdrop-filter: blur(10px);
-    }
-    body.help-theme .control-btn { border-color: #ff9800; color: #ff9800; }
-    body.late-theme .control-btn { border-color: #9c27b0; color: #9c27b0; }
-    body.phone-theme .control-btn { border-color: #00bcd4; color: #00bcd4; }
-    body.job-theme .control-btn { border-color: #ff9800; color: #ff9800; }
-    body.wallet-theme .control-btn { border-color: #4caf50; color: #4caf50; }
-    body.birthday-theme .control-btn { border-color: #e91e63; color: #e91e63; }
-    body.battery-theme .control-btn { border-color: #ff9800; color: #ff9800; }
-    body.directions-theme .control-btn { border-color: #00acc1; color: #00acc1; }
-    body.sick-theme .control-btn { border-color: #ff7043; color: #ff7043; }
-    body.glasses-theme .control-btn { border-color: #8e24aa; color: #8e24aa; }
-    body.beach-theme .control-btn { border-color: #00bcd4; color: #00bcd4; }
-    body.cosmetics-theme .control-btn { border-color: #ec407a; color: #ec407a; }
-    body.cinema-theme .control-btn { border-color: #8e24aa; color: #8e24aa; }
-    body.restaurant-theme .control-btn { border-color: #e91e63; color: #e91e63; }
-    body.thailand-theme .control-btn { border-color: #00bcd4; color: #00bcd4; }
-    body.friends-theme .control-btn { border-color: #66bb6a; color: #66bb6a; }
-    body.guest-theme .control-btn { border-color: #ff8f00; color: #ff8f00; }
-    .control-btn:active { transform: scale(0.95); opacity: 0.8; }
-    .control-btn.stop-btn { background: rgba(244,67,54,0.95); border-color: #f44336; color: white; display: none; }
-    .control-btn.stop-btn.visible { display: block; }
-
-    .speed-control {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.98);
-      padding: 10px 18px env(safe-area-inset-bottom, 10px);
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .speed-label { font-weight: 700; color: #da291c; font-size: 11px; }
-    body.help-theme .speed-label { color: #ff9800; }
-    body.late-theme .speed-label { color: #9c27b0; }
-    body.phone-theme .speed-label { color: #00bcd4; }
-    body.job-theme .speed-label { color: #ff9800; }
-    body.wallet-theme .speed-label { color: #4caf50; }
-    body.birthday-theme .speed-label { color: #e91e63; }
-    body.battery-theme .speed-label { color: #ff9800; }
-    body.directions-theme .speed-label { color: #00acc1; }
-    body.sick-theme .speed-label { color: #ff7043; }
-    body.glasses-theme .speed-label { color: #8e24aa; }
-    body.beach-theme .speed-label { color: #00bcd4; }
-    body.cosmetics-theme .speed-label { color: #ec407a; }
-    body.cinema-theme .speed-label { color: #8e24aa; }
-    body.restaurant-theme .speed-label { color: #e91e63; }
-    body.thailand-theme .speed-label { color: #00bcd4; }
-    body.friends-theme .speed-label { color: #66bb6a; }
-    body.guest-theme .speed-label { color: #ff8f00; }
-    .speed-slider { flex: 1; -webkit-appearance: none; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #da291c, #ffc72c); }
-    body.help-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
-    body.late-theme .speed-slider { background: linear-gradient(90deg, #9c27b0, #e91e63); }
-    body.phone-theme .speed-slider { background: linear-gradient(90deg, #00bcd4, #2196f3); }
-    body.job-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
-    body.wallet-theme .speed-slider { background: linear-gradient(90deg, #4caf50, #8bc34a); }
-    body.birthday-theme .speed-slider { background: linear-gradient(90deg, #e91e63, #f06292); }
-    body.battery-theme .speed-slider { background: linear-gradient(90deg, #ff9800, #ffc107); }
-    body.directions-theme .speed-slider { background: linear-gradient(90deg, #00acc1, #26c6da); }
-    body.sick-theme .speed-slider { background: linear-gradient(90deg, #ff7043, #ff8a65); }
-    body.glasses-theme .speed-slider { background: linear-gradient(90deg, #8e24aa, #ab47bc); }
-    body.beach-theme .speed-slider { background: linear-gradient(90deg, #00bcd4, #ffeb3b); }
-    body.cosmetics-theme .speed-slider { background: linear-gradient(90deg, #ec407a, #42a5f5); }
-    body.cinema-theme .speed-slider { background: linear-gradient(90deg, #8e24aa, #ba68c8); }
-    body.restaurant-theme .speed-slider { background: linear-gradient(90deg, #e91e63, #ffc72c); }
-    body.thailand-theme .speed-slider { background: linear-gradient(90deg, #00bcd4, #ffca28); }
-    body.friends-theme .speed-slider { background: linear-gradient(90deg, #66bb6a, #f48fb1); }
-    body.guest-theme .speed-slider { background: linear-gradient(90deg, #ff8f00, #ffe082); }
-    .speed-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: white; border: 3px solid #da291c; }
-    body.help-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
-    body.late-theme .speed-slider::-webkit-slider-thumb { border-color: #9c27b0; }
-    body.phone-theme .speed-slider::-webkit-slider-thumb { border-color: #00bcd4; }
-    body.job-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
-    body.wallet-theme .speed-slider::-webkit-slider-thumb { border-color: #4caf50; }
-    body.birthday-theme .speed-slider::-webkit-slider-thumb { border-color: #e91e63; }
-    body.battery-theme .speed-slider::-webkit-slider-thumb { border-color: #ff9800; }
-    body.directions-theme .speed-slider::-webkit-slider-thumb { border-color: #00acc1; }
-    body.sick-theme .speed-slider::-webkit-slider-thumb { border-color: #ff7043; }
-    body.glasses-theme .speed-slider::-webkit-slider-thumb { border-color: #8e24aa; }
-    body.beach-theme .speed-slider::-webkit-slider-thumb { border-color: #00bcd4; }
-    body.cosmetics-theme .speed-slider::-webkit-slider-thumb { border-color: #ec407a; }
-    body.cinema-theme .speed-slider::-webkit-slider-thumb { border-color: #8e24aa; }
-    body.restaurant-theme .speed-slider::-webkit-slider-thumb { border-color: #e91e63; }
-    body.thailand-theme .speed-slider::-webkit-slider-thumb { border-color: #00bcd4; }
-    body.friends-theme .speed-slider::-webkit-slider-thumb { border-color: #66bb6a; }
-    body.guest-theme .speed-slider::-webkit-slider-thumb { border-color: #ff8f00; }
-    .speed-value { font-weight: 700; color: #da291c; font-size: 12px; min-width: 45px; text-align: center; }
-    body.help-theme .speed-value { color: #ff9800; }
-    body.late-theme .speed-value { color: #9c27b0; }
-    body.phone-theme .speed-value { color: #00bcd4; }
-    body.job-theme .speed-value { color: #ff9800; }
-    body.wallet-theme .speed-value { color: #4caf50; }
-    body.birthday-theme .speed-value { color: #e91e63; }
-    body.battery-theme .speed-value { color: #ff9800; }
-    body.directions-theme .speed-value { color: #00acc1; }
-    body.sick-theme .speed-value { color: #ff7043; }
-    body.glasses-theme .speed-value { color: #8e24aa; }
-    body.beach-theme .speed-value { color: #00bcd4; }
-    body.cosmetics-theme .speed-value { color: #ec407a; }
-    body.cinema-theme .speed-value { color: #8e24aa; }
-    body.restaurant-theme .speed-value { color: #e91e63; }
-    body.thailand-theme .speed-value { color: #00bcd4; }
-    body.friends-theme .speed-value { color: #66bb6a; }
-    body.guest-theme .speed-value { color: #ff8f00; }
-
-    .panel {
-      min-height: 100vh; min-height: -webkit-fill-available;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 100px 20px 80px;
-      background: linear-gradient(180deg, #fff8f0 0%, #ffe8d6 100%);
-      position: relative; transition: background 0.5s ease;
-    }
-    body.help-theme .panel { background: linear-gradient(180deg, #fff8e8 0%, #ffe8c0 100%); }
-    body.late-theme .panel { background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 100%); }
-    body.phone-theme .panel { background: linear-gradient(180deg, #e8f5ff 0%, #d6eeff 100%); }
-    body.job-theme .panel { background: linear-gradient(180deg, #fffbe8 0%, #fff5c0 100%); }
-    body.wallet-theme .panel { background: linear-gradient(180deg, #e8ffe8 0%, #d6ffd6 100%); }
-    body.birthday-theme .panel { background: linear-gradient(180deg, #ffe8f5 0%, #ffd6ee 100%); }
-    body.battery-theme .panel { background: linear-gradient(180deg, #fff8e0 0%, #ffe8a0 100%); }
-    body.directions-theme .panel { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 100%); }
-    body.sick-theme .panel { background: linear-gradient(180deg, #fff5f0 0%, #ffe8e0 100%); }
-    body.glasses-theme .panel { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 100%); }
-    body.beach-theme .panel { background: linear-gradient(180deg, #e0f7fa 0%, #fff9c4 100%); }
-    body.cosmetics-theme .panel { background: linear-gradient(180deg, #fce4ec 0%, #e3f2fd 100%); }
-    body.cinema-theme .panel { background: linear-gradient(180deg, #f3e5f5 0%, #e1bee7 100%); }
-    body.restaurant-theme .panel { background: linear-gradient(180deg, #fff0f5 0%, #ffe4e1 100%); }
-    body.thailand-theme .panel { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 100%); }
-    body.friends-theme .panel { background: linear-gradient(180deg, #f0fff4 0%, #e8f5e9 100%); }
-    body.guest-theme .panel { background: linear-gradient(180deg, #fff8e1 0%, #ffecb3 100%); }
-
-    .panel-inner {
-      background: white; border-radius: 20px;
-      box-shadow: 0 8px 32px rgba(218,41,28,0.12);
-      border: 2px solid #ffd6b3;
-      max-width: 600px; width: 100%; overflow: hidden;
-      transition: border-color 0.4s ease, box-shadow 0.4s ease;
-    }
-    body.help-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
-    body.late-theme .panel-inner { box-shadow: 0 8px 32px rgba(156,39,176,0.12); border-color: #f8bbd9; }
-    body.phone-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,188,212,0.12); border-color: #b3e5fc; }
-    body.job-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
-    body.wallet-theme .panel-inner { box-shadow: 0 8px 32px rgba(76,175,80,0.12); border-color: #c8e6c9; }
-    body.birthday-theme .panel-inner { box-shadow: 0 8px 32px rgba(233,30,99,0.12); border-color: #f8bbd0; }
-    body.battery-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,152,0,0.12); border-color: #ffe0b2; }
-    body.directions-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,172,193,0.12); border-color: #b2ebf2; }
-    body.sick-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,112,67,0.12); border-color: #ffccbc; }
-    body.glasses-theme .panel-inner { box-shadow: 0 8px 32px rgba(142,36,170,0.12); border-color: #e1bee7; }
-    body.beach-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,188,212,0.12); border-color: #b2ebf2; }
-    body.cosmetics-theme .panel-inner { box-shadow: 0 8px 32px rgba(236,64,122,0.12); border-color: #f8bbd0; }
-    body.cinema-theme .panel-inner { box-shadow: 0 8px 32px rgba(142,36,170,0.12); border-color: #e1bee7; }
-    body.restaurant-theme .panel-inner { box-shadow: 0 8px 32px rgba(233,30,99,0.12); border-color: #f8bbd0; }
-    body.thailand-theme .panel-inner { box-shadow: 0 8px 32px rgba(0,188,212,0.12); border-color: #b2ebf2; }
-    body.friends-theme .panel-inner { box-shadow: 0 8px 32px rgba(102,187,106,0.12); border-color: #c8e6c9; }
-    body.guest-theme .panel-inner { box-shadow: 0 8px 32px rgba(255,143,0,0.12); border-color: #ffe082; }
-
-    .panel.active-panel .panel-inner { border-color: #da291c; box-shadow: 0 8px 32px rgba(218,41,28,0.2); }
-    body.help-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
-    body.late-theme .panel.active-panel .panel-inner { border-color: #9c27b0; box-shadow: 0 8px 32px rgba(156,39,176,0.25); }
-    body.phone-theme .panel.active-panel .panel-inner { border-color: #00bcd4; box-shadow: 0 8px 32px rgba(0,188,212,0.25); }
-    body.job-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
-    body.wallet-theme .panel.active-panel .panel-inner { border-color: #4caf50; box-shadow: 0 8px 32px rgba(76,175,80,0.25); }
-    body.birthday-theme .panel.active-panel .panel-inner { border-color: #e91e63; box-shadow: 0 8px 32px rgba(233,30,99,0.25); }
-    body.battery-theme .panel.active-panel .panel-inner { border-color: #ff9800; box-shadow: 0 8px 32px rgba(255,152,0,0.25); }
-    body.directions-theme .panel.active-panel .panel-inner { border-color: #00acc1; box-shadow: 0 8px 32px rgba(0,172,193,0.25); }
-    body.sick-theme .panel.active-panel .panel-inner { border-color: #ff7043; box-shadow: 0 8px 32px rgba(255,112,67,0.25); }
-    body.glasses-theme .panel.active-panel .panel-inner { border-color: #8e24aa; box-shadow: 0 8px 32px rgba(142,36,170,0.25); }
-    body.beach-theme .panel.active-panel .panel-inner { border-color: #00acc1; box-shadow: 0 8px 32px rgba(0,188,212,0.25); }
-    body.cosmetics-theme .panel.active-panel .panel-inner { border-color: #ec407a; box-shadow: 0 8px 32px rgba(236,64,122,0.25); }
-    body.cinema-theme .panel.active-panel .panel-inner { border-color: #8e24aa; box-shadow: 0 8px 32px rgba(142,36,170,0.25); }
-    body.restaurant-theme .panel.active-panel .panel-inner { border-color: #e91e63; box-shadow: 0 8px 32px rgba(233,30,99,0.25); }
-    body.thailand-theme .panel.active-panel .panel-inner { border-color: #00bcd4; box-shadow: 0 8px 32px rgba(0,188,212,0.25); }
-    body.friends-theme .panel.active-panel .panel-inner { border-color: #66bb6a; box-shadow: 0 8px 32px rgba(102,187,106,0.25); }
-    body.guest-theme .panel.active-panel .panel-inner { border-color: #ff8f00; box-shadow: 0 8px 32px rgba(255,143,0,0.25); }
-
-    .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fffaf8; border-bottom: 1px dashed #ffd6b3; }
-    body.help-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
-    body.late-theme .panel-header { background: #fff5f8; border-bottom-color: #f8bbd9; }
-    body.phone-theme .panel-header { background: #f0faff; border-bottom-color: #b3e5fc; }
-    body.job-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
-    body.wallet-theme .panel-header { background: #f0fff0; border-bottom-color: #c8e6c9; }
-    body.birthday-theme .panel-header { background: #fff0f8; border-bottom-color: #f8bbd0; }
-    body.battery-theme .panel-header { background: #fffaf0; border-bottom-color: #ffe0b2; }
-    body.directions-theme .panel-header { background: #f0fdff; border-bottom-color: #b2ebf2; }
-    body.sick-theme .panel-header { background: #fff8f5; border-bottom-color: #ffccbc; }
-    body.glasses-theme .panel-header { background: #faf0fc; border-bottom-color: #e1bee7; }
-    body.beach-theme .panel-header { background: #f0faff; border-bottom-color: #b2ebf2; }
-    body.cosmetics-theme .panel-header { background: #fff0f5; border-bottom-color: #f8bbd0; }
-    body.cinema-theme .panel-header { background: #fff0f5; border-bottom-color: #e1bee7; }
-    body.restaurant-theme .panel-header { background: #fff5f8; border-bottom-color: #f8bbd0; }
-    body.thailand-theme .panel-header { background: #f0fdff; border-bottom-color: #b2ebf2; }
-    body.friends-theme .panel-header { background: #f5fff8; border-bottom-color: #c8e6c9; }
-    body.guest-theme .panel-header { background: #fffde7; border-bottom-color: #ffe082; }
-
-    .panel-num { font-weight: 700; color: #da291c; font-size: 14px; display: flex; align-items: center; gap: 8px; }
-    body.help-theme .panel-num { color: #ff9800; }
-    body.late-theme .panel-num { color: #9c27b0; }
-    body.phone-theme .panel-num { color: #00bcd4; }
-    body.job-theme .panel-num { color: #ff9800; }
-    body.wallet-theme .panel-num { color: #4caf50; }
-    body.birthday-theme .panel-num { color: #e91e63; }
-    body.battery-theme .panel-num { color: #ff9800; }
-    body.directions-theme .panel-num { color: #00acc1; }
-    body.sick-theme .panel-num { color: #ff7043; }
-    body.glasses-theme .panel-num { color: #8e24aa; }
-    body.beach-theme .panel-num { color: #00acc1; }
-    body.cosmetics-theme .panel-num { color: #ec407a; }
-    body.cinema-theme .panel-num { color: #8e24aa; }
-    body.restaurant-theme .panel-num { color: #e91e63; }
-    body.thailand-theme .panel-num { color: #00bcd4; }
-    body.friends-theme .panel-num { color: #66bb6a; }
-    body.guest-theme .panel-num { color: #ff8f00; }
-
-    .panel-num-badge { background: linear-gradient(135deg, #da291c, #ffc72c); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; }
-    body.help-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
-    body.late-theme .panel-num-badge { background: linear-gradient(135deg, #9c27b0, #e91e63); }
-    body.phone-theme .panel-num-badge { background: linear-gradient(135deg, #00bcd4, #2196f3); }
-    body.job-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
-    body.wallet-theme .panel-num-badge { background: linear-gradient(135deg, #4caf50, #8bc34a); }
-    body.birthday-theme .panel-num-badge { background: linear-gradient(135deg, #e91e63, #f06292); }
-    body.battery-theme .panel-num-badge { background: linear-gradient(135deg, #ff9800, #ffc107); }
-    body.directions-theme .panel-num-badge { background: linear-gradient(135deg, #00acc1, #26c6da); }
-    body.sick-theme .panel-num-badge { background: linear-gradient(135deg, #ff7043, #ff8a65); }
-    body.glasses-theme .panel-num-badge { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
-    body.beach-theme .panel-num-badge { background: linear-gradient(135deg, #00acc1, #26c6da); }
-    body.cosmetics-theme .panel-num-badge { background: linear-gradient(135deg, #ec407a, #ab47bc); }
-    body.cinema-theme .panel-num-badge { background: linear-gradient(135deg, #8e24aa, #ba68c8); }
-    body.restaurant-theme .panel-num-badge { background: linear-gradient(135deg, #e91e63, #ff6f61); }
-    body.thailand-theme .panel-num-badge { background: linear-gradient(135deg, #00bcd4, #26c6da); }
-    body.friends-theme .panel-num-badge { background: linear-gradient(135deg, #66bb6a, #f48fb1); }
-    body.guest-theme .panel-num-badge { background: linear-gradient(135deg, #ff8f00, #ffe082); }
-
-    .speak-buttons { display: flex; gap: 8px; align-items: center; }
-    .action-btn { border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 17px; transition: opacity 0.2s ease; color: white; position: relative; }
-    .action-btn:active { opacity: 0.7; }
-    .speak-btn-zh { background: linear-gradient(135deg, #da291c, #ff6b6b); }
-    body.help-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
-    body.late-theme .speak-btn-zh { background: linear-gradient(135deg, #9c27b0, #e91e63); }
-    body.phone-theme .speak-btn-zh { background: linear-gradient(135deg, #00bcd4, #2196f3); }
-    body.job-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
-    body.wallet-theme .speak-btn-zh { background: linear-gradient(135deg, #4caf50, #8bc34a); }
-    body.birthday-theme .speak-btn-zh { background: linear-gradient(135deg, #e91e63, #f06292); }
-    body.battery-theme .speak-btn-zh { background: linear-gradient(135deg, #ff9800, #ffb74d); }
-    body.directions-theme .speak-btn-zh { background: linear-gradient(135deg, #00acc1, #26c6da); }
-    body.sick-theme .speak-btn-zh { background: linear-gradient(135deg, #ff7043, #ff8a65); }
-    body.glasses-theme .speak-btn-zh { background: linear-gradient(135deg, #8e24aa, #ab47bc); }
-    body.beach-theme .speak-btn-zh { background: linear-gradient(135deg, #00acc1, #26c6da); }
-    body.cosmetics-theme .speak-btn-zh { background: linear-gradient(135deg, #ec407a, #ab47bc); }
-    body.cinema-theme .speak-btn-zh { background: linear-gradient(135deg, #8e24aa, #ba68c8); }
-    body.restaurant-theme .speak-btn-zh { background: linear-gradient(135deg, #e91e63, #ff6f61); }
-    body.thailand-theme .speak-btn-zh { background: linear-gradient(135deg, #00bcd4, #26c6da); }
-    body.friends-theme .speak-btn-zh { background: linear-gradient(135deg, #66bb6a, #aed581); }
-    body.guest-theme .speak-btn-zh { background: linear-gradient(135deg, #ff8f00, #ffb300); }
-    .speak-btn-ru { background: linear-gradient(135deg, #4a90e2, #67b26f); }
-    .speak-btn.speaking { opacity: 0.8; }
-    .record-btn { background: linear-gradient(135deg, #ff9800, #f57c00); }
-    .record-btn.recording { opacity: 0.8; }
-    .record-btn.has-recording { background: linear-gradient(135deg, #4CAF50, #67b26f); }
-    .replay-btn { background: #eee; color: #888; border: 1px solid #ddd; }
-    .replay-btn.playing { opacity: 0.7; }
-    .delete-overlay { position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; background: #f44336; border: 2px solid white; border-radius: 50%; font-size: 9px; display: none; align-items: center; justify-content: center; color: white; }
-    .record-btn.has-recording .delete-overlay { display: flex; }
-
-    .panel-img-wrap { position: relative; background: linear-gradient(135deg, #fff8f0, #ffe8d6); overflow: hidden; border-top: 1px dashed #ffd6b3; border-bottom: 1px dashed #ffd6b3; }
-    body.help-theme .panel-img-wrap { background: linear-gradient(135deg, #fff8e8, #ffe8c0); border-color: #ffe0b2; }
-    body.late-theme .panel-img-wrap { background: linear-gradient(135deg, #fff5f5, #ffe8e8); border-color: #f8bbd9; }
-    body.phone-theme .panel-img-wrap { background: linear-gradient(135deg, #e8f5ff, #d6eeff); border-color: #b3e5fc; }
-    body.job-theme .panel-img-wrap { background: linear-gradient(135deg, #fffbe8, #fff5c0); border-color: #ffe0b2; }
-    body.wallet-theme .panel-img-wrap { background: linear-gradient(135deg, #e8ffe8, #d6ffd6); border-color: #c8e6c9; }
-    body.birthday-theme .panel-img-wrap { background: linear-gradient(135deg, #ffe8f5, #ffd6ee); border-color: #f8bbd0; }
-    body.battery-theme .panel-img-wrap { background: linear-gradient(135deg, #fff8e0, #ffe8a0); border-color: #ffe0b2; }
-    body.directions-theme .panel-img-wrap { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-color: #b2ebf2; }
-    body.sick-theme .panel-img-wrap { background: linear-gradient(135deg, #fff5f0, #ffe8e0); border-color: #ffccbc; }
-    body.glasses-theme .panel-img-wrap { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-color: #e1bee7; }
-    body.beach-theme .panel-img-wrap { background: linear-gradient(135deg, #e0f7fa, #fff9c4); border-color: #b2ebf2; }
-    body.cosmetics-theme .panel-img-wrap { background: linear-gradient(135deg, #fce4ec, #e3f2fd); border-color: #f8bbd0; }
-    body.cinema-theme .panel-img-wrap { background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-color: #e1bee7; }
-    body.restaurant-theme .panel-img-wrap { background: linear-gradient(135deg, #fff0f5, #ffe4e1); border-color: #f8bbd0; }
-    body.thailand-theme .panel-img-wrap { background: linear-gradient(135deg, #e0f7fa, #b2ebf2); border-color: #b2ebf2; }
-    body.friends-theme .panel-img-wrap { background: linear-gradient(135deg, #f0fff4, #e8f5e9); border-color: #c8e6c9; }
-    body.guest-theme .panel-img-wrap { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-color: #ffe082; }
-    .panel-img { width: 100%; display: block; max-height: 45vh; object-fit: contain; }
-    .img-error-msg { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 8px; color: #cc6644; text-align: center; padding: 20px; }
-    .img-error-msg .big { font-size: 50px; }
-    .panel-img-wrap.has-error .panel-img { display: none; }
-    .panel-img-wrap.has-error .img-error-msg { display: flex; }
-
-    .dialogue { padding: 20px 18px; }
-    .bubble { padding: 18px; border-radius: 16px; margin-bottom: 16px; border: 2px solid transparent; }
-    .bubble.waiter { background: linear-gradient(135deg, #f0f8ff, #fff); border-color: #99ccff; }
-    .bubble.sailor { background: linear-gradient(135deg, #fff5f8, #fff); border-color: #ffb3cc; }
-    .speaker-tag { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
-    .speaker-tag.w { color: #4488cc; }
-    .speaker-tag.s { color: #cc4488; }
-    .zh-text { font-family: 'Noto Sans SC', sans-serif; font-size: 32px; font-weight: 700; color: #2a2a2a; margin-bottom: 10px; line-height: 1.5; letter-spacing: 2px; padding: 10px 14px; border-radius: 12px; transition: background-color 0.4s ease, color 0.4s ease; background: white; text-align: center; }
-    .zh-text.active { background: #ffc72c; color: #da291c; }
-    body.help-theme .zh-text.active { background: #ffc107; color: #ff9800; }
-    body.late-theme .zh-text.active { background: #f48fb1; color: #9c27b0; }
-    body.phone-theme .zh-text.active { background: #81d4fa; color: #00838f; }
-    body.job-theme .zh-text.active { background: #ffc107; color: #ff9800; }
-    body.wallet-theme .zh-text.active { background: #a5d6a7; color: #2e7d32; }
-    body.birthday-theme .zh-text.active { background: #f48fb1; color: #c2185b; }
-    body.battery-theme .zh-text.active { background: #ffc107; color: #ff9800; }
-    body.directions-theme .zh-text.active { background: #80deea; color: #006064; }
-    body.sick-theme .zh-text.active { background: #ffab91; color: #bf360c; }
-    body.glasses-theme .zh-text.active { background: #ce93d8; color: #4a148c; }
-    body.beach-theme .zh-text.active { background: #80deea; color: #006064; }
-    body.cosmetics-theme .zh-text.active { background: #f48fb1; color: #ad1457; }
-    body.cinema-theme .zh-text.active { background: #ce93d8; color: #6a1b9a; }
-    body.restaurant-theme .zh-text.active { background: #f48fb1; color: #c2185b; }
-    body.thailand-theme .zh-text.active { background: #80deea; color: #006064; }
-    body.friends-theme .zh-text.active { background: #aed581; color: #2e7d32; }
-    body.guest-theme .zh-text.active { background: #ffe082; color: #4e342e; }
-    .py-text { font-size: 17px; color: #888; font-style: italic; margin-bottom: 12px; font-weight: 600; text-align: center; }
-    .ru-text { font-size: 18px; color: #555; line-height: 1.5; padding: 10px 14px; border-left: 4px solid #ffd6b3; border-radius: 12px; transition: background-color 0.4s ease, color 0.4s ease; background: white; text-align: center; }
-    body.help-theme .ru-text { border-left-color: #ffe0b2; }
-    body.late-theme .ru-text { border-left-color: #f8bbd9; }
-    body.phone-theme .ru-text { border-left-color: #b3e5fc; }
-    body.job-theme .ru-text { border-left-color: #ffe0b2; }
-    body.wallet-theme .ru-text { border-left-color: #c8e6c9; }
-    body.birthday-theme .ru-text { border-left-color: #f8bbd0; }
-    body.battery-theme .ru-text { border-left-color: #ffe0b2; }
-    body.directions-theme .ru-text { border-left-color: #b2ebf2; }
-    body.sick-theme .ru-text { border-left-color: #ffccbc; }
-    body.glasses-theme .ru-text { border-left-color: #e1bee7; }
-    body.beach-theme .ru-text { border-left-color: #b2ebf2; }
-    body.cosmetics-theme .ru-text { border-left-color: #f8bbd0; }
-    body.cinema-theme .ru-text { border-left-color: #e1bee7; }
-    body.restaurant-theme .ru-text { border-left-color: #f8bbd0; }
-    body.thailand-theme .ru-text { border-left-color: #b2ebf2; }
-    body.friends-theme .ru-text { border-left-color: #c8e6c9; }
-    body.guest-theme .ru-text { border-left-color: #ffe082; }
-    .ru-text.active { background: #4a90e2; color: white; border-left-color: #2c5aa0; }
-
-    .next-card-btn { display: block; margin: 10px auto 0; padding: 8px 18px; background: transparent; color: #bbb; border: 1px solid #e0e0e0; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: inherit; opacity: 0.6; }
-    .next-card-btn:hover { opacity: 1; background: #fff8f0; border-color: #ffc72c; color: #da291c; }
-    body.help-theme .next-card-btn:hover { background: #fff8e8; border-color: #ffc107; color: #ff9800; }
-    body.late-theme .next-card-btn:hover { background: #fff5f5; border-color: #f48fb1; color: #9c27b0; }
-    body.phone-theme .next-card-btn:hover { background: #e8f5ff; border-color: #81d4fa; color: #00838f; }
-    body.job-theme .next-card-btn:hover { background: #fffbe8; border-color: #ffc107; color: #ff9800; }
-    body.wallet-theme .next-card-btn:hover { background: #e8ffe8; border-color: #a5d6a7; color: #2e7d32; }
-    body.birthday-theme .next-card-btn:hover { background: #ffe8f5; border-color: #f48fb1; color: #c2185b; }
-    body.battery-theme .next-card-btn:hover { background: #fff8e0; border-color: #ffc107; color: #ff9800; }
-    body.directions-theme .next-card-btn:hover { background: #e0f7fa; border-color: #80deea; color: #006064; }
-    body.sick-theme .next-card-btn:hover { background: #fff5f0; border-color: #ffab91; color: #bf360c; }
-    body.glasses-theme .next-card-btn:hover { background: #f3e5f5; border-color: #ce93d8; color: #4a148c; }
-    body.beach-theme .next-card-btn:hover { background: #e0f7fa; border-color: #80deea; color: #006064; }
-    body.cosmetics-theme .next-card-btn:hover { background: #fce4ec; border-color: #f48fb1; color: #ad1457; }
-    body.cinema-theme .next-card-btn:hover { background: #f3e5f5; border-color: #ba68c8; color: #6a1b9a; }
-    body.restaurant-theme .next-card-btn:hover { background: #fff0f5; border-color: #f48fb1; color: #c2185b; }
-    body.thailand-theme .next-card-btn:hover { background: #e0f7fa; border-color: #80deea; color: #006064; }
-    body.friends-theme .next-card-btn:hover { background: #f0fff4; border-color: #aed581; color: #2e7d32; }
-    body.guest-theme .next-card-btn:hover { background: #fff8e1; border-color: #ffe082; color: #4e342e; }
-    .next-card-btn:active { opacity: 0.5; }
-    .next-card-btn.playing { opacity: 0.3; pointer-events: none; }
-
-    .now-playing-bar { display: none; align-items: center; gap: 8px; font-size: 12px; color: #da291c; font-weight: 700; padding: 6px 14px; background: #fff0f0; border-radius: 20px; margin-top: 12px; justify-content: center; }
-    body.help-theme .now-playing-bar { color: #ff9800; background: #fff8e8; }
-    body.late-theme .now-playing-bar { color: #9c27b0; background: #fff5f8; }
-    body.phone-theme .now-playing-bar { color: #00838f; background: #e8f5ff; }
-    body.job-theme .now-playing-bar { color: #ff9800; background: #fffbe8; }
-    body.wallet-theme .now-playing-bar { color: #2e7d32; background: #e8ffe8; }
-    body.birthday-theme .now-playing-bar { color: #c2185b; background: #ffe8f5; }
-    body.battery-theme .now-playing-bar { color: #ff9800; background: #fff8e0; }
-    body.directions-theme .now-playing-bar { color: #006064; background: #e0f7fa; }
-    body.sick-theme .now-playing-bar { color: #bf360c; background: #fff5f0; }
-    body.glasses-theme .now-playing-bar { color: #4a148c; background: #f3e5f5; }
-    body.beach-theme .now-playing-bar { color: #006064; background: #e0f7fa; }
-    body.cosmetics-theme .now-playing-bar { color: #ad1457; background: #fce4ec; }
-    body.cinema-theme .now-playing-bar { color: #6a1b9a; background: #f3e5f5; }
-    body.restaurant-theme .now-playing-bar { color: #c2185b; background: #fff0f5; }
-    body.thailand-theme .now-playing-bar { color: #006064; background: #e0f7fa; }
-    body.friends-theme .now-playing-bar { color: #2e7d32; background: #f0fff4; }
-    body.guest-theme .now-playing-bar { color: #4e342e; background: #fff8e1; }
-    .now-playing-bar.visible { display: inline-flex; }
-    .bars { display: flex; gap: 3px; align-items: flex-end; height: 14px; }
-    .bars span { width: 4px; background: #da291c; border-radius: 2px; animation: barAnim 1.2s ease-in-out infinite; }
-    body.help-theme .bars span { background: #ff9800; }
-    body.late-theme .bars span { background: #9c27b0; }
-    body.phone-theme .bars span { background: #00bcd4; }
-    body.job-theme .bars span { background: #ff9800; }
-    body.wallet-theme .bars span { background: #4caf50; }
-    body.birthday-theme .bars span { background: #e91e63; }
-    body.battery-theme .bars span { background: #ff9800; }
-    body.directions-theme .bars span { background: #00acc1; }
-    body.sick-theme .bars span { background: #ff7043; }
-    body.glasses-theme .bars span { background: #8e24aa; }
-    body.beach-theme .bars span { background: #00acc1; }
-    body.cosmetics-theme .bars span { background: #ec407a; }
-    body.cinema-theme .bars span { background: #8e24aa; }
-    body.restaurant-theme .bars span { background: #e91e63; }
-    body.thailand-theme .bars span { background: #00bcd4; }
-    body.friends-theme .bars span { background: #66bb6a; }
-    body.guest-theme .bars span { background: #ff8f00; }
-    .bars span:nth-child(1){height:5px;animation-delay:0s}
-    .bars span:nth-child(2){height:10px;animation-delay:.2s}
-    .bars span:nth-child(3){height:6px;animation-delay:.4s}
-    .bars span:nth-child(4){height:12px;animation-delay:.1s}
-    @keyframes barAnim { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(0.5)} }
-
-    .toast { position: fixed; bottom: calc(80px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(40,15,50,0.95); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-family: inherit; z-index: 999; transition: transform 0.4s ease; pointer-events: none; white-space: nowrap; }
-    .toast.show { transform: translateX(-50%) translateY(0); }
-    .manga-container::-webkit-scrollbar { display: none; }
-    .manga-container { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>🇨 Учим китайский</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;position:fixed;width:100%}
+body{background:linear-gradient(180deg,#fff8f0 0%,#ffe8d6 50%,#ffd6b3 100%);font-family:'Comfortaa','Noto Sans SC',sans-serif;overscroll-behavior:none;-webkit-text-size-adjust:100%;transition:background .5s ease}
+body.help-theme{background:linear-gradient(180deg,#fff8e8,#ffe8c0 50%,#ffd699)}
+body.late-theme{background:linear-gradient(180deg,#fff5f5,#ffe8e8 50%,#ffd6d6)}
+body.phone-theme{background:linear-gradient(180deg,#e8f5ff,#d6eeff 50%,#b3ddff)}
+body.job-theme{background:linear-gradient(180deg,#fffbe8,#fff5c0 50%,#ffe999)}
+body.wallet-theme{background:linear-gradient(180deg,#e8ffe8,#d6ffd6 50%,#b3ffb3)}
+body.birthday-theme{background:linear-gradient(180deg,#ffe8f5,#ffd6ee 50%,#ffb3dd)}
+body.battery-theme{background:linear-gradient(180deg,#fff8e0,#ffe8a0 50%,#ffd660)}
+body.directions-theme{background:linear-gradient(180deg,#e0f7fa,#b2ebf2 50%,#80deea)}
+body.sick-theme{background:linear-gradient(180deg,#fff5f0,#ffe8e0 50%,#ffd6cc)}
+body.glasses-theme{background:linear-gradient(180deg,#f3e5f5,#e1bee7 50%,#ce93d8)}
+body.beach-theme{background:linear-gradient(180deg,#e0f7fa,#fff9c4 50%,#b2ebf2)}
+body.cosmetics-theme{background:linear-gradient(180deg,#fce4ec,#e3f2fd 50%,#f8bbd0)}
+body.cinema-theme{background:linear-gradient(180deg,#f3e5f5,#e1bee7 50%,#ce93d8)}
+body.restaurant-theme{background:linear-gradient(180deg,#fff0f5,#ffe4e1 50%,#ffdab9)}
+body.thailand-theme{background:linear-gradient(180deg,#e0f7fa,#b2ebf2 50%,#80deea)}
+body.friends-theme{background:linear-gradient(180deg,#f0fff4,#e8f5e9 50%,#c8e6c9)}
+body.guest-theme{background:linear-gradient(180deg,#fff8e1,#ffecb3 50%,#ffe082)}
+.manga-container{max-width:100%;height:100vh;height:-webkit-fill-available;overflow-y:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.scene-title{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(135deg,#da291c,#ff4b2b,#ffc72c);padding:env(safe-area-inset-top,12px) 18px 12px;text-align:center;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+body.help-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
+body.late-theme .scene-title{background:linear-gradient(135deg,#9c27b0,#e91e63,#f48fb1)}
+body.phone-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#2196f3,#64b5f6)}
+body.job-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
+body.wallet-theme .scene-title{background:linear-gradient(135deg,#4caf50,#8bc34a,#cddc39)}
+body.birthday-theme .scene-title{background:linear-gradient(135deg,#e91e63,#f06292,#f8bbd0)}
+body.battery-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
+body.directions-theme .scene-title{background:linear-gradient(135deg,#00acc1,#26c6da,#80deea)}
+body.sick-theme .scene-title{background:linear-gradient(135deg,#ff7043,#ff8a65,#ffab91)}
+body.glasses-theme .scene-title{background:linear-gradient(135deg,#8e24aa,#ab47bc,#ce93d8)}
+body.beach-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#ffeb3b,#00acc1);color:#006064}
+body.cosmetics-theme .scene-title{background:linear-gradient(135deg,#ec407a,#ab47bc,#42a5f5)}
+body.cinema-theme .scene-title{background:linear-gradient(135deg,#8e24aa,#ba68c8,#f06292)}
+body.restaurant-theme .scene-title{background:linear-gradient(135deg,#e91e63,#ff6f61,#ffc72c)}
+body.thailand-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#26c6da,#ffca28);color:#006064}
+body.friends-theme .scene-title{background:linear-gradient(135deg,#66bb6a,#aed581,#f48fb1)}
+body.guest-theme .scene-title{background:linear-gradient(135deg,#ff8f00,#ffb300,#ffe082);color:#4e342e}
+.scene-title h1{font-size:16px;margin-bottom:2px}
+.scene-title p{font-size:11px;opacity:.9}
+.controls-bar{position:fixed;top:calc(env(safe-area-inset-top,12px) + 50px);left:0;right:0;z-index:100;display:flex;justify-content:center;gap:10px;padding:8px 18px;pointer-events:none}
+.control-btn{pointer-events:auto;background:rgba(255,255,255,.95);border:2px solid #da291c;color:#da291c;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s ease;backdrop-filter:blur(10px)}
+.control-btn:active{transform:scale(.95);opacity:.8}
+.control-btn.stop-btn{background:rgba(244,67,54,.95);border-color:#f44336;color:#fff;display:none}
+.control-btn.stop-btn.visible{display:block}
+.speed-control{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.98);padding:10px 18px env(safe-area-inset-bottom,10px);box-shadow:0 -2px 8px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
+.speed-label{font-weight:700;color:#da291c;font-size:11px}
+.speed-slider{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:linear-gradient(90deg,#da291c,#ffc72c)}
+.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid #da291c}
+.speed-value{font-weight:700;color:#da291c;font-size:12px;min-width:45px;text-align:center}
+.panel{min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:100px 20px 80px;background:linear-gradient(180deg,#fff8f0,#ffe8d6);position:relative}
+.panel-inner{background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(218,41,28,.12);border:2px solid #ffd6b3;max-width:600px;width:100%;overflow:hidden;transition:border-color .4s ease,box-shadow .4s ease}
+.panel.active-panel .panel-inner{border-color:#da291c;box-shadow:0 8px 32px rgba(218,41,28,.2)}
+.panel-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fffaf8;border-bottom:1px dashed #ffd6b3}
+.panel-num{font-weight:700;color:#da291c;font-size:14px;display:flex;align-items:center;gap:8px}
+.panel-num-badge{background:linear-gradient(135deg,#da291c,#ffc72c);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.speak-buttons{display:flex;gap:8px;align-items:center}
+.action-btn{border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:opacity .2s ease;color:#fff;position:relative}
+.action-btn:active{opacity:.7}
+.speak-btn-zh{background:linear-gradient(135deg,#da291c,#ff6b6b)}
+.speak-btn-ru{background:linear-gradient(135deg,#4a90e2,#67b26f)}
+.speak-btn.speaking{opacity:.8}
+.record-btn{background:linear-gradient(135deg,#ff9800,#f57c00)}
+.record-btn.recording{opacity:.8;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(244,67,54,.7)}50%{box-shadow:0 0 0 10px rgba(244,67,54,0)}}
+.record-btn.has-recording{background:linear-gradient(135deg,#4caf50,#67b26f)}
+.replay-btn{background:#eee;color:#888;border:1px solid #ddd}
+.replay-btn.playing{opacity:.7}
+.delete-overlay{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:#f44336;border:2px solid #fff;border-radius:50%;font-size:9px;display:none;align-items:center;justify-content:center;color:#fff}
+.record-btn.has-recording .delete-overlay{display:flex}
+.panel-img-wrap{position:relative;background:linear-gradient(135deg,#fff8f0,#ffe8d6);overflow:hidden;border-top:1px dashed #ffd6b3;border-bottom:1px dashed #ffd6b3}
+.panel-img{width:100%;display:block;max-height:45vh;object-fit:contain}
+.img-error-msg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#cc6644;text-align:center;padding:20px}
+.img-error-msg .big{font-size:50px}
+.panel-img-wrap.has-error .panel-img{display:none}
+.panel-img-wrap.has-error .img-error-msg{display:flex}
+.dialogue{padding:20px 18px}
+.bubble{padding:18px;border-radius:16px;margin-bottom:16px;border:2px solid transparent}
+.bubble.waiter{background:linear-gradient(135deg,#f0f8ff,#fff);border-color:#99ccff}
+.bubble.sailor{background:linear-gradient(135deg,#fff5f8,#fff);border-color:#ffb3cc}
+.speaker-tag{font-size:13px;font-weight:700;margin-bottom:10px}
+.speaker-tag.w{color:#4488cc}
+.speaker-tag.s{color:#cc4488}
+.zh-text{font-family:'Noto Sans SC',sans-serif;font-size:32px;font-weight:700;color:#2a2a2a;margin-bottom:10px;line-height:1.5;letter-spacing:2px;padding:10px 14px;border-radius:12px;transition:background-color .4s ease,color .4s ease;background:#fff;text-align:center}
+.zh-text.active{background:#ffc72c;color:#da291c}
+.py-text{font-size:17px;color:#888;font-style:italic;margin-bottom:12px;font-weight:600;text-align:center}
+.ru-text{font-size:18px;color:#555;line-height:1.5;padding:10px 14px;border-left:4px solid #ffd6b3;border-radius:12px;transition:background-color .4s ease,color .4s ease;background:#fff;text-align:center}
+.ru-text.active{background:#4a90e2;color:#fff;border-left-color:#2c5aa0}
+.next-card-btn{display:block;margin:10px auto 0;padding:8px 18px;background:transparent;color:#bbb;border:1px solid #e0e0e0;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s ease;font-family:inherit;opacity:.6}
+.next-card-btn:hover{opacity:1;background:#fff8f0;border-color:#ffc72c;color:#da291c}
+.next-card-btn:active{opacity:.5}
+.next-card-btn.playing{opacity:.3;pointer-events:none}
+.now-playing-bar{display:none;align-items:center;gap:8px;font-size:12px;color:#da291c;font-weight:700;padding:6px 14px;background:#fff0f0;border-radius:20px;margin-top:12px;justify-content:center}
+.now-playing-bar.visible{display:inline-flex}
+.bars{display:flex;gap:3px;align-items:flex-end;height:14px}
+.bars span{width:4px;background:#da291c;border-radius:2px;animation:barAnim 1.2s ease-in-out infinite}
+.bars span:nth-child(1){height:5px}
+.bars span:nth-child(2){height:10px;animation-delay:.2s}
+.bars span:nth-child(3){height:6px;animation-delay:.4s}
+.bars span:nth-child(4){height:12px;animation-delay:.1s}
+@keyframes barAnim{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.5)}}
+.toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(80px);background:rgba(40,15,50,.95);color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;font-family:inherit;z-index:999;transition:transform .4s ease;pointer-events:none;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.manga-container::-webkit-scrollbar{display:none}
+.manga-container{-ms-overflow-style:none;scrollbar-width:none}
+</style>
 </head>
 <body>
 
@@ -491,7 +129,7 @@
 <div class="manga-container" id="panelsContainer"></div>
 
 <div class="speed-control">
-  <div class="speed-label"> Скорость:</div>
+  <div class="speed-label">Скорость:</div>
   <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
   <div class="speed-value" id="speedValue">0.55x</div>
 </div>
@@ -500,6 +138,12 @@
 <audio id="globalAudio" playsinline webkit-playsinline style="display:none;"></audio>
 
 <script>
+/* ============================================================
+   ⚙️ НАСТРОЙКА — URL Worker'а
+   ============================================================ */
+const WORKER_URL = 'https://bejdialog-api.meledy1111.workers.dev';
+/* ============================================================ */
+
 const SCENES = {
   mcdonalds: {
     title: "🍔 在麦当劳 — Диалог в McDonald's", subtitle: "Листайте вниз для перехода между карточками", switchLabel: "🤝 Просьба о помощи",
@@ -508,11 +152,11 @@ const SCENES = {
       { img:"IMG_7559", zh:"嗯…选哪个好呢？", py:"Ńg... xuǎn nǎge hǎo ne?", ru:"Хм... какой выбрать?", who:"s", speaker:"👧 Настя" },
       { img:"IMG_7560", zh:"请给我一个芝士汉堡和大份薯条。", py:"Qǐng gěi wǒ yīgè zhīshì hànbǎo hé dà fèn shǔtiáo.", ru:"Дайте мне, пожалуйста, один чизбургер и большую порцию картошки фри.", who:"s", speaker:"👧 Настя" },
       { img:"IMG_7561", zh:"请问今天有素食选项吗？", py:"Qǐngwèn jīntiān yǒu sùshí xuǎnxiàng ma?", ru:"Скажите, сегодня есть вегетарианские блюда?", who:"s", speaker:"👧 Настя" },
-      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑‍ Персонал" },
+      { img:"IMG_7587", zh:"有的，我们有蔬菜汉堡和沙拉。", py:"Yǒu de, wǒmen yǒu shūcài hànbǎo hé shālā.", ru:"Да, у нас есть овощной бургер и салат.", who:"w", speaker:"🧑 Персонал" },
       { img:"IMG_7588", zh:"那我要一个蔬菜汉堡！", py:"Nà wǒ yào yīgè shūcài hànbǎo!", ru:"Тогда я хочу один овощной бургер!", who:"s", speaker:"👧 Настя" },
-      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ so mǎ zhīfù ma?", ru:"Я могу оплатить по QR-коду?", who:"s", speaker:"👧 Настя" },
-      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Можно, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑‍ Персонал" },
-      { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Это ваш заказ, приятного аппетита!", who:"w", speaker:"🧑‍🍳 Персонал" },
+      { img:"IMG_7562", zh:"我可以扫码支付吗？", py:"Wǒ kěyǐ sǎo mǎ zhīfù ma?", ru:"Я могу оплатить по QR-коду?", who:"s", speaker:"👧 Настя" },
+      { img:"IMG_7586", zh:"可以，我们接受支付宝、微信和现金。", py:"Kěyǐ, wǒmen jiēshòu zhīfùbǎo, wēixìn hé xiànjīn.", ru:"Можно, мы принимаем Alipay, WeChat и наличные.", who:"w", speaker:"🧑 Персонал" },
+      { img:"IMG_7589", zh:"这是您的餐，请慢用！", py:"Zhè shì nín de cān, qǐng màn yòng!", ru:"Это ваш заказ, приятного аппетита!", who:"w", speaker:"🧑🍳 Персонал" },
       { img:"IMG_7590", zh:"哪里有座位？", py:"Nǎlǐ yǒu zuòwèi?", ru:"Где есть свободные места?", who:"s", speaker:"👧 Настя" },
       { img:"IMG_7565", zh:"真好吃！", py:"Zhēn hǎochī!", ru:"Очень вкусно!", who:"s", speaker:"👧 Настя" },
       { img:"IMG_7591", zh:"再来一个冰淇淋！", py:"Zài lái yīgè bīngqílín!", ru:"Ещё одно мороженое!", who:"s", speaker:"👧 Настя" },
@@ -527,7 +171,7 @@ const SCENES = {
       { img:"help_02", zh:"什么忙？你说。", py:"Shénme máng? Nǐ shuō.", ru:"Какую услугу? Говори.", who:"w", speaker:"👦 Парень" },
       { img:"help_03", zh:"帮我搬一下这个箱子。", py:"Bāng wǒ bān yīxià zhège xiāngzi.", ru:"Помоги мне перенести эту коробку.", who:"s", speaker:"👧 Настя" },
       { img:"help_04", zh:"没问题，你放心吧！", py:"Méi wèntí, nǐ fàngxīn ba!", ru:"Нет проблем, не волнуйся!", who:"w", speaker:"👦 Парень" },
-      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! W dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо тебе! Я обещаю в следующий раз угостить тебя.", who:"s", speaker:"👧 Настя" },
+      { img:"help_05", zh:"谢谢你！我答应你下次请你吃饭。", py:"Xièxie nǐ! Wǒ dāying nǐ xiàcì qǐng nǐ chīfàn.", ru:"Спасибо тебе! Я обещаю в следующий раз угостить тебя.", who:"s", speaker:"👧 Настя" },
       { img:"help_06", zh:"做得好！搬完了！", py:"Zuò dé hǎo! Bān wánle!", ru:"Отлично! Перенесли!", who:"w", speaker:"👦 Парень" }
     ]
   },
@@ -546,7 +190,7 @@ const SCENES = {
     panels: [
       { img:"phone_01", zh:"我的手机坏了，怎么办？", py:"Wǒ de shǒujī huài le, zěnme bàn?", ru:"Мой телефон сломался, что делать?", who:"s", speaker:"👧 Настя" },
       { img:"phone_02", zh:"先试试重启手机。", py:"Xiān shìshi chóngqǐ shǒujī.", ru:"Сначала попробуй перезагрузить телефон.", who:"w", speaker:"👦 Друг" },
-      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngq méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Настя" },
+      { img:"phone_03", zh:"如果重启没用呢？", py:"Rúguǒ chóngqǐ méi yòng ne?", ru:"А если перезагрузка не поможет?", who:"s", speaker:"👧 Настя" },
       { img:"phone_04", zh:"这里不远有个维修中心，不贵而且质量好。", py:"Zhèlǐ bù yuǎn yǒu gè wéixiū zhōngxīn, bù guì érqiě zhìliàng hǎo.", ru:"Здесь недалеко есть сервисный центр, недорого и качество хорошее.", who:"w", speaker:"👦 Друг" },
       { img:"phone_05", zh:"好的，谢谢！我回家路上去一下。", py:"Hǎo de, xièxie! Wǒ huíjiā lùshang qù yīxià.", ru:"Хорошо, спасибо! Зайду по дороге домой.", who:"s", speaker:"👧 Настя" }
     ]
@@ -566,7 +210,7 @@ const SCENES = {
     title: "👛 我的钱包不见了！ — Потерянный кошелёк", subtitle: "Диалог на улице и в кафе", switchLabel: "🎂 День рождения",
     panels: [
       { img:"wallet_01", zh:"我的钱包不见了！", py:"Wǒ de qiánbāo bù jiàn le!", ru:"Мой кошелёк пропал!", who:"s", speaker:"👧 Настя" },
-      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zho.", ru:"Не паникуй, давай поищем вместе.", who:"w", speaker:"👱‍♀️ Лена" },
+      { img:"wallet_02", zh:"别着急，我们一起找。", py:"Bié zhāojí, wǒmen yīqǐ zhǎo.", ru:"Не паникуй, давай поищем вместе.", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"wallet_03", zh:"我刚才还在咖啡馆的。", py:"Wǒ gāngcái hái zài kāfēiguǎn de.", ru:"Он только что был в кафе.", who:"s", speaker:"👧 Настя" },
       { img:"wallet_04", zh:"我们回去看看吧！", py:"Wǒmen huíqù kànkan ba!", ru:"Давай вернёмся и посмотрим!", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"wallet_05", zh:"找到了！在这里！", py:"Zhǎodào le! Zài zhèlǐ!", ru:"Нашла! Вот он!", who:"s", speaker:"👧 Настя" },
@@ -632,7 +276,7 @@ const SCENES = {
       { img:"glasses_10", zh:"您好，一共三百块。", py:"Nín hǎo, yīgòng sānbǎi kuài.", ru:"Здравствуйте, итого триста юаней.", who:"w", speaker:"🧑‍💼 Продавец" },
       { img:"glasses_11", zh:"可以刷卡吗？", py:"Kěyǐ shuākǎ ma?", ru:"Можно оплатить картой?", who:"s", speaker:"👧 Настя" },
       { img:"glasses_12", zh:"可以，我们有POS机。", py:"Kěyǐ, wǒmen yǒu POS jī.", ru:"Можно, у нас есть терминал.", who:"w", speaker:"🧑‍💼 Продавец" },
-      { img:"glasses_13", zh:"我有会员卡，可以打折吗？", py:"Wǒ yǒu huìyuán kǎ, kěyǐ dzhé ma?", ru:"У меня есть карта клиента, можно сделать скидку?", who:"w", speaker:"👱‍♀️ Лена" },
+      { img:"glasses_13", zh:"我有会员卡，可以打折吗？", py:"Wǒ yǒu huìyuán kǎ, kěyǐ dǎzhé ma?", ru:"У меня есть карта клиента, можно сделать скидку?", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"glasses_14", zh:"当然！打九折，二百七十块。", py:"Dāngrán! Dǎ jiǔ zhé, èrbǎi qīshí kuài.", ru:"Конечно! Скидка 10%, двести семьдесят юаней.", who:"w", speaker:"🧑‍💼 Продавец" }
     ]
   },
@@ -685,14 +329,14 @@ const SCENES = {
       { img:"cinema_06", zh:"太好了！去买票吧。", py:"Tài hǎo le! Qù mǎi piào ba.", ru:"Отлично! Пошли покупать билеты.", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"cinema_07", zh:"您好！请问看哪部电影？", py:"Nín hǎo! Qǐngwèn kàn nǎ bù diànyǐng?", ru:"Здравствуйте! Какой фильм хотите посмотреть?", who:"w", speaker:"🧑‍💼 Кассир" },
       { img:"cinema_08", zh:"两张浪漫喜剧的票。", py:"Liǎng zhāng làngmàn xǐjù de piào.", ru:"Два билета на романтическую комедию.", who:"s", speaker:"👧 Настя" },
-      { img:"cinema_09", zh:"好的，第五排中间，一共八十块。", py:"Hǎo de, dì wǔ pái zhōngjiān, yīgòng bāshí kuài.", ru:"Хорошо, пятый ряд, середина, итого восемьдесят юаней.", who:"w", speaker:"🧑‍ Кассир" },
+      { img:"cinema_09", zh:"好的，第五排中间，一共八十块。", py:"Hǎo de, dì wǔ pái zhōngjiān, yīgòng bāshí kuài.", ru:"Хорошо, пятый ряд, середина, итого восемьдесят юаней.", who:"w", speaker:"🧑 Кассир" },
       { img:"cinema_10", zh:"可以刷卡吗？", py:"Kěyǐ shuākǎ ma?", ru:"Можно оплатить картой?", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"cinema_11", zh:"可以！这是您的票，请拿好。", py:"Kěyǐ! Zhè shì nín de piào, qǐng ná hǎo.", ru:"Можно! Это ваши билеты, возьмите.", who:"w", speaker:"🧑‍💼 Кассир" },
       { img:"cinema_12", zh:"我们去买爆米花吧！", py:"Wǒmen qù mǎi bàomǐhuā ba!", ru:"Пошли купим попкорн!", who:"s", speaker:"👧 Настя" },
       { img:"cinema_13", zh:"您好！要大份还是小份？", py:"Nín hǎo! Yào dà fèn háishì xiǎo fèn?", ru:"Здравствуйте! Большую порцию или маленькую?", who:"w", speaker:"🧑‍🍳 Продавец" },
       { img:"cinema_14", zh:"一份大份爆米花和两杯可乐！", py:"Yī fèn dà fèn bàomǐhuā hé liǎng bēi kělè!", ru:"Одну большую порцию попкорна и две колы!", who:"s", speaker:"👧 Настя" },
       { img:"cinema_15", zh:"还要一包薯片！", py:"Hái yào yī bāo shǔpiàn!", ru:"И ещё одну пачку чипсов!", who:"w", speaker:"👱‍♀️ Лена" },
-      { img:"cinema_16", zh:"好的，一共四十五块。请慢用！", py:"Hǎo de, yīgòng sìshíwǔ kuài. Qǐng màn yòng!", ru:"Хорошо, итого сорок пять юаней. Приятного аппетита!", who:"w", speaker:"🧑‍ Продавец" },
+      { img:"cinema_16", zh:"好的，一共四十五块。请慢用！", py:"Hǎo de, yīgòng sìshíwǔ kuài. Qǐng màn yòng!", ru:"Хорошо, итого сорок пять юаней. Приятного аппетита!", who:"w", speaker:"🧑 Продавец" },
       { img:"cinema_17", zh:"太好看了！我好感动。", py:"Tài hǎokàn le! Wǒ hǎo gǎndòng.", ru:"Так интересно! Я так тронута.", who:"s", speaker:"👧 Настя" },
       { img:"cinema_18", zh:"下次我们再来看！", py:"Xiàcì wǒmen zài lái kàn!", ru:"В следующий раз придём смотреть снова!", who:"w", speaker:"👱‍♀️ Лена" }
     ]
@@ -725,7 +369,7 @@ const SCENES = {
       { img:"thailand_04", zh:"好！我们在包厢里坐。", py:"Hǎo! Wǒmen zài bāoxiāng lǐ zuò.", ru:"Хорошо! Мы будем сидеть в купе.", who:"s", speaker:"👧 Настя" },
       { img:"thailand_05", zh:"我饿了，去买点吃的吧。", py:"Wǒ è le, qù mǎi diǎn chī de ba.", ru:"Я проголодался, пойдём купим что-нибудь поесть.", who:"w", speaker:"👦 Сергей" },
       { img:"thailand_06", zh:"我去餐车看看。", py:"Wǒ qù cānchē kànkan.", ru:"Я пойду в вагон-ресторан посмотрю.", who:"s", speaker:"👧 Настя" },
-      { img:"thailand_07", zh:"您好！要点什么？", py:"Nín hǎo! Yào diǎn shénme?", ru:"Здравствуйте! Что будете заказывать?", who:"w", speaker:"🧑‍ Проводник" },
+      { img:"thailand_07", zh:"您好！要点什么？", py:"Nín hǎo! Yào diǎn shénme?", ru:"Здравствуйте! Что будете заказывать?", who:"w", speaker:"🧑 Проводник" },
       { img:"thailand_08", zh:"一份三明治和一杯热茶。", py:"Yī fèn sānmíngzhì hé yī bēi rè chá.", ru:"Один сэндвич и чашку горячего чая.", who:"s", speaker:"👧 Настя" },
       { img:"thailand_09", zh:"还要一瓶水，谢谢。", py:"Hái yào yī píng shuǐ, xièxie.", ru:"И ещё бутылку воды, спасибо.", who:"w", speaker:"👦 Сергей" },
       { img:"thailand_10", zh:"好的，一共三十五块。请慢用！", py:"Hǎo de, yīgòng sānshíwǔ kuài. Qǐng màn yòng!", ru:"Хорошо, итого тридцать пять юаней. Приятного аппетита!", who:"w", speaker:"🧑‍🍳 Проводник" },
@@ -733,9 +377,9 @@ const SCENES = {
       { img:"thailand_12", zh:"走吧，去机场！", py:"Zǒu ba, qù jīchǎng!", ru:"Пошли, в аэропорт!", who:"w", speaker:"👦 Сергей" },
       { img:"thailand_13", zh:"我们的行李很重。", py:"Wǒmen de xíngli hěn zhòng.", ru:"Наш багаж очень тяжёлый.", who:"s", speaker:"👧 Настя" },
       { img:"thailand_14", zh:"去柜台托运行李吧。", py:"Qù guìtái tuōyùn xíngli ba.", ru:"Пойдём к стойке сдавать багаж.", who:"w", speaker:"👦 Сергей" },
-      { img:"thailand_15", zh:"您好！请出示护照和机票。", py:"Nín hǎo! Qǐng chūshì hùzhào hé jīpiào.", ru:"Здравствуйте! Предъявите, пожалуйста, паспорт и билет.", who:"w", speaker:"🧑‍ Сотрудник" },
+      { img:"thailand_15", zh:"您好！请出示护照和机票。", py:"Nín hǎo! Qǐng chūshì hùzhào hé jīpiào.", ru:"Здравствуйте! Предъявите, пожалуйста, паспорт и билет.", who:"w", speaker:"🧑 Сотрудник" },
       { img:"thailand_16", zh:"给您，这是我们的护照。", py:"Gěi nín, zhè shì wǒmen de hùzhào.", ru:"Вот, это наши паспорта.", who:"s", speaker:"👧 Настя" },
-      { img:"thailand_17", zh:"好的，行李二十三公斤，可以托运。", py:"Hǎo de, xíngli èrshísān gōngjīn, kěyǐ tuōyùn.", ru:"Хорошо, багаж двадцать три килограмма, можно сдать.", who:"w", speaker:"🧑‍ Сотрудник" },
+      { img:"thailand_17", zh:"好的，行李二十三公斤，可以托运。", py:"Hǎo de, xíngli èrshísān gōngjīn, kěyǐ tuōyùn.", ru:"Хорошо, багаж двадцать три килограмма, можно сдать.", who:"w", speaker:"🧑 Сотрудник" },
       { img:"thailand_18", zh:"这是登机牌，请拿好。", py:"Zhè shì dēngjīpái, qǐng ná hǎo.", ru:"Это посадочные талоны, возьмите.", who:"w", speaker:"🧑‍💼 Сотрудник" },
       { img:"thailand_19", zh:"祝您旅途愉快！", py:"Zhù nín lǚtú yúkuài!", ru:"Желаю приятного путешествия!", who:"w", speaker:"🧑‍💼 Сотрудник" },
       { img:"thailand_20", zh:"现在去安检。", py:"Xiànzài qù ānjiǎn.", ru:"Теперь идём на досмотр безопасности.", who:"s", speaker:"👧 Настя" },
@@ -744,7 +388,7 @@ const SCENES = {
       { img:"thailand_23", zh:"要飞多久？", py:"Yào fēi duōjiǔ?", ru:"Сколько лететь?", who:"s", speaker:"👧 Настя" },
       { img:"thailand_24", zh:"大概九个小时。", py:"Dàgài jiǔ gè xiǎoshí.", ru:"Примерно девять часов.", who:"w", speaker:"👦 Сергей" },
       { img:"thailand_25", zh:"欢迎登机！请系好安全带。", py:"Huānyíng dēngjī! Qǐng jì hǎo ānquándài.", ru:"Добро пожаловать на борт! Пристегните ремни безопасности.", who:"w", speaker:"👩‍✈️ Стюардесса" },
-      { img:"thailand_26", zh:"起飞前请关闭手机。", py:"Qǐfēi qián qǐng guānbì shǒujī.", ru:"Перед взлётом выключите, пожалуйста, телефоны.", who:"w", speaker:"👩‍ Стюардесса" },
+      { img:"thailand_26", zh:"起飞前请关闭手机。", py:"Qǐfēi qián qǐng guānbì shǒujī.", ru:"Перед взлётом выключите, пожалуйста, телефоны.", who:"w", speaker:"👩 Стюардесса" },
       { img:"thailand_27", zh:"您好！要吃午餐吗？", py:"Nín hǎo! Yào chī wǔcān ma?", ru:"Здравствуйте! Будете обедать?", who:"w", speaker:"👩‍️ Стюардесса" },
       { img:"thailand_28", zh:"要！鸡肉饭和橙汁。", py:"Yào! Jīròu fàn hé chéngzhī.", ru:"Да! Курицу с рисом и апельсиновый сок.", who:"s", speaker:"👧 Настя" },
       { img:"thailand_29", zh:"我要牛肉面和咖啡。", py:"Wǒ yào niúròu miàn hé kāfēi.", ru:"Я хочу лапшу с говядиной и кофе.", who:"w", speaker:"👦 Сергей" },
@@ -764,7 +408,7 @@ const SCENES = {
       { img:"friends_08", zh:"可以！我有时间。", py:"Kěyǐ! Wǒ yǒu shíjiān.", ru:"Можно! У меня есть время.", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"friends_09", zh:"因为我想买那本书，所以去书店。", py:"Yīnwèi wǒ xiǎng mǎi nà běn shū, suǒyǐ qù shūdiàn.", ru:"Потому что я хочу купить ту книгу, поэтому иду в книжный.", who:"s", speaker:"👧 Настя" },
       { img:"friends_10", zh:"这本书很好，给我看看！", py:"Zhè běn shū hěn hǎo, gěi wǒ kànkan!", ru:"Эта книга очень хорошая, дай мне посмотреть!", who:"w", speaker:"👱‍♀️ Лена" },
-      { img:"friends_11", zh:"好的。我是学生，我没有钱。", py:"Hǎo de. Wǒ shì xuésheng, wǒ méiyu qián.", ru:"Хорошо. Я студентка, у меня нет денег.", who:"s", speaker:"👧 Настя" },
+      { img:"friends_11", zh:"好的。我是学生，我没有钱。", py:"Hǎo de. Wǒ shì xuésheng, wǒ méiyǒu qián.", ru:"Хорошо. Я студентка, у меня нет денег.", who:"s", speaker:"👧 Настя" },
       { img:"friends_12", zh:"没关系，我有钱。", py:"Méiguānxi, wǒ yǒu qián.", ru:"Ничего страшного, у меня есть деньги.", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"friends_13", zh:"虽然今天下雨，但是我很开心。", py:"Suīrán jīntiān xiàyǔ, dànshì wǒ hěn kāixīn.", ru:"Хотя сегодня идёт дождь, но я очень счастлива.", who:"s", speaker:"👧 Настя" },
       { img:"friends_14", zh:"我也是！我们走吧！", py:"Wǒ yě shì! Wǒmen zǒu ba!", ru:"Я тоже! Пошли!", who:"w", speaker:"👱‍♀️ Лена" }
@@ -780,19 +424,18 @@ const SCENES = {
       { img:"guest_05", zh:"吃饭了！快来尝尝我做的菜！", py:"Chīfàn le! Kuài lái chángchang wǒ zuò de cài!", ru:"Пора есть! Идите попробуйте мои блюда!", who:"s", speaker:"👧 Настя" },
       { img:"guest_06", zh:"太好吃了！再吃点吧！", py:"Tài hǎochī le! Zài chī diǎn ba!", ru:"Так вкусно! Ещё поешь!", who:"w", speaker:"👱‍♀️ Лена" },
       { img:"guest_07", zh:"我吃饱了，真的吃不下了。", py:"Wǒ chī bǎo le, zhēn de chī bù xià le.", ru:"Я наелась, реально больше не могу.", who:"s", speaker:"👧 Настя" },
-      { img:"guest_08", zh:"那好吧，辛苦了！谢谢你的款待！", py:"Nà hǎo ba, xīnkǔ le! Xièxie nǐ de kundài!", ru:"Ну ладно, спасибо за труды! Спасибо за угощение!", who:"w", speaker:"👱‍♀️ Лена" }
+      { img:"guest_08", zh:"那好吧，辛苦了！谢谢你的款待！", py:"Nà hǎo ba, xīnkǔ le! Xièxie nǐ de kuǎndài!", ru:"Ну ладно, спасибо за труды! Спасибо за угощение!", who:"w", speaker:"👱‍♀️ Лена" }
     ]
   }
 };
 
-const SCENE_ORDER = ['mcdonalds', 'help', 'late', 'phone', 'job', 'wallet', 'birthday', 'battery', 'directions', 'sick', 'glasses', 'beach', 'cosmetics', 'cinema', 'restaurant', 'thailand', 'friends', 'guest'];
-const THEME_MAP = { mcdonalds: '', help: 'help-theme', late: 'late-theme', phone: 'phone-theme', job: 'job-theme', wallet: 'wallet-theme', birthday: 'birthday-theme', battery: 'battery-theme', directions: 'directions-theme', sick: 'sick-theme', glasses: 'glasses-theme', beach: 'beach-theme', cosmetics: 'cosmetics-theme', cinema: 'cinema-theme', restaurant: 'restaurant-theme', thailand: 'thailand-theme', friends: 'friends-theme', guest: 'guest-theme' };
-const SCENE_NAMES = { mcdonalds: '🍔 McDonald\'s', help: '🤝 Просьба о помощи', late: '⏰ Опоздание', phone: '📱 Что делать?', job: '💼 Новая работа', wallet: '👛 Потерянный кошелёк', birthday: '🎂 День рождения', battery: '🔋 Разрядился телефон', directions: '🗺️ Как пройти?', sick: '🤒 Я простудилась', glasses: '👓 Поход за очками', beach: '🏖️ Пошли на пляж!', cosmetics: '🛍️ Корейская косметика', cinema: '🎬 Поход в кино', restaurant: '🌹 Пошли в ресторан', thailand: '✈️ Полетели в Таиланд', friends: '🌸 Встреча подруг', guest: '🏠 В гостях' };
+const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
+const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'phone-theme', job:'job-theme', wallet:'wallet-theme', birthday:'birthday-theme', battery:'battery-theme', directions:'directions-theme', sick:'sick-theme', glasses:'glasses-theme', beach:'beach-theme', cosmetics:'cosmetics-theme', cinema:'cinema-theme', restaurant:'restaurant-theme', thailand:'thailand-theme', friends:'friends-theme', guest:'guest-theme' };
+const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
 
 const REPEAT_PAUSE = 2500;
-
 let currentScene = 'mcdonalds';
-let zhVoice = null, ruVoice = null, currentSpeed = 0.55, db = null;
+let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
@@ -802,10 +445,7 @@ function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
   const audio = new Audio();
   audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-  audio.play().then(() => {
-    audio.pause(); audioUnlocked = true;
-    if ('speechSynthesis' in window) { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(''); u.volume = 0; speechSynthesis.speak(u); }
-  }).catch(() => { audioUnlocked = true; });
+  audio.play().then(() => { audio.pause(); audioUnlocked = true; if ('speechSynthesis' in window) { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(''); u.volume = 0; speechSynthesis.speak(u); } }).catch(() => { audioUnlocked = true; });
 }
 document.addEventListener('touchstart', unlockAudioOnInteraction, { once: true });
 document.addEventListener('click', unlockAudioOnInteraction, { once: true });
@@ -815,34 +455,74 @@ function wakeUpSpeechSynthesis() {
   return new Promise(resolve => { speechSynthesis.cancel(); if (isIOS) speechSynthesis.resume(); setTimeout(resolve, 50); });
 }
 
-function initDB() {
+/* ==================== GITHUB через Worker ==================== */
+let uploadKey = localStorage.getItem('upload_key') || '';
+function ensureKey() {
+  if (uploadKey) return true;
+  const k = prompt('Введите код доступа (UPLOAD_KEY):');
+  if (k && k.trim()) { uploadKey = k.trim(); localStorage.setItem('upload_key', uploadKey); return true; }
+  showToast('❌ Код не введён');
+  return false;
+}
+function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('ChineseLearningAudio_v15', 1);
-    request.onupgradeneeded = (event) => { const db = event.target.result; if (!db.objectStoreNames.contains('recordings')) db.createObjectStore('recordings'); };
-    request.onsuccess = (event) => { db = event.target.result; resolve(db); };
-    request.onerror = (event) => reject(event.target.error);
+    const r = new FileReader();
+    r.onloadend = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(blob);
   });
 }
-function saveToDB(key, blob) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readwrite'); const req = tx.objectStore('recordings').put(blob, key); req.onsuccess = () => resolve(); req.onerror = () => reject(req.error); }); }
-function getFromDB(key) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readonly'); const req = tx.objectStore('recordings').get(key); req.onsuccess = () => resolve(req.result); req.onerror = () => reject(req.error); }); }
-function deleteFromDB(key) { return new Promise((resolve, reject) => { const tx = db.transaction(['recordings'], 'readwrite'); const req = tx.objectStore('recordings').delete(key); req.onsuccess = () => resolve(); req.onerror = () => reject(req.error); }); }
-
+async function saveToDB(key, blob) {
+  if (!ensureKey()) throw new Error('No key');
+  const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
+  const path = `recordings/${key}.${ext}`;
+  const content = await blobToBase64(blob);
+  const res = await fetch(`${WORKER_URL}/${path}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'X-Upload-Key': uploadKey },
+    body: JSON.stringify({ content })
+  });
+  if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+  return res.json();
+}
+async function getFromDB(key) {
+  for (const ext of ['webm', 'mp4']) {
+    try {
+      const res = await fetch(`${WORKER_URL}/recordings/${key}.${ext}`, { cache: 'no-cache' });
+      if (res.ok) return await res.blob();
+    } catch (e) {}
+  }
+  return null;
+}
+async function deleteFromDB(key) {
+  if (!ensureKey()) return;
+  for (const ext of ['webm', 'mp4']) {
+    try { await fetch(`${WORKER_URL}/recordings/${key}.${ext}`, { method: 'DELETE', headers: { 'X-Upload-Key': uploadKey } }); } catch (e) {}
+  }
+}
+/* ==================== INIT ==================== */
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
   ruVoice = voices.find(v => v.lang.includes('ru-RU')) || voices[0];
 }
 if ('speechSynthesis' in window) { speechSynthesis.onvoiceschanged = loadVoices; loadVoices(); }
-
-document.getElementById('speedSlider').addEventListener('input', (e) => { currentSpeed = parseFloat(e.target.value); document.getElementById('speedValue').textContent = currentSpeed.toFixed(2) + 'x'; });
-
-function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
-
+document.getElementById('speedSlider').addEventListener('input', (e) => {
+  currentSpeed = parseFloat(e.target.value);
+  document.getElementById('speedValue').textContent = currentSpeed.toFixed(2) + 'x';
+});
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
 function resetAllRecordButtons() {
-  document.querySelectorAll('.record-btn').forEach(btn => btn.classList.remove('recording'));
+  document.querySelectorAll('.record-btn').forEach(b => b.classList.remove('recording'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
+/* ==================== RENDER ==================== */
 async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
@@ -852,7 +532,6 @@ async function renderScene(sceneKey) {
   document.body.className = '';
   const theme = THEME_MAP[sceneKey];
   if (theme) document.body.classList.add(theme);
-
   let html = "";
   data.panels.forEach((p, i) => {
     const bubbleClass = p.who === "s" ? "sailor" : "waiter";
@@ -895,29 +574,30 @@ async function renderScene(sceneKey) {
   container.scrollTop = 0;
   await checkRecordings(sceneKey);
 }
-
 async function checkRecordings(sceneKey) {
   const data = SCENES[sceneKey];
-  for (let i = 0; i < data.panels.length; i++) {
+  const checks = data.panels.map(async (_, i) => {
     try {
-      const blob = await getFromDB(`${sceneKey}_ru_${i}`);
-      if (blob) { const recBtn = document.getElementById(`${sceneKey}-rec-ru-${i}`); if (recBtn) recBtn.classList.add('has-recording'); }
+      const res = await fetch(`${WORKER_URL}/recordings/${sceneKey}_ru_${i}.webm`, { method: 'GET', cache: 'no-cache' });
+      if (res.ok) {
+        const btn = document.getElementById(`${sceneKey}-rec-ru-${i}`);
+        if (btn) btn.classList.add('has-recording');
+      }
     } catch(e) {}
-  }
+  });
+  await Promise.all(checks);
 }
-
 function switchScene() {
   stopPlayback();
-  const currentIndex = SCENE_ORDER.indexOf(currentScene);
-  const nextIndex = (currentIndex + 1) % SCENE_ORDER.length;
-  currentScene = SCENE_ORDER[nextIndex];
+  const idx = SCENE_ORDER.indexOf(currentScene);
+  const next = (idx + 1) % SCENE_ORDER.length;
+  currentScene = SCENE_ORDER[next];
   renderScene(currentScene);
   showToast(SCENE_NAMES[currentScene]);
 }
-
 function stopPlayback() {
   isPlaying = false;
-  speechSynthesis.cancel();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (globalAudio) { globalAudio.pause(); globalAudio.currentTime = 0; }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
@@ -928,19 +608,24 @@ function stopPlayback() {
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
+/* ==================== RECORDING ==================== */
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
-  if (activeRecordingKey && activeRecordingKey.key === sceneKey && activeRecordingKey.idx === idx) { stopCurrentRecording(); return; }
+  if (activeRecordingKey && activeRecordingKey.key === sceneKey && activeRecordingKey.idx === idx) {
+    stopCurrentRecording(); return;
+  }
   if (activeRecordingKey) { stopCurrentRecording(); await sleep(300); }
+  if (!ensureKey()) return;
   try {
     resetAllRecordButtons();
-    const stream = await navigator.mediaDevices.getUserMedia({ 
-      audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } 
-    });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
     let mimeType = 'audio/webm;codecs=opus';
-    if (isIOS) { if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4'; else if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm'; }
+    if (isIOS) {
+      if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
+      else if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
+    }
     const recorder = new MediaRecorder(stream, { mimeType, audioBitsPerSecond: 128000 });
     activeRecorder = recorder;
     activeRecordingKey = { key: sceneKey, idx, lang };
@@ -948,7 +633,15 @@ async function toggleRecording(sceneKey, idx, lang) {
     recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = async () => {
       const blob = new Blob(chunks, { type: mimeType });
-      try { await saveToDB(`${sceneKey}_${lang}_${idx}`, blob); document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.add('has-recording'); showToast('✅ Сохранено!'); } catch(e) { showToast('❌ Ошибка'); }
+      showToast('⬆️ Загрузка на GitHub...');
+      try {
+        await saveToDB(`${sceneKey}_${lang}_${idx}`, blob);
+        document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.add('has-recording');
+        showToast('✅ Сохранено на GitHub!');
+      } catch(e) {
+        console.error(e);
+        showToast('❌ Ошибка: ' + (e.message || 'unknown'));
+      }
       if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
       activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons();
     };
@@ -958,12 +651,32 @@ async function toggleRecording(sceneKey, idx, lang) {
     recorder.start();
     showToast('🎙️ Запись...');
     recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
-  } catch (err) { console.error(err); showToast('⚠️ Нет доступа к микрофону'); cleanupRecording(); }
+  } catch (err) {
+    console.error(err);
+    showToast('⚠️ Нет доступа к микрофону');
+    cleanupRecording();
+  }
 }
-function stopCurrentRecording() { if (recordingTimeout) clearTimeout(recordingTimeout); if (activeRecorder && activeRecorder.state !== 'inactive') { try { activeRecorder.stop(); } catch(e) { cleanupRecording(); } } else { cleanupRecording(); } }
-function cleanupRecording() { if (recordingTimeout) clearTimeout(recordingTimeout); if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; } activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons(); }
-async function handleDelete(sceneKey, idx, lang) { try { await deleteFromDB(`${sceneKey}_${lang}_${idx}`); document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.remove('has-recording'); showToast('🗑️ Удалено'); } catch(e) {} }
+function stopCurrentRecording() {
+  if (recordingTimeout) clearTimeout(recordingTimeout);
+  if (activeRecorder && activeRecorder.state !== 'inactive') {
+    try { activeRecorder.stop(); } catch(e) { cleanupRecording(); }
+  } else cleanupRecording();
+}
+function cleanupRecording() {
+  if (recordingTimeout) clearTimeout(recordingTimeout);
+  if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
+  activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons();
+}
+async function handleDelete(sceneKey, idx, lang) {
+  try {
+    await deleteFromDB(`${sceneKey}_${lang}_${idx}`);
+    document.getElementById(`${sceneKey}-rec-${lang}-${idx}`).classList.remove('has-recording');
+    showToast('🗑️ Удалено с GitHub');
+  } catch(e) { showToast('❌ Ошибка удаления'); }
+}
 
+/* ==================== TTS ==================== */
 function playTTSRobust(sceneKey, idx, lang) {
   return new Promise(async (resolve) => {
     if (!isPlaying) { resolve(); return; }
@@ -983,10 +696,9 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.onend = () => { clearTimeout(safetyTimeout); finish(); };
     utterance.onerror = () => { clearTimeout(safetyTimeout); finish(); };
     await wakeUpSpeechSynthesis();
-    setTimeout(() => { if (!finished && isPlaying) { try { speechSynthesis.speak(utterance); } catch(e) { finish(); } } else if (!isPlaying) { finish(); } }, 100);
+    setTimeout(() => { if (!finished && isPlaying) { try { speechSynthesis.speak(utterance); } catch(e) { finish(); } } else if (!isPlaying) finish(); }, 100);
   });
 }
-
 function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
   const channelData = audioBuffer.getChannelData(0);
   let maxPeak = 0;
@@ -994,10 +706,9 @@ function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
   if (maxPeak < 0.001) return audioBuffer;
   const gain = targetPeak / maxPeak;
   if (gain <= 1.0) return audioBuffer;
-  for (let i = 0; i < channelData.length; i++) { channelData[i] = channelData[i] * gain; }
+  for (let i = 0; i < channelData.length; i++) channelData[i] *= gain;
   return audioBuffer;
 }
-
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     if (!isPlaying) { resolve(); return; }
@@ -1009,8 +720,7 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
     const reader = new FileReader();
     reader.onload = async (e) => {
       try {
-        const arrayBuffer = e.target.result;
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        const audioBuffer = await audioContext.decodeAudioData(e.target.result);
         normalizeAudioBuffer(audioBuffer, 0.9);
         highlightText(sceneKey, idx, lang);
         let finished = false;
@@ -1024,28 +734,30 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
         const safetyTimeout = setTimeout(finish, 15000);
         source.onended = () => { clearTimeout(safetyTimeout); finish(); };
         source.start(0);
-      } catch(err) { console.error('AudioContext error:', err); playRecordingFallback(blob, sceneKey, idx, lang, resolve); }
+      } catch(err) { playRecordingFallback(blob, sceneKey, idx, lang, resolve); }
     };
-    reader.onerror = () => { playRecordingFallback(blob, sceneKey, idx, lang, resolve); };
+    reader.onerror = () => playRecordingFallback(blob, sceneKey, idx, lang, resolve);
     reader.readAsArrayBuffer(blob);
   });
 }
-
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   if (!globalAudio) globalAudio = document.getElementById('globalAudio');
-  const audioUrl = URL.createObjectURL(blob);
-  globalAudio.src = audioUrl; globalAudio.playsInline = true; globalAudio.webkitPlaysInline = true; globalAudio.volume = 1.0;
+  const url = URL.createObjectURL(blob);
+  globalAudio.src = url;
+  globalAudio.playsInline = true;
+  globalAudio.webkitPlaysInline = true;
+  globalAudio.volume = 1.0;
   highlightText(sceneKey, idx, lang);
   let finished = false;
-  const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); URL.revokeObjectURL(audioUrl); resolve(); };
+  const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); URL.revokeObjectURL(url); resolve(); };
   const safetyTimeout = setTimeout(finish, 15000);
   globalAudio.onended = () => { clearTimeout(safetyTimeout); finish(); };
   globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
   globalAudio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
 }
-
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
 
+/* ==================== HIGHLIGHT ==================== */
 function highlightText(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
   const panel = document.getElementById(`${sceneKey}-p${idx}`);
@@ -1054,13 +766,13 @@ function highlightText(sceneKey, idx, lang) {
   const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
   const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
   const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
-  if(el) el.classList.add('active');
-  if(panel) panel.classList.add('active-panel');
-  if(btn) btn.classList.add('speaking');
-  if(replayBtn) replayBtn.classList.add('playing');
-  if(nextBtn) nextBtn.classList.add('playing');
-  if(np) np.classList.add('visible');
-  if(npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇷 Русский...';
+  if (el) el.classList.add('active');
+  if (panel) panel.classList.add('active-panel');
+  if (btn) btn.classList.add('speaking');
+  if (replayBtn) replayBtn.classList.add('playing');
+  if (nextBtn) nextBtn.classList.add('playing');
+  if (np) np.classList.add('visible');
+  if (npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇷 Русский...';
 }
 function clearHighlight(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
@@ -1069,14 +781,13 @@ function clearHighlight(sceneKey, idx, lang) {
   const np = document.getElementById(`${sceneKey}-np${idx}`);
   const replayBtn = document.getElementById(`${sceneKey}-replay-${idx}`);
   const nextBtn = document.getElementById(`${sceneKey}-next-${idx}`);
-  if(el) el.classList.remove('active');
-  if(panel) panel.classList.remove('active-panel');
-  if(btn) btn.classList.remove('speaking');
-  if(replayBtn) replayBtn.classList.remove('playing');
-  if(nextBtn) nextBtn.classList.remove('playing');
-  if(np) np.classList.remove('visible');
+  if (el) el.classList.remove('active');
+  if (panel) panel.classList.remove('active-panel');
+  if (btn) btn.classList.remove('speaking');
+  if (replayBtn) replayBtn.classList.remove('playing');
+  if (nextBtn) nextBtn.classList.remove('playing');
+  if (np) np.classList.remove('visible');
 }
-
 function showRepeatPause(sceneKey, idx) {
   const np = document.getElementById(`${sceneKey}-np${idx}`);
   const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
@@ -1084,16 +795,22 @@ function showRepeatPause(sceneKey, idx) {
   if (npT) npT.textContent = '🗣️ Повторите фразу вслух...';
 }
 
+/* ==================== PLAYBACK ==================== */
 async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
   await wakeUpSpeechSynthesis();
-  if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
-  else { try { const blob = await getFromDB(`${sceneKey}_ru_${idx}`); if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru'); else await playTTSRobust(sceneKey, idx, 'ru'); } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); } }
+  if (lang ===T 'zh') await playTTSRobust(sceneKey, idx, 'zh');
+  else {
+    try {
+      const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
+      if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
+      else await playTTSRobust(sceneKey, idx, 'ru');
+    } catch(e) { await playTSRobust(sceneKey, idx, 'ru'); }
+  }
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
-
 async function playCardInternal(sceneKey, idx) {
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
@@ -1106,14 +823,13 @@ async function playCardInternal(sceneKey, idx) {
   try {
     const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
     if (blob) { await playRecordingRobust(blob, sceneKey, idx, 'ru'); if (!isPlaying) return; await wakeUpSpeechSynthesis(); }
-    else { await playTTSRobust(sceneKey, idx, 'ru'); }
+    else await playTTSRobust(sceneKey, idx, 'ru');
   } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
   if (!isPlaying) return;
   showRepeatPause(sceneKey, idx);
   await sleep(REPEAT_PAUSE);
   if (btn) btn.classList.remove('playing');
 }
-
 async function playCard(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -1121,7 +837,6 @@ async function playCard(sceneKey, idx) {
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
-
 async function playAndNext(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -1131,22 +846,19 @@ async function playAndNext(sceneKey, idx) {
   let nextIdx = idx + 1;
   if (nextIdx >= panels.length) { nextIdx = 0; showToast('🔄 Начинаем сначала'); }
   const nextPanel = document.getElementById(`${sceneKey}-p${nextIdx}`);
-  if (nextPanel) { setTimeout(() => { nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
+  if (nextPanel) setTimeout(() => nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-
+/* ==================== START ==================== */
 window.addEventListener('load', async () => {
   globalAudio = document.getElementById('globalAudio');
-  await initDB();
   renderScene(currentScene);
   if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
-
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
 </script>
 </body>
 </html>
-
