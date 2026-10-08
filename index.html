@@ -689,7 +689,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     if (panelEl) panelEl.classList.add('recording-panel');
     recorder.start();
     showToast('🎙️ Запись...');
-    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
+    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 120000);
   } catch (err) {
     console.error(err);
     showToast('⚠️ Нет доступа к микрофону');
