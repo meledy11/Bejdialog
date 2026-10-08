@@ -463,8 +463,8 @@ function unlockAudioOnInteraction() {
     }
   }).catch(() => { audioUnlocked = true; });
 }
-document.addEventListener('touchstart', unlockAudioOnInteraction, { once: true });
-document.addEventListener('click', unlockAudioOnInteraction, { once: true });
+document.addEventListener('touchstart', unlockAudioOnInteraction);
+document.addEventListener('click', unlockAudioOnInteraction);
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return Promise.resolve();
@@ -747,7 +747,7 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* Воспроизведение через <audio> тег — надёжно работает на iPhone */
+/* ⭐ УПРОЩЕНО: ВСЕГДА через <audio> тег, БЕЗ AudioContext — работает на iOS Safari */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
@@ -777,7 +777,7 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
 
   const playPromise = globalAudio.play();
   if (playPromise && playPromise.catch) {
-    playPromise.catch((err) => {
+    playPromise.catch(() => {
       setTimeout(() => {
         globalAudio.play().catch(() => {});
       }, 50);
