@@ -654,7 +654,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
 
-    // ПРИОРИТЕТ .webm — для iOS Safari
+    // ПРИОРИТЕТ .webm
     let mimeType = 'audio/webm;codecs=opus';
     if (!MediaRecorder.isTypeSupported(mimeType)) {
       if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
@@ -738,6 +738,7 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
+/* ⭐ ГЛАВНЫЙ ФИКС: new Audio() + ждём onended, игнорируем ложные onerror на iOS */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
@@ -752,24 +753,39 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   highlightText(sceneKey, idx, lang);
 
   let finished = false;
+  let safetyTimeout = null;
+
   const finish = () => {
     if (finished) return;
     finished = true;
+    if (safetyTimeout) clearTimeout(safetyTimeout);
     clearHighlight(sceneKey, idx, lang);
     setTimeout(() => URL.revokeObjectURL(url), 500);
     if (resolve) resolve();
   };
 
-  const safetyTimeout = setTimeout(finish, 15000);
-  audio.onended = () => { clearTimeout(safetyTimeout); finish(); };
-  audio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
+  // ⭐ Главный триггер — окончание воспроизведения
+  audio.onended = () => finish();
 
-  const playPromise = audio.play();
-  if (playPromise && playPromise.catch) {
-    playPromise.catch(() => {
-      setTimeout(() => { audio.play().catch(() => {}); }, 50);
-    });
-  }
+  // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
+  audio.onerror = () => {
+    // code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED — реальная ошибка
+    // Остальные "ошибки" iOS игнорируем — звук всё равно играет
+    if (audio.error && audio.error.code === 4) {
+      console.warn('Audio decode error:', audio.error.message);
+      finish();
+    }
+  };
+
+  // Запуск воспроизведения
+  audio.play().catch(() => {
+    setTimeout(() => {
+      audio.play().catch(() => finish());
+    }, 100);
+  });
+
+  // Защита от зависания — 30 сек максимум (записи короткие, но с запасом)
+  safetyTimeout = setTimeout(finish, 30000);
 }
 
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
