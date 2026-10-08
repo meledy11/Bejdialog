@@ -3,94 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎤 Полныйл тест</title>
+<title>🎤 Тест воспроизведения</title>
 <style>
 body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0;font-size:14px}
 h1{font-size:18px;margin:0 0 12px 0}
 .box{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-.box h2{font-size:14px;margin:0 0 8px 0;display:flex;justify-content:space-between;align-items:center}
-.status{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;margin-left:6px}
-.pending{background:#eee;color:#666}
-.ok{background:#d4edda;color:#155724}
-.fail{background:#f8d7da;color:#721c24}
-.warn{background:#fff3cd;color:#856404}
-.result{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
+.box h2{font-size:14px;margin:0 0 8px 0}
+.status{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;margin-left:6px;background:#eee;color:#666}
+.status.ok{background:#d4edda;color:#155724}
+.status.fail{background:#f8d7da;color:#721c24}
+.result{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:250px;overflow-y:auto}
 .btn{background:#007aff;color:#fff;border:none;padding:14px 20px;border-radius:10px;font-size:15px;font-weight:600;width:100%;margin-bottom:10px;cursor:pointer}
 .btn:active{opacity:.7}
 .btn-copy{background:#4caf50}
+.btn-green{background:#4caf50}
 audio{width:100%;margin-top:8px}
 </style>
 </head>
 <body>
 
-<h1>🎤 Полный тест записи и воспроизведения</h1>
+<h1>🎤 Тест воспроизведения</h1>
 
 <div class="box">
-  <h2>⚙️ Настройка <span class="status pending" id="s-config">...</span></h2>
-  <div class="result" id="r-config">Не проверено</div>
+  <h2>⚙️ Настройка <span class="status" id="s-config">...</span></h2>
+  <div class="result" id="r-config">—</div>
 </div>
 
 <button class="btn" onclick="testAll()">▶️ ЗАПУСТИТЬ ПОЛНЫЙ ТЕСТ</button>
 <button class="btn btn-copy" onclick="copyAll()">📋 Скопировать отчёт</button>
 
 <div class="box">
-  <h2>1. Микрофон <span class="status pending" id="s-mic">...</span></h2>
-  <div class="result" id="r-mic">Не проверено</div>
+  <h2>1. Микрофон <span class="status" id="s-mic">...</span></h2>
+  <div class="result" id="r-mic">—</div>
 </div>
 
 <div class="box">
-  <h2>2. Формат записи <span class="status pending" id="s-format">...</span></h2>
-  <div class="result" id="r-format">Не проверено</div>
+  <h2>2. Запись 3 сек <span class="status" id="s-rec">...</span></h2>
+  <div class="result" id="r-rec">—</div>
 </div>
 
 <div class="box">
-  <h2>3. Запись (blob) <span class="status pending" id="s-blob">...</span></h2>
-  <div class="result" id="r-blob">Не проверено</div>
-</div>
-
-<div class="box">
-  <h2>4. Воспроизведение локального blob (как в index.html) <span class="status pending" id="s-play-local">...</span></h2>
-  <div class="result" id="r-play-local">Не проверено</div>
+  <h2>3. Локальный blob → свой audio <span class="status" id="s-local">...</span></h2>
+  <div class="result" id="r-local">—</div>
   <audio id="playerLocal" controls playsinline webkit-playsinline></audio>
 </div>
 
 <div class="box">
-  <h2>5. Сохранение в GitHub (PUT) <span class="status pending" id="s-put">...</span></h2>
-  <div class="result" id="r-put">Не проверено</div>
+  <="h2>4. PUTr в GitHub <span class="status"-get id="s-put">...</span">></h2>
+  <div class="result" id="r-put">—</div—>
 </div>
 
 <div class="box">
-  <h2>6. Чтение из GitHub (GET) <span class="status pending" id="s-get">...</span></h2>
-  <div class="result" id="r-get">Не проверено</div>
+  <h2>5. GET из GitHub <span class="status" id="s-get">...</span></h2>
+  <div class="result" id</div>
 </div>
 
 <div class="box">
-  <h2>7. Воспроизведение из GitHub <span class="status pending" id="s-play-remote">...</span></h2>
-  <div class="result" id="r-play-remote">Не проверено</div>
+  <h2>6. Воспроизведение через СВОЙ audio <span class="status" id="s-remote">...</span></h2>
+  <div class="result" id="r-remote">—</div>
   <audio id="playerRemote" controls playsinline webkit-playsinline></audio>
 </div>
 
 <div class="box">
-  <h2>8. Тест громкости globalAudio <span class="status pending" id="s-global">...</span></h2>
-  <div class="result" id="r-global">Не проверено</div>
+  <h2>7. ⭐ Воспроизведение через GLOBAL audio (как в index.html) <span class="status" id="s-global">...</span></h2>
+  <div class="result" id="r-global">—</div>
 </div>
 
-<audio id="globalAudio" playsinline webkit-playsinline style="display:none;"></audio>
+<div class="box">
+  <h2>8. ⭐ Воспроизведение через НОВЫЙ Audio() (обход) <span class="status" id="s-newaudio">...</span></h2>
+  <div class="result" id="r-newaudio">—</div>
+</div>
+
+<audio id="globalAudio" playsinline webkit-playsinline style="position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:none;"></audio>
 
 <script>
 const WORKER_URL = 'https://bejdialog.meledy1111.workers.dev';
-const TEST_KEY = 'test_record_check';
+const TEST_KEY = 'test_play_diag';
 const results = {};
 
 let currentBlob = null;
 let currentExt = null;
-let mediaRecorder = null;
-let stream = null;
+let fetchedBlob = null;
 let globalAudio = null;
 
 function setS(id, cls, text) {
   const el = document.getElementById('s-' + id);
-  if (el) { el.className = 'status ' + cls; el.textContent = text; }
+  if (el) { el.className = 'status ' + (cls || ''); el.textContent = text; }
 }
 function setR(id, text) {
   const el = document.getElementById('r-' + id);
@@ -100,98 +98,72 @@ function setR(id, text) {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function testAll() {
-  setS('config', 'ok', 'OK');
-  setR('config', 'Worker: ' + WORKER_URL + '\nUA: ' + navigator.userAgent + '\nUPLOAD_KEY: ' + (localStorage.getItem('upload_key') ? '✅ сохранён' : '❌ нет'));
-
   globalAudio = document.getElementById('globalAudio');
-  if (!globalAudio) {
-    setS('global', 'fail', '❌ НЕТ');
-    setR('global', 'globalAudio не найден в HTML');
-  } else {
-    setS('global', 'ok', 'есть');
-    setR('global', 'globalAudio найден\nstyle.display: ' + (globalAudio.style.display || 'default') + '\nplaysInline: ' + globalAudio.playsInline);
-  }
+
+  setS('config', 'ok', 'OK');
+  setR('config', 'Worker: ' + WORKER_URL + '\nUA: ' + navigator.userAgent + '\nUPLOAD_KEY: ' + (localStorage.getItem('upload_key') ? '✅' : '❌'));
 
   // 1. Микрофон
+  let stream;
   try {
     setS('mic', '', 'запрос...');
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const track = stream.getAudioTracks()[0];
-    setS('mic', 'ok', '✅ OK');
+    setS('mic', 'ok', '✅');
     setR('mic', 'Устройство: ' + (track ? track.label : '?'));
   } catch(e) {
-    setS('mic', 'fail', '❌ ОШИБКА');
+    setS('mic', 'fail', '❌');
     setR('mic', e.name + ' — ' + e.message);
     return;
   }
 
-  // 2. Формат
+  // 2. Запись
   let mimeType = 'audio/webm;codecs=opus';
   if (!MediaRecorder.isTypeSupported(mimeType)) {
     if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
     else if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
   }
   currentExt = mimeType.includes('mp4') ? 'mp4' : 'webm';
-  setS('format', 'ok', mimeType.split(';')[0]);
-  setR('format', 'Поддержка:\nwebm/opus: ' + MediaRecorder.isTypeSupported('audio/webm;codecs=opus') +
-    '\nwebm: ' + MediaRecorder.isTypeSupported('audio/webm') +
-    '\nmp4: ' + MediaRecorder.isTypeSupported('audio/mp4') +
-    '\n\nВыбран: ' + mimeType);
 
-  // 3. Запись
   try {
-    setS('blob', '', 'запись 3 сек...');
+    setS('rec', '', 'запись 3 сек...');
     await new Promise((resolve, reject) => {
-      mediaRecorder = new MediaRecorder(stream, { mimeType, audioBitsPerSecond: 128000 });
+      const recorder = new MediaRecorder(stream, { mimeType, audioBitsPerSecond: 128000 });
       const chunks = [];
-      mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
-      mediaRecorder.onstop = () => {
-        currentBlob = new Blob(chunks, { type: mimeType });
-        resolve();
-      };
-      mediaRecorder.onerror = reject;
-      mediaRecorder.start();
-      setTimeout(() => { if (mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 3000);
+      recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+      recorder.onstop = () => { currentBlob = new Blob(chunks, { type: mimeType }); resolve(); };
+      recorder.onerror = reject;
+      recorder.start();
+      setTimeout(() => { if (recorder.state === 'recording') recorder.stop(); }, 3000);
     });
-
-    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-
-    setS('blob', 'ok', '✅ ' + currentBlob.size + ' байт');
-    setR('blob', 'Размер: ' + currentBlob.size + ' байт\nТип: ' + currentBlob.type + '\nРасширение: .' + currentExt);
+    stream.getTracks().forEach(t => t.stop());
+    setS('rec', 'ok', '✅ ' + currentBlob.size + ' байт');
+    setR('rec', 'Размер: ' + currentBlob.size + '\nТип: ' + currentBlob.type + '\nРасширение: .' + currentExt);
   } catch(e) {
-    setS('blob', 'fail', '❌ ОШИБКА');
-    setR('blob', e.name + ' — ' + e.message);
+    setS('rec', 'fail', '❌');
+    setR('rec', e.name + ' — ' + e.message);
     return;
   }
 
-  // 4. Локальное воспроизведение через <audio>
+  // 3. Локальный blob → свой audio
   try {
-    setS('play-local', '', 'проверка...');
+    setS('local', '', 'проверка...');
     const player = document.getElementById('playerLocal');
-    const url = URL.createObjectURL(currentBlob);
-    player.src = url;
+    player.src = URL.createObjectURL(currentBlob);
     player.volume = 1.0;
     await player.play();
-    setS('play-local', 'ok', '✅ играет');
-    setR('play-local', '✅ Локальный blob играет через <audio>\nРазмер: ' + currentBlob.size + '\nТип: ' + currentBlob.type);
+    setS('local', 'ok', '✅ играет');
+    setR('local', '✅ Локальный blob играет через свой <audio>\nРазмер: ' + currentBlob.size + '\nТип: ' + currentBlob.type + '\n\nГромкость = 1.0');
     await sleep(1500);
     player.pause();
   } catch(e) {
-    setS('play-local', 'fail', '❌ ' + e.name);
-    setR('play-local', 'Ошибка: ' + e.name + ' — ' + e.message);
+    setS('local', 'fail', '❌');
+    setR('local', 'Ошибка: ' + e.name + ' — ' + e.message);
   }
 
-  // 5. PUT в GitHub
-  let uploadKey = localStorage.getItem('upload_key');
-  if (!uploadKey) {
-    uploadKey = prompt('UPLOAD_KEY:');
-    if (uploadKey) localStorage.setItem('upload_key', uploadKey);
-  }
-  if (!uploadKey) {
-    setS('put', 'fail', '❌ нет ключа');
-    setR('put', 'Не введён UPLOAD_KEY');
-    return;
-  }
+  // 4. PUT в GitHub
+  let uploadKey = localStorage.getItem('upload_key') || prompt('UPLOAD_KEY:');
+  if (uploadKey) localStorage.setItem('upload_key', uploadKey);
 
   try {
     setS('put', '', 'отправка...');
@@ -201,96 +173,113 @@ async function testAll() {
       r.onerror = reject;
       r.readAsDataURL(currentBlob);
     });
-
     const path = `recordings/${TEST_KEY}.${currentExt}`;
-    const start = Date.now();
     const res = await fetch(`${WORKER_URL}/${path}?key=${encodeURIComponent(uploadKey)}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ content, key: uploadKey })
     });
-    const elapsed = Date.now() - start;
     const text = await res.text();
-
     if (res.ok) {
       setS('put', 'ok', '✅ ' + res.status);
-      setR('put', '✅ Сохранено\nHTTP ' + res.status + '\nВремя: ' + elapsed + 'ms\nПуть: ' + path);
+      setR('put', 'HTTP ' + res.status + '\nПуть: ' + path);
     } else {
       setS('put', 'fail', '❌ ' + res.status);
-      setR('put', '❌ HTTP ' + res.status + '\n' + text.substring(0, 300));
+      setR('put', 'HTTP ' + res.status + '\n' + text.substring(0, 200));
       return;
     }
   } catch(e) {
-    setS('put', 'fail', '❌ ОШИБКА');
+    setS('put', 'fail', '❌');
     setR('put', e.name + ' — ' + e.message);
     return;
   }
 
-  // 6. GET из GitHub
-  let fetchedBlob = null;
-  let usedExt = null;
+  // 5. GET
+  await sleep(500);
   try {
     setS('get', '', 'загрузка...');
-    await sleep(1000);
     for (const ext of ['webm', 'mp4']) {
-      const url = `${WORKER_URL}/recordings/${TEST_KEY}.${ext}`;
-      const res = await fetch(url, { cache: 'no-cache' });
+      const res = await fetch(`${WORKER_URL}/recordings/${TEST_KEY}.${ext}`, { cache: 'no-cache' });
       if (res.ok) {
         fetchedBlob = await res.blob();
-        usedExt = ext;
         setS('get', 'ok', '✅ ' + res.status);
-        setR('get', '✅ Получено\nHTTP ' + res.status + '\nРазмер: ' + fetchedBlob.size + ' байт\nТип: ' + fetchedBlob.type + '\nРасширение: .' + ext);
+        setR('get', 'HTTP ' + res.status + '\nРазмер: ' + fetchedBlob.size + ' байт\nТип: ' + fetchedBlob.type + '\nРасширение: .' + ext);
         break;
       }
     }
     if (!fetchedBlob) {
       setS('get', 'fail', '❌ 404');
-      setR('get', 'Файл не найден в GitHub (кэш 5 мин — подождите)');
+      setR('get', 'Файл не найден в GitHub (кэш 5 мин)');
       return;
     }
   } catch(e) {
-    setS('get', 'fail', '❌ ОШИБКА');
+    setS('get', 'fail', '❌');
     setR('get', e.name + ' — ' + e.message);
     return;
   }
 
-  // 7. Воспроизведение из GitHub через отдельный <audio>
+  // 6. Свой audio
   try {
-    setS('play-remote', '', 'играем...');
+    setS('remote', '', 'играем...');
     const player = document.getElementById('playerRemote');
-    const url = URL.createObjectURL(fetchedBlob);
-    player.src = url;
+    player.src = URL.createObjectURL(fetchedBlob);
     player.volume = 1.0;
     await player.play();
-    setS('play-remote', 'ok', '✅ играет');
-    setR('play-remote', '✅ Файл из GitHub играет через <audio>\nРазмер: ' + fetchedBlob.size + ' байт\nТип: ' + fetchedBlob.type);
+    setS('remote', 'ok', '✅ играет');
+    setR('remote', '✅ Файл из GitHub играет через свой <audio>\nРазмер: ' + fetchedBlob.size);
     await sleep(1500);
     player.pause();
   } catch(e) {
-    setS('play-remote', 'fail', '❌ ' + e.name);
-    setR('play-remote', 'Ошибка: ' + e.name + ' — ' + e.message);
+    setS('remote', 'fail', '❌');
+    setR('remote', 'Ошибка: ' + e.name + ' — ' + e.message);
   }
 
-  // 8. Тест globalAudio — точно как в index.html
+  // 7. Global audio (как в index.html)
   try {
-    setS('global', '', 'тест через globalAudio...');
+    setS('global', '', 'играем...');
     const url = URL.createObjectURL(fetchedBlob);
     globalAudio.src = url;
     globalAudio.playsInline = true;
     globalAudio.volume = 1.0;
-    await globalAudio.play();
-    setS('global', 'ok', '✅ globalAudio играет');
-    setR('global', '✅ globalAudio (id="globalAudio") ИГРАЕТ\nЭто тот же элемент, что в index.html\nРазмер: ' + fetchedBlob.size + '\nТип: ' + fetchedBlob.type + '\n\nЗНАЧИТ: воспроизведение из index.html РАБОТАЕТ');
-    await sleep(1500);
-    globalAudio.pause();
+
+    const playPromise = globalAudio.play();
+    if (playPromise && playPromise.then) {
+      await playPromise;
+      setS('global', 'ok', '✅ играет');
+      setR('global', '✅ globalAudio ИГРАЕТ!\n\nЗНАЧИТ: проблема в index.html — НЕ в globalAudio\nА в том, ЧТО index.html делает перед play()\n\n(например, getFromDB возвращает NULL)');
+      await sleep(1500);
+      globalAudio.pause();
+    } else {
+      await globalAudio.play();
+      setS('global', 'ok', '✅ играет');
+      setR('global', '✅ globalAudio ИГРАЕТ!');
+      await sleep(1500);
+      globalAudio.pause();
+    }
   } catch(e) {
     setS('global', 'fail', '❌ ' + e.name);
-    setR('global', '❌ globalAudio НЕ играет!\nОшибка: ' + e.name + ' — ' + e.message + '\n\nЭТО ПРИЧИНА проблемы в index.html.\n\nВозможные причины:\n- globalAudio.src задан неправильно\n- iOS блокирует autoplay\n- volume = 0');
+    setR('global', '❌ globalAudio НЕ ИГРАЕТ!\nОшибка: ' + e.name + ' — ' + e.message + '\n\nЭто может быть причина проблемы в index.html:\n- iOS блокирует autoplay\n- globalAudio повреждён\n- display:none мешает');
+  }
+
+  // 8. Через НОВЫЙ Audio() — обход
+  try {
+    setS('newaudio', '', 'играем...');
+    const url = URL.createObjectURL(fetchedBlob);
+    const freshAudio = new Audio(url);
+    freshAudio.volume = 1.0;
+    await freshAudio.play();
+    setS('newaudio', 'ok', '✅ играет');
+    setR('newaudio', '✅ НОВЫЙ Audio() ИГРАЕТ!\n\nЗНАЧИТ: можно использовать new Audio(url) вместо globalAudio\nЭто ОБХОДНОЙ путь — работает на iOS лучше');
+    await sleep(1500);
+    freshAudio.pause();
+  } catch(e) {
+    setS('newaudio', 'fail', '❌ ' + e.name);
+    setR('newaudio', 'Ошибка: ' + e.name + ' — ' + e.message);
   }
 }
 
 function copyAll() {
-  let report = '=== ТЕСТ ЗАПИСИ И ВОСПРОИЗВЕДЕНИЯ ===\n';
+  let report = '=== ТЕСТ ВОСПРОИЗВЕДЕНИЯ ===\n';
   report += 'Дата: ' + new Date().toISOString() + '\n';
   report += 'UA: ' + navigator.userAgent + '\n\n';
   for (const [k, v] of Object.entries(results)) {
@@ -301,7 +290,7 @@ function copyAll() {
 
 window.addEventListener('load', () => {
   setS('config', 'ok', 'OK');
-  setR('config', 'Worker: ' + WORKER_URL + '\nUPLOAD_KEY: ' + (localStorage.getItem('upload_key') ? '✅ сохранён' : '❌ нет'));
+  setR('config', 'Worker: ' + WORKER_URL + '\nUPLOAD_KEY: ' + (localStorage.getItem('upload_key') ? '✅' : '❌'));
 });
 </script>
 </body>
