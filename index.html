@@ -437,7 +437,6 @@ let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
-let audioContext = null;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
@@ -738,9 +737,11 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ГЛАВНЫЙ ФИКС: new Audio() + ждём onended, игнорируем ложные onerror на iOS */
+/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
-  return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
+  return new Promise((resolve) => {
+    playRecordingFallback(blob, sceneKey, idx, lang, resolve);
+  });
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
@@ -769,8 +770,6 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
 
   // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
   audio.onerror = () => {
-    // code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED — реальная ошибка
-    // Остальные "ошибки" iOS игнорируем — звук всё равно играет
     if (audio.error && audio.error.code === 4) {
       console.warn('Audio decode error:', audio.error.message);
       finish();
@@ -784,7 +783,7 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     }, 100);
   });
 
-  // Защита от зависания — 30 сек максимум (записи короткие, но с запасом)
+  // Защита от зависания — 30 сек максимум
   safetyTimeout = setTimeout(finish, 30000);
 }
 
