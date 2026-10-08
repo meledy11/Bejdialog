@@ -1,141 +1,3 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>🇨 Учим китайский</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Comfortaa:wght@400;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;position:fixed;width:100%}
-body{background:linear-gradient(180deg,#fff8f0 0%,#ffe8d6 50%,#ffd6b3 100%);font-family:'Comfortaa','Noto Sans SC',sans-serif;overscroll-behavior:none;-webkit-text-size-adjust:100%;transition:background .5s ease}
-body.help-theme{background:linear-gradient(180deg,#fff8e8,#ffe8c0 50%,#ffd699)}
-body.late-theme{background:linear-gradient(180deg,#fff5f5,#ffe8e8 50%,#ffd6d6)}
-body.phone-theme{background:linear-gradient(180deg,#e8f5ff,#d6eeff 50%,#b3ddff)}
-body.job-theme{background:linear-gradient(180deg,#fffbe8,#fff5c0 50%,#ffe999)}
-body.wallet-theme{background:linear-gradient(180deg,#e8ffe8,#d6ffd6 50%,#b3ffb3)}
-body.birthday-theme{background:linear-gradient(180deg,#ffe8f5,#ffd6ee 50%,#ffb3dd)}
-body.battery-theme{background:linear-gradient(180deg,#fff8e0,#ffe8a0 50%,#ffd660)}
-body.directions-theme{background:linear-gradient(180deg,#e0f7fa,#b2ebf2 50%,#80deea)}
-body.sick-theme{background:linear-gradient(180deg,#fff5f0,#ffe8e0 50%,#ffd6cc)}
-body.glasses-theme{background:linear-gradient(180deg,#f3e5f5,#e1bee7 50%,#ce93d8)}
-body.beach-theme{background:linear-gradient(180deg,#e0f7fa,#fff9c4 50%,#b2ebf2)}
-body.cosmetics-theme{background:linear-gradient(180deg,#fce4ec,#e3f2fd 50%,#f8bbd0)}
-body.cinema-theme{background:linear-gradient(180deg,#f3e5f5,#e1bee7 50%,#ce93d8)}
-body.restaurant-theme{background:linear-gradient(180deg,#fff0f5,#ffe4e1 50%,#ffdab9)}
-body.thailand-theme{background:linear-gradient(180deg,#e0f7fa,#b2ebf2 50%,#80deea)}
-body.friends-theme{background:linear-gradient(180deg,#f0fff4,#e8f5e9 50%,#c8e6c9)}
-body.guest-theme{background:linear-gradient(180deg,#fff8e1,#ffecb3 50%,#ffe082)}
-.manga-container{max-width:100%;height:100vh;height:-webkit-fill-available;overflow-y:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
-.scene-title{position:fixed;top:0;left:0;right:0;z-index:100;background:linear-gradient(135deg,#da291c,#ff4b2b,#ffc72c);padding:env(safe-area-inset-top,12px) 18px 12px;text-align:center;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-body.help-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
-body.late-theme .scene-title{background:linear-gradient(135deg,#9c27b0,#e91e63,#f48fb1)}
-body.phone-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#2196f3,#64b5f6)}
-body.job-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
-body.wallet-theme .scene-title{background:linear-gradient(135deg,#4caf50,#8bc34a,#cddc39)}
-body.birthday-theme .scene-title{background:linear-gradient(135deg,#e91e63,#f06292,#f8bbd0)}
-body.battery-theme .scene-title{background:linear-gradient(135deg,#ff9800,#ffc107,#ffeb3b);color:#5d4037}
-body.directions-theme .scene-title{background:linear-gradient(135deg,#00acc1,#26c6da,#80deea)}
-body.sick-theme .scene-title{background:linear-gradient(135deg,#ff7043,#ff8a65,#ffab91)}
-body.glasses-theme .scene-title{background:linear-gradient(135deg,#8e24aa,#ab47bc,#ce93d8)}
-body.beach-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#ffeb3b,#00acc1);color:#006064}
-body.cosmetics-theme .scene-title{background:linear-gradient(135deg,#ec407a,#ab47bc,#42a5f5)}
-body.cinema-theme .scene-title{background:linear-gradient(135deg,#8e24aa,#ba68c8,#f06292)}
-body.restaurant-theme .scene-title{background:linear-gradient(135deg,#e91e63,#ff6f61,#ffc72c)}
-body.thailand-theme .scene-title{background:linear-gradient(135deg,#00bcd4,#26c6da,#ffca28);color:#006064}
-body.friends-theme .scene-title{background:linear-gradient(135deg,#66bb6a,#aed581,#f48fb1)}
-body.guest-theme .scene-title{background:linear-gradient(135deg,#ff8f00,#ffb300,#ffe082);color:#4e342e}
-.scene-title h1{font-size:16px;margin-bottom:2px}
-.scene-title p{font-size:11px;opacity:.9}
-.controls-bar{position:fixed;top:calc(env(safe-area-inset-top,12px) + 50px);left:0;right:0;z-index:100;display:flex;justify-content:center;gap:10px;padding:8px 18px;pointer-events:none}
-.control-btn{pointer-events:auto;background:rgba(255,255,255,.95);border:2px solid #da291c;color:#da291c;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s ease;backdrop-filter:blur(10px)}
-.control-btn:active{transform:scale(.95);opacity:.8}
-.control-btn.stop-btn{background:rgba(244,67,54,.95);border-color:#f44336;color:#fff;display:none}
-.control-btn.stop-btn.visible{display:block}
-.speed-control{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.98);padding:10px 18px env(safe-area-inset-bottom,10px);box-shadow:0 -2px 8px rgba(0,0,0,.08);display:flex;align-items:center;gap:10px}
-.speed-label{font-weight:700;color:#da291c;font-size:11px}
-.speed-slider{flex:1;-webkit-appearance:none;height:6px;border-radius:3px;background:linear-gradient(90deg,#da291c,#ffc72c)}
-.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid #da291c}
-.speed-value{font-weight:700;color:#da291c;font-size:12px;min-width:45px;text-align:center}
-.panel{min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:100px 20px 80px;background:linear-gradient(180deg,#fff8f0,#ffe8d6);position:relative}
-.panel-inner{background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(218,41,28,.12);border:2px solid #ffd6b3;max-width:600px;width:100%;overflow:hidden;transition:border-color .4s ease,box-shadow .4s ease}
-.panel.active-panel .panel-inner{border-color:#da291c;box-shadow:0 8px 32px rgba(218,41,28,.2)}
-.panel-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fffaf8;border-bottom:1px dashed #ffd6b3}
-.panel-num{font-weight:700;color:#da291c;font-size:14px;display:flex;align-items:center;gap:8px}
-.panel-num-badge{background:linear-gradient(135deg,#da291c,#ffc72c);color:#fff;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
-.speak-buttons{display:flex;gap:8px;align-items:center}
-.action-btn{border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;transition:opacity .2s ease;color:#fff;position:relative}
-.action-btn:active{opacity:.7}
-.speak-btn-zh{background:linear-gradient(135deg,#da291c,#ff6b6b)}
-.speak-btn-ru{background:linear-gradient(135deg,#4a90e2,#67b26f)}
-.speak-btn.speaking{opacity:.8}
-.record-btn{background:linear-gradient(135deg,#ff9800,#f57c00)}
-.record-btn.recording{opacity:.8;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(244,67,54,.7)}50%{box-shadow:0 0 0 10px rgba(244,67,54,0)}}
-.record-btn.has-recording{background:linear-gradient(135deg,#4caf50,#67b26f)}
-.replay-btn{background:#eee;color:#888;border:1px solid #ddd}
-.replay-btn.playing{opacity:.7}
-.delete-overlay{position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:#f44336;border:2px solid #fff;border-radius:50%;font-size:9px;display:none;align-items:center;justify-content:center;color:#fff}
-.record-btn.has-recording .delete-overlay{display:flex}
-.panel-img-wrap{position:relative;background:linear-gradient(135deg,#fff8f0,#ffe8d6);overflow:hidden;border-top:1px dashed #ffd6b3;border-bottom:1px dashed #ffd6b3}
-.panel-img{width:100%;display:block;max-height:45vh;object-fit:contain}
-.img-error-msg{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#cc6644;text-align:center;padding:20px}
-.img-error-msg .big{font-size:50px}
-.panel-img-wrap.has-error .panel-img{display:none}
-.panel-img-wrap.has-error .img-error-msg{display:flex}
-.dialogue{padding:20px 18px}
-.bubble{padding:18px;border-radius:16px;margin-bottom:16px;border:2px solid transparent}
-.bubble.waiter{background:linear-gradient(135deg,#f0f8ff,#fff);border-color:#99ccff}
-.bubble.sailor{background:linear-gradient(135deg,#fff5f8,#fff);border-color:#ffb3cc}
-.speaker-tag{font-size:13px;font-weight:700;margin-bottom:10px}
-.speaker-tag.w{color:#4488cc}
-.speaker-tag.s{color:#cc4488}
-.zh-text{font-family:'Noto Sans SC',sans-serif;font-size:32px;font-weight:700;color:#2a2a2a;margin-bottom:10px;line-height:1.5;letter-spacing:2px;padding:10px 14px;border-radius:12px;transition:background-color .4s ease,color .4s ease;background:#fff;text-align:center}
-.zh-text.active{background:#ffc72c;color:#da291c}
-.py-text{font-size:17px;color:#888;font-style:italic;margin-bottom:12px;font-weight:600;text-align:center}
-.ru-text{font-size:18px;color:#555;line-height:1.5;padding:10px 14px;border-left:4px solid #ffd6b3;border-radius:12px;transition:background-color .4s ease,color .4s ease;background:#fff;text-align:center}
-.ru-text.active{background:#4a90e2;color:#fff;border-left-color:#2c5aa0}
-.next-card-btn{display:block;margin:10px auto 0;padding:8px 18px;background:transparent;color:#bbb;border:1px solid #e0e0e0;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s ease;font-family:inherit;opacity:.6}
-.next-card-btn:hover{opacity:1;background:#fff8f0;border-color:#ffc72c;color:#da291c}
-.next-card-btn:active{opacity:.5}
-.next-card-btn.playing{opacity:.3;pointer-events:none}
-.now-playing-bar{display:none;align-items:center;gap:8px;font-size:12px;color:#da291c;font-weight:700;padding:6px 14px;background:#fff0f0;border-radius:20px;margin-top:12px;justify-content:center}
-.now-playing-bar.visible{display:inline-flex}
-.bars{display:flex;gap:3px;align-items:flex-end;height:14px}
-.bars span{width:4px;background:#da291c;border-radius:2px;animation:barAnim 1.2s ease-in-out infinite}
-.bars span:nth-child(1){height:5px}
-.bars span:nth-child(2){height:10px;animation-delay:.2s}
-.bars span:nth-child(3){height:6px;animation-delay:.4s}
-.bars span:nth-child(4){height:12px;animation-delay:.1s}
-@keyframes barAnim{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.5)}}
-.toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%) translateY(80px);background:rgba(40,15,50,.95);color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;font-family:inherit;z-index:999;transition:transform .4s ease;pointer-events:none;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.manga-container::-webkit-scrollbar{display:none}
-.manga-container{-ms-overflow-style:none;scrollbar-width:none}
-</style>
-</head>
-<body>
-
-<div class="scene-title">
-  <h1 id="sceneTitle">🍔 在麦当劳 — Диалог в McDonald's</h1>
-  <p id="sceneSubtitle">Листайте вниз для перехода между карточками</p>
-</div>
-
-<div class="controls-bar">
-  <button class="control-btn" id="switchBtn" onclick="switchScene()">🤝 Просьба о помощи</button>
-  <button class="control-btn stop-btn" id="stopBtn" onclick="stopPlayback()">⏹ Стоп</button>
-</div>
-
-<div class="manga-container" id="panelsContainer"></div>
-
-<div class="speed-control">
-  <div class="speed-label">Скорость:</div>
-  <input type="range" id="speedSlider" class="speed-slider" min="0.3" max="1.0" step="0.05" value="0.55">
-  <div class="speed-value" id="speedValue">0.55x</div>
-</div>
-
-<div class="toast" id="toast"></div>
-<audio id="globalAudio" playsinline webkit-playsinline style="position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:none;"></audio>
 <script>
 /* ============================================================
    ⚙️ НАСТРОЙКА — URL Worker'а
@@ -437,6 +299,7 @@ let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
+let isAudioLoading = false;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
@@ -628,9 +491,15 @@ function switchScene() {
 
 function stopPlayback() {
   isPlaying = false;
+  isAudioLoading = false;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-  if (globalAudio) { globalAudio.pause(); globalAudio.currentTime = 0; }
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+  if (globalAudio) { 
+    globalAudio.pause(); 
+    globalAudio.currentTime = 0; 
+    globalAudio.src = '';
+  }
+  stopCurrentRecording(); // Останавливаем запись, если она шла
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel', 'recording-panel'));
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
   document.querySelectorAll('.replay-btn').forEach(b => b.classList.remove('playing'));
   document.querySelectorAll('.next-card-btn').forEach(b => b.classList.remove('playing'));
@@ -650,10 +519,10 @@ async function toggleRecording(sceneKey, idx, lang) {
   if (!ensureKey()) return;
   try {
     resetAllRecordButtons();
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
+    // ИСПРАВЛЕНО: Убраны жёсткие ограничения, вызывающие OverconstrainedError на iOS/Android
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     activeStream = stream;
 
-    // ПРИОРИТЕТ .webm
     let mimeType = 'audio/webm;codecs=opus';
     if (!MediaRecorder.isTypeSupported(mimeType)) {
       if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
@@ -702,6 +571,9 @@ function stopCurrentRecording() {
 function cleanupRecording() {
   if (recordingTimeout) clearTimeout(recordingTimeout);
   if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
+  if (activeRecorder && activeRecorder.state !== 'inactive') {
+    try { activeRecorder.stop(); } catch(e) {}
+  }
   activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons();
 }
 
@@ -724,6 +596,7 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
+    utterance.volume = 0.7;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     let finished = false;
@@ -737,7 +610,7 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
+/* ==================== PLAYBACK (ИСПРАВЛЕНО) ==================== */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     playRecordingFallback(blob, sceneKey, idx, lang, resolve);
@@ -745,11 +618,13 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
+  // ИСПРАВЛЕНО: Используем глобальный audio элемент, чтобы stopPlayback() мог его остановить
+  if (!globalAudio) globalAudio = document.getElementById('globalAudio');
   const url = URL.createObjectURL(blob);
-  const audio = new Audio(url);
-  audio.playsInline = true;
-  audio.webkitPlaysInline = true;
-  audio.volume = 1.0;
+  globalAudio.src = url;
+  globalAudio.playsInline = true;
+  globalAudio.webkitPlaysInline = true;
+  globalAudio.volume = 1.0;
 
   highlightText(sceneKey, idx, lang);
 
@@ -761,29 +636,26 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     finished = true;
     if (safetyTimeout) clearTimeout(safetyTimeout);
     clearHighlight(sceneKey, idx, lang);
+    globalAudio.pause();
+    globalAudio.src = ''; // Освобождаем память
     setTimeout(() => URL.revokeObjectURL(url), 500);
     if (resolve) resolve();
   };
 
-  // ⭐ Главный триггер — окончание воспроизведения
-  audio.onended = () => finish();
-
-  // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
-  audio.onerror = () => {
-    if (audio.error && audio.error.code === 4) {
-      console.warn('Audio decode error:', audio.error.message);
-      finish();
-    }
+  globalAudio.onended = () => finish();
+  
+  // ИСПРАВЛЕНО: Обрабатываем ЛЮБУЮ ошибку, а не только code 4, чтобы интерфейс не зависал
+  globalAudio.onerror = (e) => {
+    console.warn('Audio error:', globalAudio.error ? globalAudio.error.code : 'unknown', e);
+    finish();
   };
 
-  // Запуск воспроизведения
-  audio.play().catch(() => {
+  globalAudio.play().catch(() => {
     setTimeout(() => {
-      audio.play().catch(() => finish());
+      globalAudio.play().catch(() => finish());
     }, 100);
   });
 
-  // Защита от зависания — 30 сек максимум
   safetyTimeout = setTimeout(finish, 30000);
 }
 
@@ -829,63 +701,93 @@ function showRepeatPause(sceneKey, idx) {
   if (npT) npT.textContent = '🗣️ Повторите фразу вслух...';
 }
 
-/* ==================== PLAYBACK ==================== */
+/* ==================== PLAYBACK CONTROL (ИСПРАВЛЕНО) ==================== */
 async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  await wakeUpSpeechSynthesis();
-  if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
-  else {
-    try {
-      const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
-      if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
-      else await playTTSRobust(sceneKey, idx, 'ru');
-    } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
+  try {
+    await wakeUpSpeechSynthesis();
+    if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
+    else {
+      try {
+        const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
+        if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
+        else await playTTSRobust(sceneKey, idx, 'ru');
+      } catch(e) { 
+        console.error(e);
+        await playTTSRobust(sceneKey, idx, 'ru'); 
+      }
+    }
+  } finally {
+    isPlaying = false;
+    document.getElementById('stopBtn').classList.remove('visible');
   }
-  isPlaying = false;
-  document.getElementById('stopBtn').classList.remove('visible');
 }
 
 async function playCardInternal(sceneKey, idx) {
+  if (isAudioLoading) {
+    console.log('Уже идёт загрузка — ждём');
+    return;
+  }
+  isAudioLoading = true;
+
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
-  await wakeUpSpeechSynthesis();
-  await playTTSRobust(sceneKey, idx, 'zh');
-  if (!isPlaying) return;
-  await sleep(500);
-  if (!isPlaying) return;
-  await wakeUpSpeechSynthesis();
+
   try {
+    await wakeUpSpeechSynthesis();
+    await playTTSRobust(sceneKey, idx, 'zh');
+    if (!isPlaying) return;
+    await sleep(500);
+    if (!isPlaying) return;
+    await wakeUpSpeechSynthesis();
+
     const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
-    if (blob) { await playRecordingRobust(blob, sceneKey, idx, 'ru'); if (!isPlaying) return; await wakeUpSpeechSynthesis(); }
-    else await playTTSRobust(sceneKey, idx, 'ru');
-  } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
-  if (!isPlaying) return;
-  showRepeatPause(sceneKey, idx);
-  await sleep(REPEAT_PAUSE);
-  if (btn) btn.classList.remove('playing');
+    if (blob) {
+      await playRecordingRobust(blob, sceneKey, idx, 'ru');
+      if (!isPlaying) return;
+      await wakeUpSpeechSynthesis();
+    } else {
+      await playTTSRobust(sceneKey, idx, 'ru');
+    }
+
+    if (!isPlaying) return;
+    showRepeatPause(sceneKey, idx);
+    await sleep(REPEAT_PAUSE);
+  } catch(e) {
+    console.error('playCardInternal error:', e);
+  } finally {
+    if (btn) btn.classList.remove('playing');
+    isAudioLoading = false;
+  }
 }
 
 async function playCard(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  await playCardInternal(sceneKey, idx);
-  isPlaying = false;
-  document.getElementById('stopBtn').classList.remove('visible');
+  try {
+    await playCardInternal(sceneKey, idx);
+  } finally {
+    isPlaying = false;
+    document.getElementById('stopBtn').classList.remove('visible');
+  }
 }
 
 async function playAndNext(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
-  const panels = SCENES[sceneKey].panels;
-  await playCardInternal(sceneKey, idx);
-  if (!isPlaying) return;
-  let nextIdx = idx + 1;
-  if (nextIdx >= panels.length) { nextIdx = 0; showToast('🔄 Начинаем сначала'); }
-  const nextPanel = document.getElementById(`${sceneKey}-p${nextIdx}`);
-  if (nextPanel) setTimeout(() => nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
-  isPlaying = false;
-  document.getElementById('stopBtn').classList.remove('visible');
+  try {
+    const panels = SCENES[sceneKey].panels;
+    await playCardInternal(sceneKey, idx);
+    if (!isPlaying) return;
+    let nextIdx = idx + 1;
+    if (nextIdx >= panels.length) { nextIdx = 0; showToast('🔄 Начинаем сначала'); }
+    const nextPanel = document.getElementById(`${sceneKey}-p${nextIdx}`);
+    if (nextPanel) setTimeout(() => nextPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+  } finally {
+    isPlaying = false;
+    document.getElementById('stopBtn').classList.remove('visible');
+  }
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -898,5 +800,4 @@ window.addEventListener('load', async () => {
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
 </script>
-</body>
-</html>
+
