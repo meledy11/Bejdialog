@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔑 Проверка ключа</title>
+<style>
+body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0;font-size:14px}
+h1{font-size:20px;margin:0 0 16px 0}
+.box{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.box h2{font-size:14px;margin:0 0 10px 0}
+input{width:100%;padding:14px;font-size:16px;border:2px solid #ddd;border-radius:8px;box-sizing:border-box;margin-bottom:12px;font-family:monospace}
+input:focus{outline:none;border-color:#007aff}
+.btn{background:#007aff;color:#fff;border:none;padding:14px 20px;border-radius:10px;font-size:15px;font-weight:600;width:100%;margin-bottom:8px;cursor:pointer}
+.btn:active{opacity:.7}
+.btn-clear{background:#f44336}
+.btn-save{background:#4caf50}
+.result{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f8f8f8;padding:10px;border-radius:6px;margin-top:10px;white-space:pre-wrap;word-break:break-all;max-height:300px;overflow-y:auto}
+.ok{color:#155724;background:#d4edda;padding:10px;border-radius:6px;margin-top:10px}
+.fail{color:#721c24;background:#f8d7da;padding:10px;border-radius:6px;margin-top:10px}
+.warn{color:#856404;background:#fff3cd;padding:10px;border-radius:6px;margin-top:10px}
+.info{font-size:12px;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+
+<h1>🔑 Проверка UPLOAD_KEY</h1>
+
+<div class="box">
+  <h2>Что это делает</h2>
+  <div style="font-size:13px;color:#444">
+    Отправляет тестовые данные на Worker <b>с вашим паролем</b> и показывает:
+    <ul style="margin:8px 0 0 20px;padding:0">
+      <li><b>403 Forbidden</b> — пароль НЕВЕРНЫЙ</li>
+      <li><b>200 OK</b> — пароль ВЕРНЫЙ ✅</li>
+      <li><b>Load failed</b> — сеть/CORS проблема</li>
+      <li><b>401</b> — проблема с GH_TOKEN</li>
+    </ul>
+  </div>
+</div>
+
+<div class="box">
+  <h2>Пароль для проверки</h2>
+  <input type="text" id="pwd" placeholder="Введите UPLOAD_KEY" autocomplete="off" autocapitalize="off" autocorrect="off">
+  <div class="info">Если пароль сохранён в браузере — подставится автоматически.</div>
+  <button class="btn" onclick="checkKey()">🔍 Проверить пароль</button>
+  <button class="btn btn-save" onclick="saveKey()">💾 Сохранить в браузере</button>
+  <button class="btn btn-clear" onclick="clearKey()">🗑️ Очистить сохранённый пароль</button>
+</div>
+
+<div class="box">
+  <h2>Результат <span id="status" style="font-size:12px;padding:3px 10px;border-radius:20px;background:#eee;color:#666">ожидание</span></h2>
+  <div class="result" id="output">Нажмите «Проверить пароль»</div>
+</div>
+
+<div class="box">
+  <h2>Текущий пароль в браузере</h2>
+  <div class="result" id="stored">—</div>
+</div>
+
+<script>
+const WORKER_URL = 'https://bejdialog.meledy1111.workers.dev';
+
+function showStored() {
+  const k = localStorage.getItem('upload_key');
+  document.getElementById('stored').textContent = k ? '✅ Сохранён: "' + k + '" (' + k.length + ' символов)\n\n' + k.split('').map((c, i) => i + ':' + (c === ' ' ? '␣' : c)).join(' ') : '❌ Не сохранён';
+  if (k) document.getElementById('pwd').value = k;
+}
+
+function setStatus(cls, text) {
+  const s = document.getElementById('status');
+  s.style.background = cls === 'ok' ? '#d4edda' : cls === 'fail' ? '#f8d7da' : cls === 'warn' ? '#fff3cd' : '#eee';
+  s.style.color = cls === 'ok' ? '#155724' : cls === 'fail' ? '#721c24' : cls === 'warn' ? '#856404' : '#666';
+  s.textContent = text;
+}
+
+function log(msg) {
+  document.getElementById('output').textContent = msg;
+}
+
+async function checkKey() {
+  const pwd = document.getElementById('pwd').value.trim();
+  if (!pwd) { alert('Введите пароль'); return; }
+
+  setStatus('running', 'проверка...');
+  log('Отправка PUT на Worker...\nПароль: "' + pwd + '" (' + pwd.length + ' символов)');
+
+  const testContent = 'test-' + Date.now();
+  const b64 = btoa(testContent);
+
+  try {
+    const start = Date.now();
+    const res = await fetch(`${WORKER_URL}/recordings/checkkey_test.txt?key=${encodeURIComponent(pwd)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ content: b64, key: pwd })
+    });
+    const elapsed = Date.now() - start;
+    const text = await res.text();
+
+    let out = '⏱️ Время: ' + elapsed + 'ms\n';
+    out += '📡 HTTP: ' + res.status + ' ' + res.statusText + '\n';
+    out += '📄 Ответ: ' + text.substring(0, 300) + '\n\n';
+
+    if (res.ok) {
+      setStatus('ok', '✅ ВЕРНЫЙ');
+      out += '✅ ПАРОЛЬ ВЕРНЫЙ!\n\nWorker принял запрос.\nСохраните пароль кнопкой ниже.';
+    } else if (res.status === 403) {
+      setStatus('fail', '❌ НЕВЕРНЫЙ');
+      out += '❌ ПАРОЛЬ НЕВЕРНЫЙ (403 Forbidden)\n\nВаш пароль: "' + pwd + '"\n\nЧто делать:\n1. Откройте Cloudflare → bejdialog → Settings → Variables\n2. Найдите UPLOAD_KEY → Edit → посмотрите/замените\n3. Введите точный пароль выше\n4. Проверьте снова';
+    } else if (res.status === 401) {
+      setStatus('fail', '❌ 401');
+      out += '❌ Проблема с GH_TOKEN\nНе UPLOAD_KEY, а GH_TOKEN неверный.\n\nЧто делать:\n1. Cloudflare → Settings → Variables → GH_TOKEN\n2. Создайте новый токен на GitHub\n3. Вставьте заново';
+    } else if (res.status === 500) {
+      setStatus('fail', '❌ 500');
+      out += '❌ Worker упал\nПроверьте Cloudflare Logs';
+    } else {
+      setStatus('warn', '⚠️ ' + res.status);
+      out += '⚠️ Неожиданный статус: ' + res.status;
+    }
+
+    log(out);
+  } catch(e) {
+    setStatus('fail', '❌ СЕТЬ');
+    log('❌ ОШИБКА СЕТИ: ' + e.name + ' — ' + e.message + '\n\n' + 'Возможные причины:\n1. Cloudflare Workers блокируется в вашей сети\n2. Включите VPN и попробуйте снова');
+  }
+}
+
+function saveKey() {
+  const pwd = document.getElementById('pwd').value.trim();
+  if (!pwd) { alert('Введите пароль'); return; }
+  localStorage.setItem('upload_key', pwd);
+  showStored();
+  alert('✅ Сохранён: "' + pwd + '"');
+}
+
+function clearKey() {
+  localStorage.removeItem('upload_key');
+  document.getElementById('pwd').value = '';
+  showStored();
+  alert('🗑️ Очищено');
+}
+
+showStored();
+</script>
+</body>
+</html>
