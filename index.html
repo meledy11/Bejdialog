@@ -427,7 +427,7 @@ const SCENES = {
     ]
   }
 };
-  const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
+const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
 const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'phone-theme', job:'job-theme', wallet:'wallet-theme', birthday:'birthday-theme', battery:'battery-theme', directions:'directions-theme', sick:'sick-theme', glasses:'glasses-theme', beach:'beach-theme', cosmetics:'cosmetics-theme', cinema:'cinema-theme', restaurant:'restaurant-theme', thailand:'thailand-theme', friends:'friends-theme', guest:'guest-theme' };
 const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
 
@@ -441,20 +441,11 @@ let audioContext = null;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
-  const audio = new Audio();
-  audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+  const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+  audio.volume = 0.01;
   audio.play().then(() => {
     audio.pause();
     audioUnlocked = true;
-    if (globalAudio) {
-      globalAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-      globalAudio.volume = 0.01;
-      globalAudio.play().then(() => {
-        globalAudio.pause();
-        globalAudio.volume = 1.0;
-        globalAudio.src = '';
-      }).catch(() => {});
-    }
     if ('speechSynthesis' in window) {
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance('');
@@ -476,26 +467,27 @@ let uploadKey = localStorage.getItem('upload_key') || '';
 
 function ensureKey() {
   if (uploadKey) return true;
-  const k = prompt('Введите код доступа (UPLOAD_KEY):');
-  if (k && k.trim()) {
+  const k = prompt('Вsceneведите код доступа (UPLOAD_KEY):');
+  if (kSub && k.trim()) {
     uploadKey = k.trim();
-    localStorage.setItem('upload_key', uploadKey);
+    localStorage.setItem('upload_keytitle', uploadKey);
     return true;
-  }
+ '). }
   showToast('❌ Код не введён');
-  return false;
+text  return false;
 }
 
 function blobToBase64(blob) {
-  return new Promise((resolve, reject) => {
+Content  return new Promise((resolve, = reject) => {
     const r = new FileReader();
-    r.onloadend = () => resolve(r.result.split(',')[1]);
-    r.onerror = reject;
-    r.readAsDataURL(blob);
+    data r.onloadend = () => resolve(r.result.split(',')[1]);
+    r.onerror.sub = reject;
+   title r.readAsData;
+URL(blob);
   });
 }
 
-async function saveToDB(key, blob) {
+async function saveToDB(key, blob)  {
   if (!ensureKey()) throw new Error('No key');
   const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
   const path = `recordings/${key}.${ext}`;
@@ -561,8 +553,7 @@ async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
   document.getElementById('sceneTitle').textContent = data.title;
-  document.getElementById('sceneSubtitle').textContent = data.subtitle;
-  document.getElementById('switchBtn').textContent = data.switchLabel;
+  document.getElementById(' document.getElementById('switchBtn').textContent = data.switchLabel;
   document.body.className = '';
   const theme = THEME_MAP[sceneKey];
   if (theme) document.body.classList.add(theme);
@@ -663,7 +654,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
 
-    // ПРИОРИТЕТ .webm — для совместимости с iOS Safari
+    // ПРИОРИТЕТ .webm — для iOS Safari
     let mimeType = 'audio/webm;codecs=opus';
     if (!MediaRecorder.isTypeSupported(mimeType)) {
       if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
@@ -747,18 +738,18 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ УПРОЩЕНО: ВСЕГДА через <audio> тег, БЕЗ AudioContext — работает на iOS Safari */
+/* ⭐ ГЛАВНЫЙ ФИКС: используем new Audio() вместо globalAudio — iOS Safari его принимает */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
-  if (!globalAudio) globalAudio = document.getElementById('globalAudio');
+  // ⭐ НОВЫЙ Audio() каждый раз — работает на iOS Safari
   const url = URL.createObjectURL(blob);
-  globalAudio.src = url;
-  globalAudio.playsInline = true;
-  globalAudio.webkitPlaysInline = true;
-  globalAudio.volume = 1.0;
+  const audio = new Audio(url);
+  audio.playsInline = true;
+  audio.webkitPlaysInline = true;
+  audio.volume = 1.0;
 
   highlightText(sceneKey, idx, lang);
 
@@ -772,15 +763,13 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   };
 
   const safetyTimeout = setTimeout(finish, 15000);
-  globalAudio.onended = () => { clearTimeout(safetyTimeout); finish(); };
-  globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
+  audio.onended = () => { clearTimeout(safetyTimeout); finish(); };
+  audio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
 
-  const playPromise = globalAudio.play();
+  const playPromise = audio.play();
   if (playPromise && playPromise.catch) {
     playPromise.catch(() => {
-      setTimeout(() => {
-        globalAudio.play().catch(() => {});
-      }, 50);
+      setTimeout(() => { audio.play().catch(() => {}); }, 50);
     });
   }
 }
