@@ -588,6 +588,7 @@ async function renderScene(sceneKey) {
   container.scrollTop = 0;
   await checkRecordings(sceneKey);
 }
+
 async function checkRecordings(sceneKey) {
   const data = SCENES[sceneKey];
   const checks = data.panels.map(async (_, i) => {
@@ -604,6 +605,7 @@ async function checkRecordings(sceneKey) {
   });
   await Promise.all(checks);
 }
+
 function switchScene() {
   stopPlayback();
   const idx = SCENE_ORDER.indexOf(currentScene);
@@ -612,6 +614,7 @@ function switchScene() {
   renderScene(currentScene);
   showToast(SCENE_NAMES[currentScene]);
 }
+
 function stopPlayback() {
   isPlaying = false;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
@@ -624,7 +627,8 @@ function stopPlayback() {
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
   document.getElementById('stopBtn').classList.remove('visible');
 }
-  /* ==================== RECORDING ==================== */
+
+/* ==================== RECORDING ==================== */
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
@@ -673,17 +677,20 @@ async function toggleRecording(sceneKey, idx, lang) {
     cleanupRecording();
   }
 }
+
 function stopCurrentRecording() {
   if (recordingTimeout) clearTimeout(recordingTimeout);
   if (activeRecorder && activeRecorder.state !== 'inactive') {
     try { activeRecorder.stop(); } catch(e) { cleanupRecording(); }
   } else cleanupRecording();
 }
+
 function cleanupRecording() {
   if (recordingTimeout) clearTimeout(recordingTimeout);
   if (activeStream) { activeStream.getTracks().forEach(t => t.stop()); activeStream = null; }
   activeRecorder = null; activeRecordingKey = null; resetAllRecordButtons();
 }
+
 async function handleDelete(sceneKey, idx, lang) {
   try {
     await deleteFromDB(`${sceneKey}_${lang}_${idx}`);
@@ -715,6 +722,7 @@ function playTTSRobust(sceneKey, idx, lang) {
     setTimeout(() => { if (!finished && isPlaying) { try { speechSynthesis.speak(utterance); } catch(e) { finish(); } } else if (!isPlaying) finish(); }, 100);
   });
 }
+
 function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
   const channelData = audioBuffer.getChannelData(0);
   let maxPeak = 0;
@@ -725,6 +733,7 @@ function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
   for (let i = 0; i < channelData.length; i++) channelData[i] *= gain;
   return audioBuffer;
 }
+
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     if (!isPlaying) { resolve(); return; }
@@ -756,6 +765,7 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
     reader.readAsArrayBuffer(blob);
   });
 }
+
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   if (!globalAudio) globalAudio = document.getElementById('globalAudio');
   const url = URL.createObjectURL(blob);
@@ -771,6 +781,7 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
   globalAudio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
 }
+
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
 
 /* ==================== HIGHLIGHT ==================== */
@@ -790,6 +801,7 @@ function highlightText(sceneKey, idx, lang) {
   if (np) np.classList.add('visible');
   if (npT) npT.textContent = lang === 'zh' ? '🇨 Китайский...' : '🇷 Русский...';
 }
+
 function clearHighlight(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
   const panel = document.getElementById(`${sceneKey}-p${idx}`);
@@ -804,6 +816,7 @@ function clearHighlight(sceneKey, idx, lang) {
   if (nextBtn) nextBtn.classList.remove('playing');
   if (np) np.classList.remove('visible');
 }
+
 function showRepeatPause(sceneKey, idx) {
   const np = document.getElementById(`${sceneKey}-np${idx}`);
   const npT = document.getElementById(`${sceneKey}-np-text${idx}`);
@@ -827,6 +840,7 @@ async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
+
 async function playCardInternal(sceneKey, idx) {
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
@@ -846,6 +860,7 @@ async function playCardInternal(sceneKey, idx) {
   await sleep(REPEAT_PAUSE);
   if (btn) btn.classList.remove('playing');
 }
+
 async function playCard(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -853,6 +868,7 @@ async function playCard(sceneKey, idx) {
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
+
 async function playAndNext(sceneKey, idx) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -866,7 +882,8 @@ async function playAndNext(sceneKey, idx) {
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
-  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /* ==================== START ==================== */
 window.addEventListener('load', async () => {
