@@ -437,6 +437,7 @@ let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
+let isAudioLoading = false;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
@@ -628,6 +629,7 @@ function switchScene() {
 
 function stopPlayback() {
   isPlaying = false;
+  isAudioLoading = false;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (globalAudio) { globalAudio.pause(); globalAudio.currentTime = 0; }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
@@ -724,6 +726,8 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
+    // ⭐ Громкость TTS — сравнима с записью с микрофона
+    utterance.volume = 0.7;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     let finished = false;
@@ -846,24 +850,43 @@ async function handleSpeak(sceneKey, idx, lang) {
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
+/* ⭐ ЗАЩИТА от двойного нажатия: isAudioLoading */
 async function playCardInternal(sceneKey, idx) {
+  if (isAudioLoading) {
+    console.log('Уже идёт загрузка — ждём');
+    return;
+  }
+  isAudioLoading = true;
+
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
   if (btn) btn.classList.add('playing');
-  await wakeUpSpeechSynthesis();
-  await playTTSRobust(sceneKey, idx, 'zh');
-  if (!isPlaying) return;
-  await sleep(500);
-  if (!isPlaying) return;
-  await wakeUpSpeechSynthesis();
+
   try {
+    await wakeUpSpeechSynthesis();
+    await playTTSRobust(sceneKey, idx, 'zh');
+    if (!isPlaying) return;
+    await sleep(500);
+    if (!isPlaying) return;
+    await wakeUpSpeechSynthesis();
+
     const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
-    if (blob) { await playRecordingRobust(blob, sceneKey, idx, 'ru'); if (!isPlaying) return; await wakeUpSpeechSynthesis(); }
-    else await playTTSRobust(sceneKey, idx, 'ru');
-  } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
-  if (!isPlaying) return;
-  showRepeatPause(sceneKey, idx);
-  await sleep(REPEAT_PAUSE);
-  if (btn) btn.classList.remove('playing');
+    if (blob) {
+      await playRecordingRobust(blob, sceneKey, idx, 'ru');
+      if (!isPlaying) return;
+      await wakeUpSpeechSynthesis();
+    } else {
+      await playTTSRobust(sceneKey, idx, 'ru');
+    }
+
+    if (!isPlaying) return;
+    showRepeatPause(sceneKey, idx);
+    await sleep(REPEAT_PAUSE);
+  } catch(e) {
+    console.error('playCardInternal error:', e);
+  } finally {
+    if (btn) btn.classList.remove('playing');
+    isAudioLoading = false;
+  }
 }
 
 async function playCard(sceneKey, idx) {
