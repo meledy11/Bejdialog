@@ -735,7 +735,7 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-    utterance.volume = 0.7;
+    utterance.volume = 0.35;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     let finished = false;
