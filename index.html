@@ -437,7 +437,7 @@ let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
-let audioContext = null;
+let reusableAudio = null;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
@@ -630,7 +630,11 @@ function switchScene() {
 function stopPlayback() {
   isPlaying = false;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-  if (globalAudio) { globalAudio.pause(); globalAudio.currentTime = 0; }
+  if (reusableAudio) {
+    try { reusableAudio.pause(); } catch(e) {}
+    try { reusableAudio.removeAttribute('src'); } catch(e) {}
+    try { reusableAudio.load(); } catch(e) {}
+  }
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
   document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
   document.querySelectorAll('.replay-btn').forEach(b => b.classList.remove('playing'));
@@ -738,7 +742,7 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
+/* ⭐ Переиспользуем ОДИН Audio() — iOS Safari не забивается */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     playRecordingFallback(blob, sceneKey, idx, lang, resolve);
@@ -747,10 +751,22 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   const url = URL.createObjectURL(blob);
-  const audio = new Audio(url);
-  audio.playsInline = true;
-  audio.webkitPlaysInline = true;
-  audio.volume = 1.0;
+
+  // ⭐ Единый audio — создаём один раз и переиспользуем
+  if (!reusableAudio) {
+    reusableAudio = new Audio();
+    reusableAudio.playsInline = true;
+    reusableAudio.webkitPlaysInline = true;
+    reusableAudio.volume = 1.0;
+  }
+  const audio = reusableAudio;
+
+  // Очищаем предыдущее
+  try { audio.pause(); } catch(e) {}
+  audio.removeAttribute('src');
+  try { audio.load(); } catch(e) {}
+  audio.onended = null;
+  audio.onerror = null;
 
   highlightText(sceneKey, idx, lang);
 
@@ -762,24 +778,30 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     finished = true;
     if (safetyTimeout) clearTimeout(safetyTimeout);
     clearHighlight(sceneKey, idx, lang);
-    setTimeout(() => URL.revokeObjectURL(url), 500);
+    try { audio.pause(); } catch(e) {}
+    audio.removeAttribute('src');
+    try { audio.load(); } catch(e) {}
+    URL.revokeObjectURL(url);
     if (resolve) resolve();
   };
 
   audio.onended = () => finish();
 
   audio.onerror = () => {
-    if (audio.error && audio.error.code === 4) {
-      console.warn('Audio decode error:', audio.error.message);
-      finish();
-    }
+    if (audio.error && audio.error.code === 4) finish();
   };
 
-  audio.play().catch(() => {
-    setTimeout(() => {
-      audio.play().catch(() => finish());
-    }, 100);
-  });
+  audio.src = url;
+  try { audio.load(); } catch(e) {}
+
+  const playPromise = audio.play();
+  if (playPromise && playPromise.catch) {
+    playPromise.catch(() => {
+      setTimeout(() => {
+        audio.play().catch(() => finish());
+      }, 100);
+    });
+  }
 
   safetyTimeout = setTimeout(finish, 30000);
 }
@@ -849,7 +871,7 @@ async function playCardInternal(sceneKey, idx) {
   await wakeUpSpeechSynthesis();
   await playTTSRobust(sceneKey, idx, 'zh');
   if (!isPlaying) return;
-  await sleep(500);
+  await sleep(600);   // ⭐ пауза 600 мс — даём iOS переключиться
   if (!isPlaying) return;
   await wakeUpSpeechSynthesis();
   try {
@@ -889,7 +911,6 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /* ==================== START ==================== */
 window.addEventListener('load', async () => {
-  globalAudio = document.getElementById('globalAudio');
   renderScene(currentScene);
   if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
