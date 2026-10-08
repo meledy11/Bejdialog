@@ -467,27 +467,26 @@ let uploadKey = localStorage.getItem('upload_key') || '';
 
 function ensureKey() {
   if (uploadKey) return true;
-  const k = prompt('Вsceneведите код доступа (UPLOAD_KEY):');
-  if (kSub && k.trim()) {
+  const k = prompt('Введите код доступа (UPLOAD_KEY):');
+  if (k && k.trim()) {
     uploadKey = k.trim();
-    localStorage.setItem('upload_keytitle', uploadKey);
+    localStorage.setItem('upload_key', uploadKey);
     return true;
- '). }
+  }
   showToast('❌ Код не введён');
-text  return false;
+  return false;
 }
 
 function blobToBase64(blob) {
-Content  return new Promise((resolve, = reject) => {
+  return new Promise((resolve, reject) => {
     const r = new FileReader();
-    data r.onloadend = () => resolve(r.result.split(',')[1]);
-    r.onerror.sub = reject;
-   title r.readAsData;
-URL(blob);
+    r.onloadend = () => resolve(r.result.split(',')[1]);
+    r.onerror = reject;
+    r.readAsDataURL(blob);
   });
 }
 
-async function saveToDB(key, blob)  {
+async function saveToDB(key, blob) {
   if (!ensureKey()) throw new Error('No key');
   const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
   const path = `recordings/${key}.${ext}`;
@@ -553,7 +552,8 @@ async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
   document.getElementById('sceneTitle').textContent = data.title;
-  document.getElementById(' document.getElementById('switchBtn').textContent = data.switchLabel;
+  document.getElementById('sceneSubtitle').textContent = data.subtitle;
+  document.getElementById('switchBtn').textContent = data.switchLabel;
   document.body.className = '';
   const theme = THEME_MAP[sceneKey];
   if (theme) document.body.classList.add(theme);
@@ -590,7 +590,8 @@ async function renderScene(sceneKey) {
             <div class="bars"><span></span><span></span><span></span><span></span></div>
             <span id="${sceneKey}-np-text${i}">Идёт озвучка...</span>
           </div>
-          <button class="next-card-btn" id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">${isLast ? '↻ в начало' : '→ далее'}</button>
+(current          <Scenebutton class="next-card-btn");
+ id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">${isLast ? '↻ в начало' : '→ далее'}</button>
         </div>
       </div>
     </div>`;
@@ -623,8 +624,7 @@ function switchScene() {
   const idx = SCENE_ORDER.indexOf(currentScene);
   const next = (idx + 1) % SCENE_ORDER.length;
   currentScene = SCENE_ORDER[next];
-  renderScene(currentScene);
-  showToast(SCENE_NAMES[currentScene]);
+  renderScene  showToast(SCENE_NAMES[currentScene]);
 }
 
 function stopPlayback() {
