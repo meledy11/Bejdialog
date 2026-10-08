@@ -452,6 +452,7 @@ function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return Promise.resolve();
   return new Promise(resolve => { speechSynthesis.cancel(); if (isIOS) speechSynthesis.resume(); setTimeout(resolve, 50); });
 }
+
 /* ==================== GITHUB через Worker ==================== */
 let uploadKey = localStorage.getItem('upload_key') || '';
 
@@ -514,6 +515,7 @@ async function deleteFromDB(key) {
     } catch (e) {}
   }
 }
+
 /* ==================== INIT ==================== */
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
@@ -592,6 +594,7 @@ async function renderScene(sceneKey) {
 async function checkRecordings(sceneKey) {
   const data = SCENES[sceneKey];
   const checks = data.panels.map(async (_, i) => {
+    await sleep(i * 80);
     for (const ext of ['webm', 'mp4']) {
       try {
         const res = await fetch(`${WORKER_URL}/recordings/${sceneKey}_ru_${i}.${ext}`, { method: 'GET', cache: 'no-cache' });
@@ -641,11 +644,14 @@ async function toggleRecording(sceneKey, idx, lang) {
     resetAllRecordButtons();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
+
+    // ⭐ ПРИОРИТЕТ .webm — для совместимости с iOS Safari
     let mimeType = 'audio/webm;codecs=opus';
-    if (isIOS) {
-      if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
-      else if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+      if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
+      else if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
     }
+
     const recorder = new MediaRecorder(stream, { mimeType, audioBitsPerSecond: 128000 });
     activeRecorder = recorder;
     activeRecordingKey = { key: sceneKey, idx, lang };
@@ -737,6 +743,12 @@ function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     if (!isPlaying) { resolve(); return; }
+
+    // ⭐ ДЛЯ .mp4 — сразу через <audio> тег (Safari iOS не декодирует mp4 через AudioContext)
+    if (blob.type.includes('mp4')) {
+      return playRecordingFallback(blob, sceneKey, idx, lang, resolve);
+    }
+
     if (!audioContext) {
       try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); }
       catch(e) { playRecordingFallback(blob, sceneKey, idx, lang, resolve); return; }
