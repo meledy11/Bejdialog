@@ -747,12 +747,11 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ УПРОЩЕНО: ВСЕГДА через <audio> тег, БЕЗ AudioContext — работает на iOS Safari */
+/* Воспроизведение через <audio> тег — надёжно работает на iPhone */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
 
-/* ⭐ Воспроизведение через <audio> тег — надёжно работает на iPhone */
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   if (!globalAudio) globalAudio = document.getElementById('globalAudio');
   const url = URL.createObjectURL(blob);
@@ -779,7 +778,6 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   const playPromise = globalAudio.play();
   if (playPromise && playPromise.catch) {
     playPromise.catch((err) => {
-      // iOS часто блокирует autoplay — пробуем ещё раз
       setTimeout(() => {
         globalAudio.play().catch(() => {});
       }, 50);
