@@ -432,10 +432,6 @@ const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'p
 const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
 
 const REPEAT_PAUSE = 2500;
-const TTS_VOLUME = 0.45;          // ⭐ Громкость TTS — тише записи
-const PAUSE_AFTER_TTS = 900;      // ⭐ Пауза после TTS (мс) — даёт iOS время
-const RECORDING_MAX_MS = 120000;  // ⭐ Лимит записи — 2 минуты
-
 let currentScene = 'mcdonalds';
 let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -659,6 +655,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
 
+    // ПРИОРИТЕТ .webm
     let mimeType = 'audio/webm;codecs=opus';
     if (!MediaRecorder.isTypeSupported(mimeType)) {
       if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
@@ -689,7 +686,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     if (panelEl) panelEl.classList.add('recording-panel');
     recorder.start();
     showToast('🎙️ Запись...');
-    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, RECORDING_MAX_MS);
+    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 120000);
   } catch (err) {
     console.error(err);
     showToast('⚠️ Нет доступа к микрофону');
@@ -729,7 +726,8 @@ function playTTSRobust(sceneKey, idx, lang) {
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
-    utterance.volume = TTS_VOLUME;   // ⭐ тише
+    // ⭐ Громкость TTS — сравнима с записью с микрофона
+    utterance.volume = 0.7;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
     let finished = false;
@@ -743,7 +741,7 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ФИКС: Promise + ждём onended + canplaythrough для стабильности */
+/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     playRecordingFallback(blob, sceneKey, idx, lang, resolve);
@@ -751,13 +749,11 @@ function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
-  // ⭐ Создаём НОВЫЙ audio, ждём canplaythrough
   const url = URL.createObjectURL(blob);
-  const audio = new Audio();
+  const audio = new Audio(url);
   audio.playsInline = true;
   audio.webkitPlaysInline = true;
   audio.volume = 1.0;
-  audio.preload = 'auto';
 
   highlightText(sceneKey, idx, lang);
 
@@ -769,42 +765,29 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     finished = true;
     if (safetyTimeout) clearTimeout(safetyTimeout);
     clearHighlight(sceneKey, idx, lang);
-    try { audio.pause(); } catch(e) {}
-    audio.src = '';
     setTimeout(() => URL.revokeObjectURL(url), 500);
     if (resolve) resolve();
   };
 
+  // ⭐ Главный триггер — окончание воспроизведения
   audio.onended = () => finish();
 
+  // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
   audio.onerror = () => {
-    if (audio.error && audio.error.code === 4) finish();
+    if (audio.error && audio.error.code === 4) {
+      console.warn('Audio decode error:', audio.error.message);
+      finish();
+    }
   };
 
-  const tryPlay = () => {
-    if (finished) return;
-    audio.play().catch((err) => {
-      console.warn('Play failed:', err.name);
-      setTimeout(() => {
-        audio.play().catch(() => finish());
-      }, 200);
-    });
-  };
-
-  // ⭐ Сначала src, потом ждём canplaythrough
-  audio.src = url;
-  audio.load();
-
-  if (audio.readyState >= 2) {
-    tryPlay();
-  } else {
-    audio.oncanplaythrough = tryPlay;
-    // Fallback через 1 сек
+  // Запуск воспроизведения
+  audio.play().catch(() => {
     setTimeout(() => {
-      if (!finished && audio.paused) tryPlay();
-    }, 1000);
-  }
+      audio.play().catch(() => finish());
+    }, 100);
+  });
 
+  // Защита от зависания — 30 сек максимум
   safetyTimeout = setTimeout(finish, 30000);
 }
 
@@ -867,8 +850,12 @@ async function handleSpeak(sceneKey, idx, lang) {
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
+/* ⭐ ЗАЩИТА от двойного нажатия: isAudioLoading */
 async function playCardInternal(sceneKey, idx) {
-  if (isAudioLoading) return;
+  if (isAudioLoading) {
+    console.log('Уже идёт загрузка — ждём');
+    return;
+  }
   isAudioLoading = true;
 
   const btn = document.getElementById(`${sceneKey}-replay-${idx}`);
@@ -878,7 +865,7 @@ async function playCardInternal(sceneKey, idx) {
     await wakeUpSpeechSynthesis();
     await playTTSRobust(sceneKey, idx, 'zh');
     if (!isPlaying) return;
-    await sleep(PAUSE_AFTER_TTS);   // ⭐ 900 мс
+    await sleep(500);
     if (!isPlaying) return;
     await wakeUpSpeechSynthesis();
 
