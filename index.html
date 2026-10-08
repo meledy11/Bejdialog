@@ -738,9 +738,11 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ГЛАВНЫЙ ФИКС: new Audio() + ждём onended, игнорируем ложные onerror на iOS */
+/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
-  return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
+  return new Promise((resolve) => {
+    playRecordingFallback(blob, sceneKey, idx, lang, resolve);
+  });
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
@@ -764,27 +766,21 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     if (resolve) resolve();
   };
 
-  // ⭐ Главный триггер — окончание воспроизведения
   audio.onended = () => finish();
 
-  // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
   audio.onerror = () => {
-    // code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED — реальная ошибка
-    // Остальные "ошибки" iOS игнорируем — звук всё равно играет
     if (audio.error && audio.error.code === 4) {
       console.warn('Audio decode error:', audio.error.message);
       finish();
     }
   };
 
-  // Запуск воспроизведения
   audio.play().catch(() => {
     setTimeout(() => {
       audio.play().catch(() => finish());
     }, 100);
   });
 
-  // Защита от зависания — 30 сек максимум (записи короткие, но с запасом)
   safetyTimeout = setTimeout(finish, 30000);
 }
 
