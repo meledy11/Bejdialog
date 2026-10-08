@@ -35,27 +35,29 @@
     h1 .title-rus { font-size: 0.55rem; font-weight: 900; color: #4a2a10; background: linear-gradient(145deg, #FFEFD5, #FFDAB9); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95); white-space: nowrap; }
     .subhead { text-align: center; font-size: 0.5rem; color: #6a4a20; background: linear-gradient(145deg, #FFE4B5, #FFDAB9); display: block; padding: 1px 8px; border-radius: 30px; margin: 0 auto 3px; flex-shrink: 0; font-weight: 700; line-height: 1.2; width: fit-content; max-width: 96%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); }
     .subhead b { color: #2a7a80; font-weight: 900; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 1px; scrollbar-width: none; }
+    /* 2 карточки в ряд */
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: 5px; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 1px; scrollbar-width: none; }
     .grid::-webkit-scrollbar { display: none; }
-    .card { border-radius: 12px; padding: 2px 3px 3px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; cursor: pointer; position: relative; min-height: 0; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.12), inset 0 0 20px rgba(255, 245, 220, 0.40), 0 2px 0 rgba(180, 140, 90, 0.18), 0 4px 8px rgba(120, 80, 40, 0.16); border: 1px solid rgba(255,255,255,0.75); border-top-color: rgba(255,255,255,0.95); border-bottom-color: rgba(230, 200, 160, 0.40); overflow: hidden; }
+    .card { border-radius: 14px; padding: 4px 6px 6px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; cursor: pointer; position: relative; min-height: 0; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.12), inset 0 0 20px rgba(255, 245, 220, 0.40), 0 2px 0 rgba(180, 140, 90, 0.18), 0 4px 8px rgba(120, 80, 40, 0.16); border: 1px solid rgba(255,255,255,0.75); border-top-color: rgba(255,255,255,0.95); border-bottom-color: rgba(230, 200, 160, 0.40); overflow: hidden; }
     .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.55) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(200, 170, 130, 0.15) 0%, transparent 50%); opacity: 0.7; mix-blend-mode: soft-light; }
-    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 100%); border-radius: 12px 12px 50% 50%; pointer-events: none; }
+    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 100%); border-radius: 14px 14px 50% 50%; pointer-events: none; }
     .card:active { transform: translateY(2px) scale(0.97); box-shadow: inset 0 2px 4px rgba(180, 140, 90, 0.22), inset 0 0 20px rgba(255, 245, 220, 0.45), 0 1px 0 rgba(180, 140, 90, 0.20); }
     .card.active { border-bottom: 4px solid var(--card-color, #40A0A0); box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.15), inset 0 0 24px rgba(255, 245, 220, 0.50), 0 4px 0 rgba(180, 140, 90, 0.22), 0 6px 12px rgba(120, 80, 40, 0.18); }
     .card.has-rec { box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(60,140,90,0.15), inset 0 0 20px rgba(220,255,230,0.45), 0 2px 0 rgba(60,140,90,0.20), 0 4px 8px rgba(30,90,50,0.16); }
-    .emoji-corner { position: absolute; top: 2px; left: 3px; font-size: 0.8rem; line-height: 1; opacity: 0.9; pointer-events: none; z-index: 1; filter: drop-shadow(0 1px 1px rgba(120, 80, 40, 0.25)); }
-    .rec-indicator { position: absolute; top: 2px; right: 3px; width: 11px; height: 11px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.46rem; font-weight: 900; background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 1px 3px rgba(30,90,50,0.3); z-index: 5; line-height: 1; }
+    .emoji-corner { position: absolute; top: 4px; left: 5px; font-size: 1rem; line-height: 1; opacity: 0.9; pointer-events: none; z-index: 1; filter: drop-shadow(0 1px 1px rgba(120, 80, 40, 0.25)); }
+    .rec-indicator { position: absolute; top: 4px; right: 5px; width: 13px; height: 13px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 900; background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 1px 3px rgba(30,90,50,0.3); z-index: 5; line-height: 1; }
     .rec-indicator.show { display: flex; }
     .rec-indicator.recording { background: linear-gradient(145deg, #ff6060, #d83030); animation: pulse 1s infinite; }
     @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,80,0.7); } 50% { box-shadow: 0 0 0 8px rgba(255,80,80,0); } }
-    .card-inner { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: 100%; padding-top: 8px; gap: 2px; }
-    .hanzi { font-size: 1.55rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: 0.5px; color: #3a1a08; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 3px rgba(120, 70, 20, 0.22); position: relative; z-index: 2; text-align: center; word-break: break-all; overflow-wrap: break-word; white-space: normal; max-width: 100%; }
-    .hanzi .key-char { border-radius: 4px; padding: 0 3px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.22); }
-    .pinyin { font-size: 0.62rem; font-weight: 800; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 1px 6px; border-radius: 30px; margin: 0; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); text-align: center; line-height: 1.2; max-width: 100%; white-space: normal; word-break: break-word; }
-    .russian { font-size: 0.68rem; font-weight: 900; color: #3a1a08; background: rgba(255,255,255,0.85); padding: 2px 7px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); line-height: 1.2; text-align: center; white-space: normal; word-break: break-word; }
-    .example { font-size: 0.56rem; font-weight: 700; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 2px 6px; border-radius: 9px; margin-top: auto; position: relative; z-index: 2; border: 1px solid rgba(220, 190, 150, 0.55); box-shadow: inset 0 1px 1px rgba(255,255,255,0.80); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.25; width: 100%; white-space: normal; word-break: break-word; overflow-wrap: break-word; }
-    .example .highlight { background: rgba(255,255,255,0.92); padding: 0 3px; border-radius: 5px; font-weight: 900; color: #2a7a80; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95); white-space: normal; }
-    .example .ru { display: block; font-weight: 600; color: #8a5a30; font-size: 0.5rem; margin-top: 1px; font-style: italic; line-height: 1.25; white-space: normal; word-break: break-word; }
+    .card-inner { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: 100%; padding-top: 14px; gap: 4px; }
+    .hanzi { font-size: 2.4rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: 0.5px; color: #3a1a08; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 3px rgba(120, 70, 20, 0.22); position: relative; z-index: 2; text-align: center; word-break: break-all; overflow-wrap: break-word; white-space: normal; max-width: 100%; }
+    .hanzi .key-char { border-radius: 5px; padding: 0 4px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.22); }
+    .pinyin { font-size: 0.9rem; font-weight: 800; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 2px 10px; border-radius: 30px; margin: 0; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); text-align: center; line-height: 1.2; max-width: 100%; white-space: normal; word-break: break-word; }
+    /* Крупнее русский текст */
+    .russian { font-size: 1.15rem; font-weight: 900; color: #3a1a08; background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); line-height: 1.2; text-align: center; white-space: normal; word-break: break-word; }
+    .example { font-size: 0.72rem; font-weight: 700; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 4px 8px; border-radius: 9px; margin-top: auto; position: relative; z-index: 2; border: 1px solid rgba(220, 190, 150, 0.55); box-shadow: inset 0 1px 1px rgba(255,255,255,0.80); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.3; width: 100%; white-space: normal; word-break: break-word; overflow-wrap: break-word; }
+    .example .highlight { background: rgba(255,255,255,0.92); padding: 0 4px; border-radius: 5px; font-weight: 900; color: #2a7a80; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95); white-space: normal; }
+    .example .ru { display: block; font-weight: 600; color: #8a5a30; font-size: 0.65rem; margin-top: 2px; font-style: italic; line-height: 1.3; white-space: normal; word-break: break-word; }
     .card[data-color="n1"]  { --card-color: #40A0A0; background: linear-gradient(145deg, #FFEFD5, #FFE4B5); }
     .card[data-color="n1"] .hanzi .key-char { color: #2a7a80; background: linear-gradient(145deg, #d8f0ee, #b0e0dc); }
     .card[data-color="n2"]  { --card-color: #40B0A8; background: linear-gradient(145deg, #FFF2DC, #FFE4B5); }
@@ -86,55 +88,57 @@
     .card[data-color="n14"] .hanzi .key-char { color: #948850; background: linear-gradient(145deg, #ecE0b0, #dcd090); }
     .card[data-color="n15"] { --card-color: #F8C898; background: linear-gradient(145deg, #FFF4DC, #FFDAB9); }
     .card[data-color="n15"] .hanzi .key-char { color: #b89058; background: linear-gradient(145deg, #ffe8c8, #f8d0a8); }
-    .rec-panel { margin-top: 3px; padding: 3px 4px; background: linear-gradient(145deg, #FFE4B5, #F0C898); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px; flex-shrink: 0; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.20), 0 2px 5px rgba(140, 100, 60, 0.15); }
-    .rec-panel-title { font-size: 0.48rem; font-weight: 800; color: #5a3a18; margin-right: 1px; text-shadow: 0 1px 0 rgba(255,255,255,0.85); }
-    .rec-num { width: 18px; height: 18px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.85); background: linear-gradient(145deg, #ffffff, #FFEFD5); box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), 0 1px 2px rgba(120, 80, 40, 0.20); display: flex; align-items: center; justify-content: center; font-size: 0.52rem; font-weight: 900; color: #5a3a18; cursor: pointer; padding: 0; transition: transform 0.12s ease, background 0.2s ease; position: relative; line-height: 1; user-select: none; -webkit-appearance: none; appearance: none; }
+    .rec-panel { margin-top: 4px; padding: 4px 5px; background: linear-gradient(145deg, #FFE4B5, #F0C898); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; flex-shrink: 0; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.20), 0 2px 5px rgba(140, 100, 60, 0.15); }
+    .rec-panel-title { font-size: 0.6rem; font-weight: 800; color: #5a3a18; margin-right: 2px; text-shadow: 0 1px 0 rgba(255,255,255,0.85); }
+    .rec-num { width: 24px; height: 24px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.85); background: linear-gradient(145deg, #ffffff, #FFEFD5); box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), 0 1px 2px rgba(120, 80, 40, 0.20); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; color: #5a3a18; cursor: pointer; padding: 0; transition: transform 0.12s ease, background 0.2s ease; position: relative; line-height: 1; user-select: none; -webkit-appearance: none; appearance: none; }
     .rec-num:active { transform: scale(0.9); }
     .rec-num.recording { background: linear-gradient(145deg, #ff7070, #d83030); color: #fff; animation: pulse2 1s infinite; }
     .rec-num.has-rec { background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; }
     @keyframes pulse2 { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,80,0.7); } 50% { box-shadow: 0 0 0 5px rgba(255,80,80,0); } }
-    .footer-note { margin-top: 2px; text-align: center; font-size: 0.42rem; font-weight: 700; color: #5a3a18; background: linear-gradient(145deg, #FFE4B5, #F0C898); padding: 2px 8px; border-radius: 60px; display: inline-block; width: auto; flex-shrink: 0; align-self: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.2; }
+    .footer-note { margin-top: 3px; text-align: center; font-size: 0.55rem; font-weight: 700; color: #5a3a18; background: linear-gradient(145deg, #FFE4B5, #F0C898); padding: 3px 10px; border-radius: 60px; display: inline-block; width: auto; flex-shrink: 0; align-self: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.2; }
     .footer-note b { font-weight: 900; color: #2a7a80; }
     .back-link { position: fixed; top: calc(env(safe-area-inset-top, 8px) + 6px); left: calc(env(safe-area-inset-left, 8px) + 6px); z-index: 999; background: rgba(255,255,255,0.95); color: #2a7a80; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none; font-family: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
     .back-link:active { transform: scale(0.95); }
     @media (max-width: 420px) {
       .container { padding: 4px 4px 3px; border-radius: 22px; }
-      .grid { gap: 3px; }
-      .hanzi { font-size: 1.4rem; }
-      .pinyin { font-size: 0.58rem; padding: 1px 5px; }
-      .russian { font-size: 0.62rem; padding: 1px 6px; }
-      .example { font-size: 0.52rem; padding: 2px 5px; }
-      .example .ru { font-size: 0.46rem; }
+      .grid { gap: 4px; }
+      .hanzi { font-size: 2.1rem; }
+      .pinyin { font-size: 0.82rem; padding: 2px 8px; }
+      .russian { font-size: 1.05rem; padding: 3px 10px; }
+      .example { font-size: 0.66rem; padding: 3px 6px; }
+      .example .ru { font-size: 0.6rem; }
       h1 { gap: 3px; }
       h1 .title-hanzi { font-size: 0.85rem; padding: 2px 6px; }
       h1 .title-pinyin { font-size: 0.5rem; padding: 2px 5px; }
       h1 .title-rus { font-size: 0.5rem; padding: 2px 5px; }
       .subhead { font-size: 0.46rem; padding: 1px 7px; }
-      .rec-num { width: 16px; height: 16px; font-size: 0.48rem; border-radius: 5px; }
-      .rec-panel { padding: 2px 3px; gap: 2px; border-radius: 10px; }
-      .rec-panel-title { font-size: 0.44rem; }
-      .footer-note { font-size: 0.4rem; padding: 1px 7px; }
-      .rec-indicator { width: 10px; height: 10px; font-size: 0.42rem; }
-      .emoji-corner { font-size: 0.75rem; }
-      .card-inner { padding-top: 6px; gap: 1px; }
+      .rec-num { width: 22px; height: 22px; font-size: 0.66rem; border-radius: 6px; }
+      .rec-panel { padding: 3px 4px; gap: 3px; border-radius: 10px; }
+      .rec-panel-title { font-size: 0.54rem; }
+      .footer-note { font-size: 0.5rem; padding: 2px 8px; }
+      .rec-indicator { width: 11px; height: 11px; font-size: 0.48rem; }
+      .emoji-corner { font-size: 0.9rem; }
+      .card-inner { padding-top: 12px; gap: 3px; }
     }
     @media (max-width: 380px) {
-      .hanzi { font-size: 1.3rem; }
-      .rec-num { width: 15px; height: 15px; font-size: 0.44rem; }
-      .pinyin { font-size: 0.54rem; }
-      .russian { font-size: 0.56rem; }
-      .example { font-size: 0.48rem; }
-      .example .ru { font-size: 0.44rem; }
+      .hanzi { font-size: 1.9rem; }
+      .pinyin { font-size: 0.75rem; }
+      .russian { font-size: 0.98rem; }
+      .example { font-size: 0.6rem; }
+      .example .ru { font-size: 0.55rem; }
+      .rec-num { width: 20px; height: 20px; font-size: 0.6rem; }
     }
-    @media (max-height: 640px) { .hanzi { font-size: 1.35rem; } .card-inner { padding-top: 5px; } }
+    @media (max-height: 640px) { .hanzi { font-size: 1.9rem; } .card-inner { padding-top: 10px; } }
     @media (orientation: landscape) and (max-height: 500px) {
       .container { max-height: 100%; border-radius: 16px; }
-      .grid { grid-template-columns: repeat(5, 1fr); }
+      .grid { grid-template-columns: repeat(4, 1fr); }
       h1 { font-size: 0.85rem; }
       h1 .title-hanzi { font-size: 1rem; padding: 2px 6px; }
       .subhead { display: none; }
       .example { display: none; }
-      .rec-num { width: 20px; height: 20px; font-size: 0.58rem; }
+      .rec-num { width: 22px; height: 22px; font-size: 0.6rem; }
+      .hanzi { font-size: 1.6rem; }
+      .russian { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -590,7 +594,6 @@
     audio.play().catch(() => {});
   }
 
-  // Только русская озвучка: запись из GitHub или TTS
   async function speakRussianOnly(card) {
     window.speechSynthesis.cancel();
     const key = card.dataset.key;
