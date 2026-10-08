@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔧 Диагностика Bejdialog</title>
+<style>
+body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0}
+h1{font-size:20px;margin:0 0 16px 0}
+.test{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.test h2{font-size:15px;margin:0 0 8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.status{font-size:12px;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap}
+.pending{background:#eee;color:#666}
+.running{background:#fff3cd;color:#856404}
+.ok{background:#d4edda;color:#155724}
+.fail{background:#f8d7da;color:#721c24}
+.warn{background:#fff3cd;color:#856404}
+.result{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
+.btn{background:#007aff;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:15px;font-weight:600;width:100%;margin-bottom:16px;cursor:pointer}
+.btn:active{opacity:.7}
+.copy{background:#4caf50;margin-top:16px}
+.critical{border-left:4px solid #dc3545}
+</style>
+</head>
+<body>
+
+<h1>🔧 Диагностика Bejdialog</h1>
+
+<div class="test critical">
+  <h2>⚙️ Настройка <span class="status pending" id="s-config">...</span></h2>
+  <div class="result" id="r-config"></div>
+</div>
+
+<button class="btn" onclick="runAll()">▶️ Запустить все тесты</button>
+
+<div class="test">
+  <h2>1. Текущий URL страницы <span class="status pending" id="s-url">...</span></h2>
+  <div class="result" id="r-url">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>2. Worker: базовый ответ <span class="status pending" id="s-worker">...</span></h2>
+  <div class="result" id="r-worker">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>3. Worker: чтение записи <span class="status pending" id="s-read">...</span></h2>
+  <div class="result" id="r-read">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>4. Worker: CORS preflight (OPTIONS) <span class="status pending" id="s-cors">...</span></h2>
+  <div class="result" id="r-cors">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>5. GitHub raw (в обход Worker) <span class="status pending" id="s-raw">...</span></h2>
+  <div class="result" id="r-raw">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>6. Микрофон <span class="status pending" id="s-mic">...</span></h2>
+  <div class="result" id="r-mic">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>7. MediaRecorder <span class="status pending" id="s-rec">...</span></h2>
+  <div class="result" id="r-rec">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>8. Speech Synthesis (голоса) <span class="status pending" id="s-tts">...</span></h2>
+  <div class="result" id="r-tts">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>9. IndexedDB / localStorage <span class="status pending" id="s-storage">...</span></h2>
+  <div class="result" id="r-storage">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>10. Информация об устройстве <span class="status pending" id="s-device">...</span></h2>
+  <div class="result" id="r-device">Не проверено</div>
+</div>
+
+<button class="btn copy" onclick="copyAll()">📋 Скопировать весь отчёт</button>
+
+<script>
+// ============ НАСТРОЙКА ============
+const WORKER_URL = 'https://bejdialog-api.meledy1111.workers.dev';
+const GITHUB_RAW = 'https://raw.githubusercontent.com/meledy11/Bejdialog/main';
+// ===================================
+
+const results = {};
+
+function setStatus(id, status, text) {
+  const el = document.getElementById('s-' + id);
+  el.className = 'status ' + status;
+  el.textContent = text;
+}
+function setResult(id, text) {
+  document.getElementById('r-' + id).textContent = text;
+  results[id] = text;
+}
+
+async function runAll() {
+  // 0. Конфигурация
+  setStatus('config', 'ok', 'OK');
+  setResult('config', 'Worker URL: ' + WORKER_URL + '\nGitHub raw: ' + GITHUB_RAW);
+
+  // 1. URL страницы
+  try {
+    const url = window.location.href;
+    const isHttps = url.startsWith('https://');
+    setStatus('url', isHttps ? 'ok' : 'warn', isHttps ? 'HTTPS ✅' : 'НЕ HTTPS ⚠️');
+    setResult('url', 'URL: ' + url + '\nHTTPS: ' + (isHttps ? 'да ✅' : 'нет ⚠️ (микрофон может не работать)'));
+  } catch(e) {
+    setStatus('url', 'fail', 'ОШИБКА');
+    setResult('url', String(e));
+  }
+
+  // 2. Worker базовый ответ
+  try {
+    setStatus('worker', 'running', 'Проверка...');
+    const url = WORKER_URL + '/recordings/test.webm';
+    const start = Date.now();
+    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+    const elapsed = Date.now() - start;
+    const text = await res.text();
+    const ok = res.status === 404 && text.includes('Not found');
+    setStatus('worker', ok ? 'ok' : 'fail', 'HTTP ' + res.status);
+    setResult('worker', 'Запрос: ' + url + '\nВремя: ' + elapsed + 'мс\nСтатус: ' + res.status + ' ' + res.statusText + '\nОтвет: ' + text.substring(0, 200));
+  } catch(e) {
+    setStatus('worker', 'fail', 'ОШИБКА СЕТИ');
+    setResult('worker', 'Не удалось связаться с Worker.\nURL: ' + WORKER_URL + '/recordings/test.webm\nОшибка: ' + e.message + '\n\n' + 'Это означает: Worker не отвечает, URL неверный, или нет интернета.');
+  }
+
+  // 3. Worker чтение
+  try {
+    setStatus('read', 'running', 'Проверка...');
+    const url = WORKER_URL + '/recordings/mcdonalds_ru_0.webm';
+    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+    if (res.status === 404) {
+      setStatus('read', 'warn', 'HTTP 404');
+      setResult('read', 'URL: ' + url + '\nHTTP 404 — файла нет (это НОРМАЛЬНО, если ещё не записывали)\n\nЕсли вы УЖЕ записывали — файл должен быть, значит не сохранился.');
+    } else if (res.ok) {
+      const blob = await res.blob();
+      setStatus('read', 'ok', 'HTTP ' + res.status);
+      setResult('read', 'URL: ' + url + '\nHTTP ' + res.status + '\nРазмер: ' + blob.size + ' байт\nТип: ' + blob.type);
+    } else {
+      setStatus('read', 'fail', 'HTTP ' + res.status);
+      const text = await res.text();
+      setResult('read', 'URL: ' + url + '\nHTTP ' + res.status + '\nОтвет: ' + text.substring(0, 300));
+    }
+  } catch(e) {
+    setStatus('read', 'fail', 'ОШИБКА');
+    setResult('read', 'Ошибка: ' + e.message);
+  }
+
+  // 4. CORS preflight
+  try {
+    setStatus('cors', 'running', 'Проверка...');
+    const url = WORKER_URL + '/recordings/test.webm';
+    const res = await fetch(url, {
+      method: 'OPTIONS',
+      headers: {
+        'Access-Control-Request-Method': 'PUT',
+        'Access-Control-Request-Headers': 'content-type,x-upload-key'
+      }
+    });
+    const allowOrigin = res.headers.get('access-control-allow-origin');
+    const allowMethods = res.headers.get('access-control-allow-methods');
+    const ok = allowOrigin === '*';
+    setStatus('cors', ok ? 'ok' : 'fail', ok ? 'CORS OK' : 'CORS НЕ OK');
+    setResult('cors', 'Статус: ' + res.status + '\nAccess-Control-Allow-Origin: ' + (allowOrigin || '(нет)') + '\nAccess-Control-Allow-Methods: ' + (allowMethods || '(нет)'));
+  } catch(e) {
+    setStatus('cors', 'fail', 'ОШИБКА');
+    setResult('cors', 'Ошибка: ' + e.message + '\n\nCORS не работает — Safari может блокировать PUT-запросы.');
+  }
+
+  // 5. GitHub raw напрямую
+  try {
+    setStatus('raw', 'running', 'Проверка...');
+    const url = GITHUB_RAW + '/recordings/test.webm';
+    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+    setStatus('raw', res.status === 404 ? 'ok' : 'warn', 'HTTP ' + res.status);
+    setResult('raw', 'URL: ' + url + '\nHTTP ' + res.status + '\n(404 = норма, файла нет)');
+  } catch(e) {
+    setStatus('raw', 'fail', 'ОШИБКА');
+    setResult('raw', 'Ошибка: ' + e.message + '\n\nЕсли raw.githubusercontent.com блокируется в вашей стране — это может быть причиной.');
+  }
+
+  // 6. Микрофон
+  try {
+    setStatus('mic', 'running', 'Запрос доступа...');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('mic', 'fail', 'НЕ ПОДДЕРЖИВАЕТСЯ');
+      setResult('mic', 'Браузер не поддерживает getUserMedia.\nВозможно, страница открыта не по HTTPS или используется старый браузер.');
+    } else {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const track = stream.getAudioTracks()[0];
+      const settings = track ? track.getSettings() : {};
+      setStatus('mic', 'ok', 'РАЗРЕШЁН');
+      setResult('mic', '✅ Доступ разрешён\nУстройство: ' + (track ? track.label : '?') + '\nНастройки: ' + JSON.stringify(settings, null, 2));
+      stream.getTracks().forEach(t => t.stop());
+    }
+  } catch(e) {
+    setStatus('mic', 'fail', 'ОТКАЗАНО');
+    setResult('mic', '❌ Ошибка: ' + e.name + ' — ' + e.message + '\n\nВозможные причины:\n- Разрешение отклонено\n- Открыто не по HTTPS\n- Открыто в не-браузере (Telegram, VK и т.п.)\n\nЧто делать:\n- Откройте сайт в Chrome или Safari\n- Проверьте разрешения в настройках браузера');
+  }
+
+  // 7. MediaRecorder
+  try {
+    setStatus('rec', 'running', 'Проверка...');
+    if (typeof MediaRecorder === 'undefined') {
+      setStatus('rec', 'fail', 'НЕ ПОДДЕРЖИВАЕТСЯ');
+      setResult('rec', 'MediaRecorder не поддерживается.\n\nНа iPhone нужен iOS 14.3+ и Safari.');
+    } else {
+      const formats = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/mp4;codecs=mp4a.40.2'];
+      const supported = formats.filter(f => MediaRecorder.isTypeSupported(f));
+      setStatus('rec', supported.length > 0 ? 'ok' : 'warn', supported.length + ' форматов');
+      setResult('rec', '✅ MediaRecorder доступен\nПоддерживаемые форматы:\n' + supported.join('\n') + '\n\nВсего: ' + supported.length);
+    }
+  } catch(e) {
+    setStatus('rec', 'fail', 'ОШИБКА');
+    setResult('rec', String(e));
+  }
+
+  // 8. Speech Synthesis
+  try {
+    setStatus('tts', 'running', 'Проверка...');
+    if (!('speechSynthesis' in window)) {
+      setStatus('tts', 'fail', 'НЕ ПОДДЕРЖИВАЕТСЯ');
+      setResult('tts', 'Speech Synthesis API не поддерживается.');
+    } else {
+      const voices = speechSynthesis.getVoices();
+      const zhVoices = voices.filter(v => v.lang.includes('zh') || v.lang.includes('cmn'));
+      const ruVoices = voices.filter(v => v.lang.includes('ru'));
+      setStatus('tts', (zhVoices.length > 0) ? 'ok' : 'warn', zhVoices.length + ' китайских');
+      setResult('tts', 'Всего голосов: ' + voices.length + '\n\nКитайские (' + zhVoices.length + '):\n' + (zhVoices.map(v => '  • ' + v.name + ' [' + v.lang + ']').join('\n') || '  ⚠️ НЕТ') + '\n\nРусские (' + ruVoices.length + '):\n' + (ruVoices.map(v => '  • ' + v.name + ' [' + v.lang + ']').join('\n') || '  ⚠️ НЕТ'));
+    }
+  } catch(e) {
+    setStatus('tts', 'fail', 'ОШИБКА');
+    setResult('tts', String(e));
+  }
+
+  // 9. Storage
+  try {
+    setStatus('storage', 'running', 'Проверка...');
+    localStorage.setItem('__test__', '1');
+    const lsOk = localStorage.getItem('__test__') === '1';
+    localStorage.removeItem('__test__');
+    let idbOk = false;
+    try {
+      idbOk = await new Promise((resolve) => {
+        const req = indexedDB.open('__test__', 1);
+        req.onsuccess = () => { req.result.close(); indexedDB.deleteDatabase('__test__'); resolve(true); };
+        req.onerror = () => resolve(false);
+        setTimeout(() => resolve(false), 1000);
+      });
+    } catch(e) {}
+    const uploadKeyStored = localStorage.getItem('upload_key');
+    setStatus('storage', lsOk ? 'ok' : 'fail', lsOk ? 'OK' : 'FAIL');
+    setResult('storage', 'localStorage: ' + (lsOk ? '✅ работает' : '❌ не работает') + '\nIndexedDB: ' + (idbOk ? '✅ работает' : '❌ не работает') + '\n\nСохранённый upload_key: ' + (uploadKeyStored ? '«' + uploadKeyStored + '» (' + uploadKeyStored.length + ' симв.)' : '❌ НЕ СОХРАНЁН'));
+  } catch(e) {
+    setStatus('storage', 'fail', 'ОШИБКА');
+    setResult('storage', String(e) + '\n\n⚠️ Возможно, вы в режиме Инкогнито — тогда localStorage отключён.');
+  }
+
+  // 10. Устройство
+  try {
+    const ua = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(ua);
+    const isAndroid = /Android/.test(ua);
+    const platform = isIOS ? 'iPhone/iPad' : isAndroid ? 'Android' : 'Other';
+    let browser = 'Other';
+    if (/CriOS/.test(ua)) browser = 'Chrome iOS';
+    else if (/FxiOS/.test(ua)) browser = 'Firefox iOS';
+    else if (/EdgiOS/.test(ua)) browser = 'Edge iOS';
+    else if (/Chrome/.test(ua) && !/Edge|OPR/.test(ua)) browser = 'Chrome';
+    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    else if (/Firefox/.test(ua)) browser = 'Firefox';
+    setStatus('device', 'ok', platform);
+    setResult('device', 'Платформа: ' + platform + '\nБраузер: ' + browser + '\nOnline: ' + navigator.onLine + '\nЯзык: ' + navigator.language + '\n\nUser-Agent:\n' + ua);
+  } catch(e) {
+    setStatus('device', 'fail', 'ОШИБКА');
+    setResult('device', String(e));
+  }
+
+  // Автоматически вниз к кнопке Copy
+  setTimeout(() => {
+    document.querySelector('.copy').scrollIntoView({ behavior: 'smooth' });
+  }, 500);
+}
+
+function copyAll() {
+  let report = '=== ДИАГНОСТИКА BEJDIALOG ===\n';
+  report += 'Дата: ' + new Date().toISOString() + '\n\n';
+  for (const [k, v] of Object.entries(results)) {
+    report += '--- ' + k.toUpperCase() + ' ---\n' + v + '\n\n';
+  }
+  navigator.clipboard.writeText(report).then(() => {
+    alert('✅ Отчёт скопирован!\n\nВставьте его в чат.');
+  }).catch(err => {
+    alert('❌ Не удалось скопировать.\n\nСкопируйте текст вручную.');
+    console.log(report);
+  });
+}
+
+// Автозапуск при загрузке
+window.addEventListener('load', () => {
+  setTimeout(runAll, 300);
+});
+</script>
+</body>
+</html>
