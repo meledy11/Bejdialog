@@ -590,8 +590,7 @@ async function renderScene(sceneKey) {
             <div class="bars"><span></span><span></span><span></span><span></span></div>
             <span id="${sceneKey}-np-text${i}">Идёт озвучка...</span>
           </div>
-(current          <Scenebutton class="next-card-btn");
- id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">${isLast ? '↻ в начало' : '→ далее'}</button>
+          <button class="next-card-btn" id="${sceneKey}-next-${i}" onclick="playAndNext('${sceneKey}',${i})">${isLast ? '↻ в начало' : '→ далее'}</button>
         </div>
       </div>
     </div>`;
@@ -624,7 +623,8 @@ function switchScene() {
   const idx = SCENE_ORDER.indexOf(currentScene);
   const next = (idx + 1) % SCENE_ORDER.length;
   currentScene = SCENE_ORDER[next];
-  renderScene  showToast(SCENE_NAMES[currentScene]);
+  renderScene(currentScene);
+  showToast(SCENE_NAMES[currentScene]);
 }
 
 function stopPlayback() {
@@ -738,13 +738,11 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ГЛАВНЫЙ ФИКС: используем new Audio() вместо globalAudio — iOS Safari его принимает */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
-  // ⭐ НОВЫЙ Audio() каждый раз — работает на iOS Safari
   const url = URL.createObjectURL(blob);
   const audio = new Audio(url);
   audio.playsInline = true;
