@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🔧 Диагностика Bejdialog</title>
 <style>
-body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0}
+body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0;font-size:14px}
 h1{font-size:20px;margin:0 0 16px 0}
 .test{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-.test h2{font-size:15px;margin:0 0 8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.status{font-size:12px;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap}
+.test h2{font-size:14px;margin:0 0 8px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.status{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap}
 .pending{background:#eee;color:#666}
 .running{background:#fff3cd;color:#856404}
 .ok{background:#d4edda;color:#155724}
 .fail{background:#f8d7da;color:#721c24}
 .warn{background:#fff3cd;color:#856404}
-.result{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
+.result{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:250px;overflow-y:auto}
 .btn{background:#007aff;color:#fff;border:none;padding:12px 20px;border-radius:10px;font-size:15px;font-weight:600;width:100%;margin-bottom:16px;cursor:pointer}
 .btn:active{opacity:.7}
 .copy{background:#4caf50;margin-top:16px}
@@ -39,22 +39,42 @@ h1{font-size:20px;margin:0 0 16px 0}
 </div>
 
 <div class="test">
-  <h2>2. Worker: чтение записи <span class="status pending" id="s-read">...</span></h2>
-  <div class="result" id="r-read">Не проверено</div>
+  <h2>2. Worker: чтение .mp4 <span class="status pending" id="s-mp4">...</span></h2>
+  <div class="result" id="r-mp4">Не проверено</div>
 </div>
 
 <div class="test">
-  <h2>3. Worker: CORS <span class="status pending" id="s-cors">...</span></h2>
-  <div class="result" id="r-cors">Не проверено</div>
+  <h2>3. Worker: чтение .webm <span class="status pending" id="s-webm">...</span></h2>
+  <div class="result" id="r-webm">Не проверено</div>
 </div>
 
 <div class="test">
-  <h2>4. Микрофон <span class="status pending" id="s-mic">...</span></h2>
-  <div class="result" id="r-mic">Не проверено</div>
+  <h2>4. GitHub raw: .mp4 <span class="status pending" id="s-raw">...</span></h2>
+  <div class="result" id="r-raw">Не проверdivено</div>
 </div>
 
 <div class="test">
-  <h2>5. Устройство <span class="status pending" id="s-device">...</span></h2>
+>
+  <h2>5. Воспроизведение</ .mp4 через AudioContext <span class="status pendingdiv" id="s-audio">...</span></h2>
+
+>
+  <div class="result" id="r-audio">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>6. Воспроизведение .mp4 через &lt;audio&gt; тег <span class="status pending" id="s-htmlaudio">...</span></h2>
+  <div class="result" id="r-htmlaudio">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>7. Микрофон <span class="status pending" id="s-mic">...</span></h2>
+  <div class="result" id="r-mic">Не проверено</<div class="test">
+  <h2>8. MediaRecorder <span class="status pending" id="s-rec">...</span></h2>
+  <div class="result" id="r-rec">Не проверено</div>
+</div>
+
+<div class="test">
+  <h2>9. Устройство <span class="status pending" id="s-device">...</span></h2>
   <div class="result" id="r-device">Не проверено</div>
 </div>
 
@@ -62,109 +82,184 @@ h1{font-size:20px;margin:0 0 16px 0}
 
 <script>
 const WORKER_URL = 'https://bejdialog.meledy1111.workers.dev';
+const GITHUB_RAW = 'https://raw.githubusercontent.com/meledy11/Bejdialog/main';
+const TEST_FILE_MP4 = 'mcdonalds_ru_0.mp4';
+const TEST_FILE_WEBM = 'mcdonalds_ru_0.webm';
 const results = {};
 
-function setStatus(id, status, text) {
-  document.getElementById('s-' + id).className = 'status ' + status;
-  document.getElementById('s-' + id).textContent = text;
+function setS(id, cls, text) {
+  const el = document.getElementById('s-' + id);
+  if (el) { el.className = 'status ' + cls; el.textContent = text; }
 }
-function setResult(id, text) {
-  document.getElementById('r-' + id).textContent = text;
+function setR(id, text) {
+  const el = document.getElementById('r-' + id);
+  if (el) el.textContent = text;
   results[id] = text;
 }
 
 async function runAll() {
-  setStatus('config', 'ok', 'OK');
-  setResult('config', 'Worker URL: ' + WORKER_URL);
+  setS('config', 'ok', 'OK');
+  setR('config', 'Worker URL: ' + WORKER_URL + '\nGitHub raw: ' + GITHUB_RAW);
 
   // 1. Worker базовый
   try {
-    setStatus('worker', 'running', '...');
+    setS('worker', 'running', '...');
     const url = WORKER_URL + '/recordings/test.webm';
     const start = Date.now();
-    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
+    const res = await fetch(url, { cache: 'no-cache' });
     const elapsed = Date.now() - start;
     const text = await res.text();
-    const ok = res.status === 404 && text.includes('Not found');
-    setStatus('worker', ok ? 'ok' : 'fail', 'HTTP ' + res.status);
-    setResult('worker', 'URL: ' + url + '\nВремя: ' + elapsed + 'мс\nСтатус: ' + res.status + '\nОтвет: ' + text.substring(0, 200));
+    const ok = res.status === 404;
+    setS('worker', ok ? 'ok' : 'warn', 'HTTP ' + res.status);
+    setR('worker', 'URL: ' + url + '\nВремя: ' + elapsed + 'ms\nСтатус: ' + res.status + '\nОтвет: ' + text.substring(0, 150));
   } catch(e) {
-    setStatus('worker', 'fail', 'ОШИБКА');
-    setResult('worker', 'Не удалось связаться с Worker.\nURL: ' + WORKER_URL + '/recordings/test.webm\nОшибка: ' + e.message);
+    setS('worker', 'fail', 'ОШИБКА');
+    setR('worker', 'Ошибка сети: ' + e.message);
   }
 
-  // 2. Worker чтение
+  // 2. Worker чтение .mp4
   try {
-    setStatus('read', 'running', '...');
-    const url = WORKER_URL + '/recordings/mcdonalds_ru_0.webm';
-    const res = await fetch(url, { method: 'GET', cache: 'no-cache' });
-    if (res.status === 404) {
-      setStatus('read', 'warn', 'HTTP 404');
-      setResult('read', 'HTTP 404 — записи нет (нормально, если ещё не писали)');
-    } else if (res.ok) {
+    setS('mp4', 'running', '...');
+    const url = WORKER_URL + '/recordings/' + TEST_FILE_MP4;
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (res.ok) {
       const blob = await res.blob();
-      setStatus('read', 'ok', 'HTTP ' + res.status);
-      setResult('read', 'HTTP ' + res.status + '\nРазмер: ' + blob.size + ' байт\nТип: ' + blob.type);
+      setS('mp4', 'ok', 'HTTP ' + res.status);
+      setR('mp4', 'URL: ' + url + '\nHTTP ' + res.status + '\nРазмер: ' + blob.size + ' байт\nТип: ' + blob.type + '\n✅ Файл доступен через Worker');
     } else {
-      setStatus('read', 'fail', 'HTTP ' + res.status);
-      setResult('read', 'HTTP ' + res.status + '\n' + (await res.text()).substring(0, 200));
+      const text = await res.text();
+      setS('mp4', 'fail', 'HTTP ' + res.status);
+      setR('mp4', 'URL: ' + url + '\nHTTP ' + res.status + '\nОтвет: ' + text.substring(0, 200));
     }
   } catch(e) {
-    setStatus('read', 'fail', 'ОШИБКА');
-    setResult('read', 'Ошибка: ' + e.message);
+    setS('mp4', 'fail', 'ОШИБКА');
+    setR('mp4', 'Ошибка: ' + e.message);
   }
 
-  // 3. CORS
+  // 3. Worker чтение .webm
   try {
-    setStatus('cors', 'running', '...');
-    const url = WORKER_URL + '/recordings/test.webm';
-    const res = await fetch(url, {
-      method: 'OPTIONS',
-      headers: {
-        'Access-Control-Request-Method': 'PUT',
-        'Access-Control-Request-Headers': 'content-type,x-upload-key'
-      }
-    });
-    const allow = res.headers.get('access-control-allow-origin');
-    setStatus('cors', allow === '*' ? 'ok' : 'fail', allow || 'НЕТ');
-    setResult('cors', 'Статус: ' + res.status + '\nAllow-Origin: ' + (allow || '(нет)'));
+    setS('webm', 'running', '...');
+    const url = WORKER_URL + '/recordings/' + TEST_FILE_WEBM;
+    const res = await fetch(url, { cache: 'no-cache' });
+    const text = await res.text();
+    setS('webm', res.status === 404 ? 'ok' : 'warn', 'HTTP ' + res.status);
+    setR('webm', 'URL: ' + url + '\nHTTP ' + res.status + '\n' + (res.status === 404 ? '✅ .webm нет — нормально, у вас .mp4' : 'Ответ: ' + text.substring(0, 200)));
   } catch(e) {
-    setStatus('cors', 'fail', 'ОШИБКА');
-    setResult('cors', 'Ошибка: ' + e.message);
+    setS('webm', 'fail', 'ОШИБКА');
+    setR('webm', 'Ошибка: ' + e.message);
   }
 
-  // 4. Микрофон
+  // 4. GitHub raw напрямую
   try {
-    setStatus('mic', 'running', '...');
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const track = stream.getAudioTracks()[0];
-    setStatus('mic', 'ok', 'OK');
-    setResult('mic', 'Разрешён\nУстройство: ' + (track ? track.label : '?'));
-    stream.getTracks().forEach(t => t.stop());
+    setS('raw', 'running', '...');
+    const url = GITHUB_RAW + '/recordings/' + TEST_FILE_MP4;
+    const res = await fetch(url, { cache: 'no-cache' });
+    setS('raw', res.ok ? 'ok' : 'fail', 'HTTP ' + res.status);
+    setR('raw', 'URL: ' + url + '\nHTTP ' + res.status + '\n' + (res.ok ? '✅ Файл есть на GitHub' : '❌ Файл не доступен напрямую'));
   } catch(e) {
-    setStatus('mic', 'fail', 'ОТКАЗ');
-    setResult('mic', 'Ошибка: ' + e.name + ' — ' + e.message + '\n\nЧто делать:\n- Safari → Настройки iPhone → Safari → Микрофон → Разрешить\n- Или тап на замок в адресной строке → Микрофон → Разрешить');
+    setS('raw', 'fail', 'ОШИБКА');
+    setR('raw', 'Ошибка: ' + e.message);
   }
 
-  // 5. Устройство
+  // 5. Воспроизведение .mp4 через AudioContext
+  try {
+    setS('audio', 'running', '...');
+    const url = WORKER_URL + '/recordings/' + TEST_FILE_MP4;
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('Файл не доступен (HTTP ' + res.status + ')');
+    const blob = await res.blob();
+    const arrayBuffer = await blob.arrayBuffer();
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') await ctx.resume();
+    const audioBuffer = await ctx.decodeAudioData(arrayBuffer);
+    const dur = audioBuffer.duration.toFixed(2);
+    setS('audio', 'ok', 'OK ' + dur + 's');
+    setR('audio', '✅ AudioContext декодировал .mp4\nДлительность: ' + dur + ' сек\nКаналов: ' + audioBuffer.numberOfChannels + '\nSample rate: ' + audioBuffer.sampleRate);
+  } catch(e) {
+    setS('audio', 'fail', 'НЕ ДЕКОДИРУЕТСЯ');
+    setR('audio', '❌ AudioContext НЕ МОЖЕТ декодировать .mp4\n\nЭто причина проблемы воспроизведения!\nОшибка: ' + e.name + ' — ' + e.message + '\n\nРЕШЕНИЕ: использовать <audio> тег вместо AudioContext для .mp4');
+  }
+
+  // 6. Воспроизведение .mp4 через <audio> тег
+  try {
+    setS('htmlaudio', 'running', '...');
+    const url = WORKER_URL + '/recordings/' + TEST_FILE_MP4;
+    const audio = new Audio();
+    audio.src = url;
+    audio.playsInline = true;
+    audio.volume = 0; // Беззвучно
+    await audio.play();
+    setTimeout(() => { audio.pause(); audio.currentTime = 0; }, 500);
+    setS('htmlaudio', 'ok', 'OK');
+    setR('htmlaudio', '✅ <audio> тег может воспроизвести .mp4\nДлительность: ' + (audio.duration || '?') + ' сек\n\nЭто значит — обходной путь РАБОТАЕТ');
+  } catch(e) {
+    setS('htmlaudio', 'fail', 'НЕ ИГРАЕТ');
+    setR('htmlaudio', '❌ <audio> тег не может воспроизвести .mp4\nОшибка: ' + e.name + ' — ' + e.message);
+  }
+
+  // 7. Микрофон
+  try {
+    setS('mic', 'running', '...');
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setS('mic', 'fail', 'НЕТ API');
+      setR('mic', 'getUserMedia не поддерживается');
+    } else {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const track = stream.getAudioTracks()[0];
+      setS('mic', 'ok', 'OK');
+      setR('mic', '✅ Микрофон: ' + (track ? track.label : '?')); 
+      stream.getTracks().forEach(t => t.stop());
+    }
+  } catch(e) {
+    setS('mic', 'fail', 'ОТКАЗ');
+    setR('mic', '❌ Ошибка: ' + e.name + ' — ' + e.message + '\n\nНастройки → Safari → Настройки для сайтов → Микрофон → Разрешить');
+  }
+
+  // 8. MediaRecorder
+  try {
+    setS('rec', 'running', '...');
+    if (typeof MediaRecorder === 'undefined') {
+      setS('rec', 'fail', 'НЕТ API');
+      setR('rec', 'MediaRecorder не поддерживается');
+    } else {
+      const formats = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm'];
+      const supported = formats.filter(f => { try { return MediaRecorder.isTypeSupported(f); } catch(e) { return false; } });
+      setS('rec', 'ok', supported.length + ' форм.');
+      setR('rec', '✅ MediaRecorder доступен\nПоддерживаемые форматы:\n' + supported.join('\n'));
+    }
+  } catch(e) {
+    setS('rec', 'fail', 'ОШИБКА');
+    setR('rec', String(e));
+  }
+
+  // 9. Устройство
   try {
     const ua = navigator.userAgent;
     const isIOS = /iPad|iPhone|iPod/.test(ua);
-    const browser = /CriOS/.test(ua) ? 'Chrome iOS' : /Safari/.test(ua) ? 'Safari' : 'другой';
-    setStatus('device', 'ok', isIOS ? 'iOS' : 'Android/другое');
-    setResult('device', 'Браузер: ' + browser + '\nOnline: ' + navigator.onLine + '\nUA: ' + ua);
+    const isAndroid = /Android/.test(ua);
+    const platform = isIOS ? 'iPhone/iPad' : isAndroid ? 'Android' : 'Other';
+    let browser = 'Other';
+    if (/CriOS/.test(ua)) browser = 'Chrome iOS';
+    else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari';
+    else if (/Chrome/.test(ua)) browser = 'Chrome';
+    else if (/Firefox/.test(ua)) browser = 'Firefox';
+    setS('device', 'ok', platform);
+    setR('device', 'Платформа: ' + platform + '\nБраузер: ' + browser + '\nOnline: ' + navigator.onLine + '\n\nUser-Agent:\n' + ua);
   } catch(e) {
-    setStatus('device', 'fail', 'ОШИБКА');
-    setResult('device', String(e));
+    setS('device', 'fail', 'ОШИБКА');
+    setR('device', String(e));
   }
 
-  setTimeout(() => document.querySelector('.copy').scrollIntoView({behavior:'smooth'}), 500);
+  setTimeout(() => document.querySelector('.copy').scrollIntoView({ behavior: 'smooth' }), 500);
 }
 
 function copyAll() {
-  let r = '=== ДИАГНОСТИКА ===\n' + new Date().toISOString() + '\n\n';
-  for (const [k, v] of Object.entries(results)) r += '--- ' + k + ' ---\n' + v + '\n\n';
-  navigator.clipboard.writeText(r).then(() => alert('✅ Скопировано')).catch(() => alert('❌ Скопируйте вручную'));
+  let report = '=== ДИАГНОСТИКА BEJDIALOG ===\n';
+  report += 'Дата: ' + new Date().toISOString() + '\n\n';
+  for (const [k, v] of Object.entries(results)) {
+    report += '--- ' + k.toUpperCase() + ' ---\n' + v + '\n\n';
+  }
+  navigator.clipboard.writeText(report).then(() => alert('✅ Отчёт скопирован!\n\nВставьте в чат.')).catch(() => alert('❌ Не удалось скопировать — выделите текст вручную'));
 }
 
 window.addEventListener('load', () => setTimeout(runAll, 300));
