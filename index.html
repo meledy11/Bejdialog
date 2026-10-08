@@ -429,7 +429,7 @@ const SCENES = {
 };
 const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
 const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'phone-theme', job:'job-theme', wallet:'wallet-theme', birthday:'birthday-theme', battery:'battery-theme', directions:'directions-theme', sick:'sick-theme', glasses:'glasses-theme', beach:'beach-theme', cosmetics:'cosmetics-theme', cinema:'cinema-theme', restaurant:'restaurant-theme', thailand:'thailand-theme', friends:'friends-theme', guest:'guest-theme' };
-const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', batteryстре:'🔋 Разрядилсяча телефон', directions:'🗺️ Как пройти? под', sick:'🤒 Я простудилась', glasses:'👓руг Поход за очками', beach:'🏖️', Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 В guest:'🏠 В гостях' };
+const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
 
 const REPEAT_PAUSE = 2500;
 let currentScene = 'mcdonalds';
@@ -437,6 +437,7 @@ let zhVoice = null, ruVoice = null, currentSpeed = 0.55;
 let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 let activeRecorder = null, activeStream = null, activeRecordingKey = null, recordingTimeout = null;
 let audioUnlocked = false, globalAudio = null, isPlaying = false;
+let audioContext = null;
 
 function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
@@ -602,6 +603,7 @@ async function renderScene(sceneKey) {
 async function checkRecordings(sceneKey) {
   const data = SCENES[sceneKey];
   const checks = data.panels.map(async (_, i) => {
+    await sleep(i * 80);
     for (const ext of ['webm', 'mp4']) {
       try {
         const res = await fetch(`${WORKER_URL}/recordings/${sceneKey}_ru_${i}.${ext}`, { method: 'GET', cache: 'no-cache' });
@@ -683,7 +685,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     if (panelEl) panelEl.classList.add('recording-panel');
     recorder.start();
     showToast('🎙️ Запись...');
-    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 120000);
+    recordingTimeout = setTimeout(() => { if (activeRecordingKey?.idx === idx) stopCurrentRecording(); }, 15000);
   } catch (err) {
     console.error(err);
     showToast('⚠️ Нет доступа к микрофону');
@@ -736,11 +738,9 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ⭐ ФИКС: Promise + ждём onended, игнорируем ложные onerror на iOS */
+/* ⭐ ГЛАВНЫЙ ФИКС: new Audio() + ждём onended, игнорируем ложные onerror на iOS */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
-  return new Promise((resolve) => {
-    playRecordingFallback(blob, sceneKey, idx, lang, resolve);
-  });
+  return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
 
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
@@ -764,21 +764,27 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
     if (resolve) resolve();
   };
 
+  // ⭐ Главный триггер — окончание воспроизведения
   audio.onended = () => finish();
 
+  // ⭐ onerror срабатывает только для РЕАЛЬНЫХ ошибок декодирования
   audio.onerror = () => {
+    // code 4 = MEDIA_ERR_SRC_NOT_SUPPORTED — реальная ошибка
+    // Остальные "ошибки" iOS игнорируем — звук всё равно играет
     if (audio.error && audio.error.code === 4) {
       console.warn('Audio decode error:', audio.error.message);
       finish();
     }
   };
 
+  // Запуск воспроизведения
   audio.play().catch(() => {
     setTimeout(() => {
       audio.play().catch(() => finish());
     }, 100);
   });
 
+  // Защита от зависания — 30 сек максимум (записи короткие, но с запасом)
   safetyTimeout = setTimeout(finish, 30000);
 }
 
