@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎤 Тест записи</title>
+<style>
+body{font-family:-apple-system,system-ui,sans-serif;background:#f5f5f5;padding:16px;color:#222;line-height:1.5;margin:0;font-size:14px}
+h1{font-size:20px;margin:0 0 16px 0}
+.box{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.box h2{font-size:14px;margin:0 0 8px 0}
+.status{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:700;margin-left:6px;background:#eee;color:#666}
+.status.ok{background:#d4edda;color:#155724}
+.status.fail{background:#f8d7da;color:#721c24}
+.status.warn{background:#fff3cd;color:#856404}
+.result{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:#f8f8f8;padding:8px;border-radius:6px;margin-top:8px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto}
+.btn{background:#007aff;color:#fff;border:none;padding:14px 20px;border-radius:10px;font-size:15px;font-weight:600;width:100%;margin-bottom:10px;cursor:pointer}
+.btn:active{opacity:.7}
+.btn-rec{background:#ff5722}
+.btn-rec.recording{background:#c62828;animation:pulse 1s infinite}
+.btn-rec.has-rec{background:#4caf50}
+.btn-play{background:#00bcd4}
+.btn-copy{background:#4caf50}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+</head>
+<body>
+
+<h1>🎤 Тест записи и воспроизведения</h1>
+
+<div class="box">
+  <h2>1. Настройка <span class="status" id="s-config">...</span></h2>
+  <div class="result" id="r-config"></div>
+</div>
+
+<button class="btn btn-rec" id="recBtn" onclick="toggleRecord()">🎤 Записать 3 секунды</button>
+<button class="btn btn-play" onclick="playRecording()">🔊 Воспроизвести запись</button>
+<button class="btn" onclick="uploadToGitHub()">⬆️ Сохранить в GitHub</button>
+<button class="btn" onclick="downloadFromGitHub()">⬇️ Скачать из GitHub</button>
+<button class="btn btn-copy" onclick="copyAll()">📋 Скопировать отчёт</button>
+
+<div class="box">
+  <h2>2. Микрофон <span class="status" id="s-mic">...</span></h2>
+  <div class="result" id="r-mic">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>3. Запись (blob) <span class="status" id="s-blob">...</span></h2>
+  <div class="result" id="r-blob">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>4. Формат записи <span class="status" id="s-format">...</span></h2>
+  <div class="result" id="r-format">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>5. Локальное воспроизведение blob <span class="status" id="s-play-local">...</span></h2>
+  <div class="result" id="r-play-local">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>6. Отправка в GitHub (PUT) <span class="status" id="s-put">...</span></h2>
+  <div class="result" id="r-put">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>7. Чтение из GitHub (GET) <span class="status" id="s-get">...</span></h2>
+  <div class="result" id="r-get">Не проверено</div>
+</div>
+
+<div class="box">
+  <h2>8. Воспроизведение из GitHub <span class="status" id="s-play-remote">...</span></h2>
+  <div class="result" id="r-play-remote">Не проверено</div>
+</div>
+
+<audio id="player" playsinline webkit-playsinline></audio>
+
+<script>
+const WORKER_URL = 'https://bejdialog.meledy1111.workers.dev';
+const TEST_KEY = 'test_record_check';
+
+let currentBlob = null;
+let currentExt = null;
+let isRecording = false;
+let mediaRecorder = null;
+let stream = null;
+const results = {};
+
+function setS(id, cls, text) {
+  const el = document.getElementById('s-' + id);
+  if (el) { el.className = 'status ' + (cls || ''); el.textContent = text; }
+}
+function setR(id, text) {
+  const el = document.getElementById('r-' + id);
+  if (el) el.textContent = text;
+  results[id] = text;
+}
+function log(id, msg) { setR(id, (results[id] || '') + msg + '\n'); }
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function initConfig() {
+  setS('config', 'ok', 'OK');
+  setR('config', 'Worker: ' + WORKER_URL + '\nUA: ' + navigator.userAgent);
+}
+
+async function toggleRecord() {
+  const btn = document.getElementById('recBtn');
+  if (isRecording) {
+    // Остановить
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+    return;
+  }
+
+  try {
+    setS('mic', '', 'запрос...');
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const track = stream.getAudioTracks()[0];
+    setS('mic', 'ok', '✅ OK');
+    setR('mic', 'Микрофон: ' + (track ? track.label : '?'));
+
+    // Формат — приоритет .webm
+    let mimeType = 'audio/webm;codecs=opus';
+    if (!MediaRecorder.isTypeSupported(mimeType)) {
+      if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
+      else if (MediaRecorder.isTypeSupported('audio/mp4')) mimeType = 'audio/mp4';
+    }
+    currentExt = mimeType.includes('mp4') ? 'mp4' : 'webm';
+
+    setS('format', 'ok', mimeType.split(';')[0]);
+    setR('format', 'Всего поддерживается:\n' +
+      'webm/opus: ' + MediaRecorder.isTypeSupported('audio/webm;codecs=opus') + '\n' +
+      'webm: ' + MediaRecorder.isTypeSupported('audio/webm') + '\n' +
+      'mp4: ' + MediaRecorder.isTypeSupported('audio/mp4') + '\n' +
+      '\nВыбран: ' + mimeType);
+
+    mediaRecorder = new MediaRecorder(stream, { mimeType, audioBitsPerSecond: 128000 });
+    const chunks = [];
+    mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      currentBlob = new Blob(chunks, { type: mimeType });
+      setS('blob', 'ok', '✅ готов');
+      setR('blob', 'Размер: ' + currentBlob.size + ' байт\nТип: ' + currentBlob.type + '\nРасширение: .' + currentExt);
+      btn.textContent = '🎤 Записать ещё раз';
+      btn.classList.remove('recording');
+      btn.classList.add('has-rec');
+      isRecording = false;
+      if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+    btn.classList.add('recording');
+    btn.textContent = '⏹ Идёт запись (3 сек)...';
+
+    // Автостоп через 3 сек
+    setTimeout(() => {
+      if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+    }, 3000);
+
+  } catch(e) {
+    setS('mic', 'fail', '❌ ОШИБКА');
+    setR('mic', 'Ошибка: ' + e.name + ' — ' + e.message);
+    isRecording = false;
+  }
+}
+
+async function playRecording() {
+  if (!currentBlob) {
+    setS('play-local', 'fail', '❌ нет записи');
+    setR('play-local', 'Сначала запишите');
+    return;
+  }
+
+  try {
+    setS('play-local', '', 'проверка...');
+    const player = document.getElementById('player');
+    player.src = URL.createObjectURL(currentBlob);
+    player.volume = 1;
+
+    await player.play();
+    setS('play-local', 'ok', '✅ играет');
+    setR('play-local', 'Локальный blob играет\nРазмер: ' + currentBlob.size + '\nТип: ' + currentBlob.type);
+
+    await sleep(1500);
+    player.pause();
+  } catch(e) {
+    setS('play-local', 'fail', '❌ не играет');
+    setR('play-local', 'Ошибка: ' + e.name + ' — ' + e.message + '\n\nЭто значит: Safari не может проиграть ' + (currentBlob ? currentBlob.type : 'blob'));
+  }
+}
+
+async function uploadToGitHub() {
+  if (!currentBlob) {
+    setS('put', 'fail', '❌ нет записи');
+    setR('put', 'Сначала запишите');
+    return;
+  }
+
+  let key = localStorage.getItem('upload_key');
+  if (!key) {
+    key = prompt('Введите UPLOAD_KEY:');
+    if (!key) { setS('put', 'fail', '❌ нет пароля'); return; }
+    localStorage.setItem('upload_key', key);
+  }
+
+  try {
+    setS('put', '', 'отправка...');
+    const content = await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onloadend = () => resolve(r.result.split(',')[1]);
+      r.onerror = reject;
+      r.readAsDataURL(currentBlob);
+    });
+
+    const path = `recordings/${TEST_KEY}.${currentExt}`;
+    const start = Date.now();
+    const res = await fetch(`${WORKER_URL}/${path}?key=${encodeURIComponent(key)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ content, key })
+    });
+    const elapsed = Date.now() - start;
+    const text = await res.text();
+
+    if (res.ok) {
+      setS('put', 'ok', '✅ ' + res.status);
+      setR('put', '✅ Сохранено!\nHTTP ' + res.status + '\nВремя: ' + elapsed + 'ms\nПуть: ' + path + '\nОтвет: ' + text.substring(0, 200));
+    } else {
+      setS('put', 'fail', '❌ ' + res.status);
+      setR('put', '❌ HTTP ' + res.status + '\nВремя: ' + elapsed + 'ms\nОтвет: ' + text.substring(0, 300));
+    }
+  } catch(e) {
+    setS('put', 'fail', '❌ ОШИБКА');
+    setR('put', 'Ошибка: ' + e.name + ' — ' + e.message + '\n\n→ Load failed — сеть/CORS');
+  }
+}
+
+async function downloadFromGitHub() {
+  try {
+    setS('get', '', 'загрузка...');
+    // Пробуем оба расширения
+    let res = null;
+    let usedExt = null;
+    for (const ext of ['webm', 'mp4']) {
+      const url = `${WORKER_URL}/recordings/${TEST_KEY}.${ext}`;
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (r.ok) { res = r; usedExt = ext; break; }
+    }
+    if (!res) {
+      setS('get', 'fail', '❌ не найдено');
+      setR('get', 'Файл test_record_check не найден в GitHub.\nСначала сохраните.');
+      return;
+    }
+    const blob = await res.blob();
+    setS('get', 'ok', '✅ ' + res.status);
+    setR('get', '✅ Файл получен\nHTTP ' + res.status + '\nРазмер: ' + blob.size + ' байт\nТип: ' + blob.type + '\nРасширение: .' + usedExt);
+
+    // Сразу пробуем воспроизвести
+    setS('play-remote', '', 'играем...');
+    const player = document.getElementById('player');
+    player.src = URL.createObjectURL(blob);
+    player.volume = 1;
+    await player.play();
+    setS('play-remote', 'ok', '✅ играет');
+    setR('play-remote', '✅ Файл из GitHub играет!\nРазмер: ' + blob.size + '\nТип: ' + blob.type);
+    await sleep(1500);
+    player.pause();
+  } catch(e) {
+    setS('get', 'fail', '❌ ОШИБКА');
+    setR('get', 'Ошибка: ' + e.name + ' — ' + e.message);
+  }
+}
+
+function copyAll() {
+  let report = '=== ТЕСТ ЗАПИСИ ===\n';
+  report += 'Дата: ' + new Date().toISOString() + '\n';
+  report += 'UA: ' + navigator.userAgent + '\n\n';
+  for (const [k, v] of Object.entries(results)) {
+    report += '--- ' + k.toUpperCase() + ' ---\n' + v + '\n\n';
+  }
+  navigator.clipboard.writeText(report).then(() => alert('✅ Скопировано')).catch(() => alert('❌ Выделите вручную'));
+}
+
+window.addEventListener('load', () => {
+  initConfig();
+  // Подтянуть сохранённый ключ
+  if (localStorage.getItem('upload_key')) {
+    setR('config', (results['config'] || '') + '\nUPLOAD_KEY: ✅ сохранён');
+  }
+});
+</script>
+</body>
+</html>
