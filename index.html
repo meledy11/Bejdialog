@@ -591,13 +591,16 @@ async function renderScene(sceneKey) {
 async function checkRecordings(sceneKey) {
   const data = SCENES[sceneKey];
   const checks = data.panels.map(async (_, i) => {
-    try {
-      const res = await fetch(`${WORKER_URL}/recordings/${sceneKey}_ru_${i}.webm`, { method: 'GET', cache: 'no-cache' });
-      if (res.ok) {
-        const btn = document.getElementById(`${sceneKey}-rec-ru-${i}`);
-        if (btn) btn.classList.add('has-recording');
-      }
-    } catch(e) {}
+    for (const ext of ['webm', 'mp4']) {
+      try {
+        const res = await fetch(`${WORKER_URL}/recordings/${sceneKey}_ru_${i}.${ext}`, { method: 'GET', cache: 'no-cache' });
+        if (res.ok) {
+          const btn = document.getElementById(`${sceneKey}-rec-ru-${i}`);
+          if (btn) btn.classList.add('has-recording');
+          break;
+        }
+      } catch(e) {}
+    }
   });
   await Promise.all(checks);
 }
