@@ -443,7 +443,25 @@ function unlockAudioOnInteraction() {
   if (audioUnlocked) return;
   const audio = new Audio();
   audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-  audio.play().then(() => { audio.pause(); audioUnlocked = true; if ('speechSynthesis' in window) { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(''); u.volume = 0; speechSynthesis.speak(u); } }).catch(() => { audioUnlocked = true; });
+  audio.play().then(() => {
+    audio.pause();
+    audioUnlocked = true;
+    if (globalAudio) {
+      globalAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      globalAudio.volume = 0.01;
+      globalAudio.play().then(() => {
+        globalAudio.pause();
+        globalAudio.volume = 1.0;
+        globalAudio.src = '';
+      }).catch(() => {});
+    }
+    if ('speechSynthesis' in window) {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance('');
+      u.volume = 0;
+      speechSynthesis.speak(u);
+    }
+  }).catch(() => { audioUnlocked = true; });
 }
 document.addEventListener('touchstart', unlockAudioOnInteraction, { once: true });
 document.addEventListener('click', unlockAudioOnInteraction, { once: true });
@@ -645,7 +663,7 @@ async function toggleRecording(sceneKey, idx, lang) {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, sampleRate: 48000, channelCount: 1 } });
     activeStream = stream;
 
-    // ⭐ ПРИОРИТЕТ .webm — для совместимости с iOS Safari
+    // ПРИОРИТЕТ .webm — для совместимости с iOS Safari
     let mimeType = 'audio/webm;codecs=opus';
     if (!MediaRecorder.isTypeSupported(mimeType)) {
       if (MediaRecorder.isTypeSupported('audio/webm')) mimeType = 'audio/webm';
@@ -729,55 +747,12 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-function normalizeAudioBuffer(audioBuffer, targetPeak = 0.9) {
-  const channelData = audioBuffer.getChannelData(0);
-  let maxPeak = 0;
-  for (let i = 0; i < channelData.length; i++) { const abs = Math.abs(channelData[i]); if (abs > maxPeak) maxPeak = abs; }
-  if (maxPeak < 0.001) return audioBuffer;
-  const gain = targetPeak / maxPeak;
-  if (gain <= 1.0) return audioBuffer;
-  for (let i = 0; i < channelData.length; i++) channelData[i] *= gain;
-  return audioBuffer;
-}
-
+/* ⭐ УПРОЩЕНО: ВСЕГДА через <audio> тег, БЕЗ AudioContext — работает на iOS Safari */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
-  return new Promise((resolve) => {
-    if (!isPlaying) { resolve(); return; }
-
-    // ⭐ ДЛЯ .mp4 — сразу через <audio> тег (Safari iOS не декодирует mp4 через AudioContext)
-    if (blob.type.includes('mp4')) {
-      return playRecordingFallback(blob, sceneKey, idx, lang, resolve);
-    }
-
-    if (!audioContext) {
-      try { audioContext = new (window.AudioContext || window.webkitAudioContext)(); }
-      catch(e) { playRecordingFallback(blob, sceneKey, idx, lang, resolve); return; }
-    }
-    if (audioContext.state === 'suspended') audioContext.resume();
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const audioBuffer = await audioContext.decodeAudioData(e.target.result);
-        normalizeAudioBuffer(audioBuffer, 0.9);
-        highlightText(sceneKey, idx, lang);
-        let finished = false;
-        const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); resolve(); };
-        const source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        const gainNode = audioContext.createGain();
-        gainNode.gain.value = 1.0;
-        source.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        const safetyTimeout = setTimeout(finish, 15000);
-        source.onended = () => { clearTimeout(safetyTimeout); finish(); };
-        source.start(0);
-      } catch(err) { playRecordingFallback(blob, sceneKey, idx, lang, resolve); }
-    };
-    reader.onerror = () => playRecordingFallback(blob, sceneKey, idx, lang, resolve);
-    reader.readAsArrayBuffer(blob);
-  });
+  return playRecordingFallback(blob, sceneKey, idx, lang, () => {});
 }
 
+/* ⭐ Воспроизведение через <audio> тег — надёжно работает на iPhone */
 function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   if (!globalAudio) globalAudio = document.getElementById('globalAudio');
   const url = URL.createObjectURL(blob);
@@ -785,13 +760,31 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
   globalAudio.playsInline = true;
   globalAudio.webkitPlaysInline = true;
   globalAudio.volume = 1.0;
+
   highlightText(sceneKey, idx, lang);
+
   let finished = false;
-  const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); URL.revokeObjectURL(url); resolve(); };
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    clearHighlight(sceneKey, idx, lang);
+    setTimeout(() => URL.revokeObjectURL(url), 500);
+    if (resolve) resolve();
+  };
+
   const safetyTimeout = setTimeout(finish, 15000);
   globalAudio.onended = () => { clearTimeout(safetyTimeout); finish(); };
   globalAudio.onerror = () => { clearTimeout(safetyTimeout); finish(); };
-  globalAudio.play().catch(() => { clearTimeout(safetyTimeout); finish(); });
+
+  const playPromise = globalAudio.play();
+  if (playPromise && playPromise.catch) {
+    playPromise.catch((err) => {
+      // iOS часто блокирует autoplay — пробуем ещё раз
+      setTimeout(() => {
+        globalAudio.play().catch(() => {});
+      }, 50);
+    });
+  }
 }
 
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
