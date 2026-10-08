@@ -136,7 +136,6 @@ body.guest-theme .scene-title{background:linear-gradient(135deg,#ff8f00,#ffb300,
 
 <div class="toast" id="toast"></div>
 <audio id="globalAudio" playsinline webkit-playsinline style="display:none;"></audio>
-
 <script>
 /* ============================================================
    ⚙️ НАСТРОЙКА — URL Worker'а
@@ -428,8 +427,7 @@ const SCENES = {
     ]
   }
 };
-
-const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
+  const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
 const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'phone-theme', job:'job-theme', wallet:'wallet-theme', birthday:'birthday-theme', battery:'battery-theme', directions:'directions-theme', sick:'sick-theme', glasses:'glasses-theme', beach:'beach-theme', cosmetics:'cosmetics-theme', cinema:'cinema-theme', restaurant:'restaurant-theme', thailand:'thailand-theme', friends:'friends-theme', guest:'guest-theme' };
 const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
 
@@ -607,8 +605,7 @@ function stopPlayback() {
   document.querySelectorAll('.zh-text, .ru-text').forEach(el => el.classList.remove('active'));
   document.getElementById('stopBtn').classList.remove('visible');
 }
-
-/* ==================== RECORDING ==================== */
+  /* ==================== RECORDING ==================== */
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
@@ -800,13 +797,13 @@ async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
   await wakeUpSpeechSynthesis();
-  if (lang ===T 'zh') await playTTSRobust(sceneKey, idx, 'zh');
+  if (lang === 'zh') await playTTSRobust(sceneKey, idx, 'zh');
   else {
     try {
       const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
       if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
       else await playTTSRobust(sceneKey, idx, 'ru');
-    } catch(e) { await playTSRobust(sceneKey, idx, 'ru'); }
+    } catch(e) { await playTTSRobust(sceneKey, idx, 'ru'); }
   }
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
@@ -850,7 +847,7 @@ async function playAndNext(sceneKey, idx) {
   isPlaying = false;
   document.getElementById('stopBtn').classList.remove('visible');
 }
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /* ==================== START ==================== */
 window.addEventListener('load', async () => {
