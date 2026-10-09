@@ -35,34 +35,34 @@
     h1 .title-rus { font-size: 0.55rem; font-weight: 900; color: #4a2a10; background: linear-gradient(145deg, #FFEFD5, #FFDAB9); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95); white-space: nowrap; }
     .subhead { text-align: center; font-size: 0.5rem; color: #6a4a20; background: linear-gradient(145deg, #FFE4B5, #FFDAB9); display: block; padding: 1px 8px; border-radius: 30px; margin: 0 auto 3px; flex-shrink: 0; font-weight: 700; line-height: 1.2; width: fit-content; max-width: 96%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); }
     .subhead b { color: #2a7a80; font-weight: 900; }
-    .grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 1px; scrollbar-width: none; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 1px; scrollbar-width: none; }
     .grid::-webkit-scrollbar { display: none; }
-    .card { border-radius: 14px; padding: 4px 5px 5px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease; cursor: pointer; position: relative; min-height: 0; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.12), inset 0 0 20px rgba(255, 245, 220, 0.40), 0 2px 0 rgba(180, 140, 90, 0.18), 0 4px 8px rgba(120, 80, 40, 0.16); border: 2px solid transparent; overflow: hidden; }
+    .card { border-radius: 12px; padding: 3px 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease; cursor: pointer; position: relative; min-height: 0; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.12), inset 0 0 20px rgba(255, 245, 220, 0.40), 0 2px 0 rgba(180, 140, 90, 0.18), 0 4px 8px rgba(120, 80, 40, 0.16); border: 2px solid transparent; overflow: hidden; }
     .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.55) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(200, 170, 130, 0.15) 0%, transparent 50%); opacity: 0.7; mix-blend-mode: soft-light; }
-    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 100%); border-radius: 14px 14px 50% 50%; pointer-events: none; }
+    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 100%); border-radius: 12px 12px 50% 50%; pointer-events: none; }
     .card:active { transform: translateY(2px) scale(0.97); }
     .card.active {
       background: linear-gradient(145deg, #fff6d0, #ffe9a8) !important;
       border: 2px solid #f0b040;
-      box-shadow: 0 0 0 4px rgba(240, 176, 64, 0.35), 0 6px 18px rgba(180, 120, 30, 0.30), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 6px rgba(180, 140, 90, 0.20);
+      box-shadow: 0 0 0 3px rgba(240, 176, 64, 0.35), 0 6px 18px rgba(180, 120, 30, 0.30), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 6px rgba(180, 140, 90, 0.20);
       transform: translateY(-2px) scale(1.02);
     }
     .card.active .hanzi .key-char { background: linear-gradient(145deg, #ffe08a, #f8c860); color: #7a3a10; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 0 0 2px rgba(240, 176, 64, 0.35); }
     .card.active .russian { background: #f0b040; color: #fff; box-shadow: 0 2px 6px rgba(180, 120, 30, 0.35); }
     .card.has-rec { box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(60,140,90,0.15), inset 0 0 20px rgba(220,255,230,0.45), 0 2px 0 rgba(60,140,90,0.20), 0 4px 8px rgba(30,90,50,0.16); }
-    .emoji-corner { position: absolute; top: 4px; left: 5px; font-size: 1.1rem; line-height: 1; opacity: 0.9; pointer-events: none; z-index: 1; filter: drop-shadow(0 1px 1px rgba(120, 80, 40, 0.25)); }
-    .rec-indicator { position: absolute; top: 4px; right: 5px; width: 14px; height: 14px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 900; background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 1px 3px rgba(30,90,50,0.3); z-index: 5; line-height: 1; }
+    .emoji-corner { position: absolute; top: 2px; left: 3px; font-size: 0.85rem; line-height: 1; opacity: 0.9; pointer-events: none; z-index: 1; filter: drop-shadow(0 1px 1px rgba(120, 80, 40, 0.25)); }
+    .rec-indicator { position: absolute; top: 2px; right: 3px; width: 12px; height: 12px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 900; background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 1px 3px rgba(30,90,50,0.3); z-index: 5; line-height: 1; }
     .rec-indicator.show { display: flex; }
     .rec-indicator.recording { background: linear-gradient(145deg, #ff6060, #d83030); animation: pulse 1s infinite; }
     @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,80,0.7); } 50% { box-shadow: 0 0 0 8px rgba(255,80,80,0); } }
-    .card-inner { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: 100%; padding-top: 14px; gap: 4px; }
-    .hanzi { font-size: 2rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: 0.5px; color: #3a1a08; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 3px rgba(120, 70, 20, 0.22); position: relative; z-index: 2; text-align: center; word-break: break-all; overflow-wrap: break-word; white-space: normal; max-width: 100%; }
-    .hanzi .key-char { border-radius: 5px; padding: 0 4px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.22); transition: background 0.25s ease, color 0.25s ease; }
-    .pinyin { font-size: 0.85rem; font-weight: 800; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 2px 9px; border-radius: 30px; margin: 0; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); text-align: center; line-height: 1.2; max-width: 100%; white-space: normal; word-break: break-word; }
-    .russian { font-size: 1rem; font-weight: 900; color: #3a1a08; background: rgba(255,255,255,0.9); padding: 4px 11px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); line-height: 1.25; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; transition: background 0.25s ease, color 0.25s ease; }
-    .example { font-size: 0.65rem; font-weight: 700; color: #5a3a18; background: rgba(255,255,255,0.85); padding: 4px 8px; border-radius: 10px; margin-top: auto; position: relative; z-index: 2; border: 1px solid rgba(220, 190, 150, 0.55); box-shadow: inset 0 1px 1px rgba(255,255,255,0.80); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.3; width: 100%; white-space: normal; word-break: break-word; overflow-wrap: break-word; }
-    .example .highlight { background: rgba(255,255,255,0.95); padding: 0 4px; border-radius: 5px; font-weight: 900; color: #2a7a80; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95); white-space: normal; }
-    .example .ru { display: block; font-weight: 600; color: #8a5a30; font-size: 0.62rem; margin-top: 2px; font-style: italic; line-height: 1.3; white-space: normal; word-break: break-word; }
+    .card-inner { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: 100%; padding-top: 10px; gap: 3px; }
+    .hanzi { font-size: 1.5rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: 0.5px; color: #3a1a08; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 3px rgba(120, 70, 20, 0.22); position: relative; z-index: 2; text-align: center; word-break: break-all; overflow-wrap: break-word; white-space: normal; max-width: 100%; }
+    .hanzi .key-char { border-radius: 4px; padding: 0 3px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.22); transition: background 0.25s ease, color 0.25s ease; }
+    .pinyin { font-size: 0.62rem; font-weight: 800; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 1px 6px; border-radius: 30px; margin: 0; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); text-align: center; line-height: 1.2; max-width: 100%; white-space: normal; word-break: break-word; }
+    .russian { font-size: 0.72rem; font-weight: 900; color: #3a1a08; background: rgba(255,255,255,0.9); padding: 2px 7px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); line-height: 1.2; text-align: center; word-break: break-word; overflow-wrap: break-word; max-width: 100%; transition: background 0.25s ease, color 0.25s ease; }
+    .example { font-size: 0.5rem; font-weight: 700; color: #5a3a18; background: rgba(255,255,255,0.85); padding: 2px 5px; border-radius: 8px; margin-top: auto; position: relative; z-index: 2; border: 1px solid rgba(220, 190, 150, 0.55); box-shadow: inset 0 1px 1px rgba(255,255,255,0.80); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.25; width: 100%; white-space: normal; word-break: break-word; overflow-wrap: break-word; }
+    .example .highlight { background: rgba(255,255,255,0.95); padding: 0 3px; border-radius: 4px; font-weight: 900; color: #2a7a80; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95); white-space: normal; }
+    .example .ru { display: block; font-weight: 600; color: #8a5a30; font-size: 0.46rem; margin-top: 1px; font-style: italic; line-height: 1.25; white-space: normal; word-break: break-word; }
     .card[data-color="n1"]  { --card-color: #40A0A0; background: linear-gradient(145deg, #FFEFD5, #FFE4B5); }
     .card[data-color="n1"] .hanzi .key-char { color: #2a7a80; background: linear-gradient(145deg, #d8f0ee, #b0e0dc); }
     .card[data-color="n2"]  { --card-color: #40B0A8; background: linear-gradient(145deg, #FFF2DC, #FFE4B5); }
@@ -100,12 +100,12 @@
     .back-link:active { transform: scale(0.95); }
     @media (max-width: 420px) {
       .container { padding: 4px 4px 3px; border-radius: 22px; }
-      .grid { gap: 4px; }
-      .hanzi { font-size: 1.9rem; }
-      .pinyin { font-size: 0.8rem; padding: 2px 8px; }
-      .russian { font-size: 0.95rem; padding: 4px 10px; }
-      .example { font-size: 0.62rem; padding: 3px 7px; }
-      .example .ru { font-size: 0.58rem; }
+      .grid { gap: 3px; }
+      .hanzi { font-size: 1.4rem; }
+      .pinyin { font-size: 0.58rem; padding: 1px 5px; }
+      .russian { font-size: 0.68rem; padding: 2px 6px; }
+      .example { font-size: 0.46rem; padding: 2px 4px; }
+      .example .ru { font-size: 0.42rem; }
       h1 { gap: 3px; }
       h1 .title-hanzi { font-size: 0.85rem; padding: 2px 6px; }
       h1 .title-pinyin { font-size: 0.5rem; padding: 2px 5px; }
@@ -115,22 +115,22 @@
       .rec-panel { padding: 4px 5px; gap: 3px; border-radius: 12px; }
       .rec-panel-title { font-size: 0.56rem; }
       .footer-note { font-size: 0.5rem; padding: 2px 9px; }
-      .rec-indicator { width: 12px; height: 12px; font-size: 0.5rem; }
-      .emoji-corner { font-size: 1rem; }
-      .card-inner { padding-top: 12px; gap: 3px; }
+      .rec-indicator { width: 11px; height: 11px; font-size: 0.46rem; }
+      .emoji-corner { font-size: 0.8rem; }
+      .card-inner { padding-top: 8px; gap: 2px; }
     }
     @media (max-width: 380px) {
-      .hanzi { font-size: 1.7rem; }
-      .rec-num { width: 22px; height: 22px; font-size: 0.68rem; }
-      .pinyin { font-size: 0.75rem; }
-      .russian { font-size: 0.9rem; }
-      .example { font-size: 0.58rem; }
-      .example .ru { font-size: 0.54rem; }
+      .hanzi { font-size: 1.3rem; }
+      .rec-num { width: 22px; height: 22px; font-size: 0.68rem; border-radius: 6px; }
+      .pinyin { font-size: 0.54rem; }
+      .russian { font-size: 0.62rem; }
+      .example { font-size: 0.42rem; }
+      .example .ru { font-size: 0.38rem; }
     }
-    @media (max-height: 640px) { .hanzi { font-size: 1.7rem; } .card-inner { padding-top: 10px; } }
+    @media (max-height: 640px) { .hanzi { font-size: 1.35rem; } .card-inner { padding-top: 6px; } }
     @media (orientation: landscape) and (max-height: 500px) {
       .container { max-height: 100%; border-radius: 16px; }
-      .grid { grid-template-columns: repeat(3, 1fr); }
+      .grid { grid-template-columns: repeat(5, 1fr); }
       h1 { font-size: 0.85rem; }
       h1 .title-hanzi { font-size: 1rem; padding: 2px 6px; }
       .subhead { display: none; }
