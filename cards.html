@@ -3,288 +3,404 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="HSK 1 · Приветствия" />
+  <meta name="apple-mobile-web-app-title" content="Китайский · 没有" />
   <meta name="format-detection" content="telephone=no" />
-  <meta name="theme-color" content="#FFEFD5" />
-  <title>Китайский · HSK 1 · Приветствия</title>
+  <meta name="theme-color" content="#C5B9E8" />
+
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23C5B9E8'/%3E%3Cstop offset='1' stop-color='%23FFBE98'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='180' height='180' rx='40' fill='url(%23g)'/%3E%3Ctext x='90' y='118' font-size='70' font-weight='900' text-anchor='middle' fill='%23FFFFFF' font-family='system-ui'%3E没%3C/text%3E%3C/svg%3E" />
+
+  <title>Китайский · 没有 (без)</title>
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
     html, body { height: 100%; overflow: hidden; overscroll-behavior: none; -webkit-user-select: none; user-select: none; position: fixed; width: 100%; -webkit-text-size-adjust: 100%; }
+
+    :root {
+      --lavender: #C5B9E8;
+      --lavender-dark: #A89BD9;
+      --peach: #FFBE98;
+      --peach-dark: #E89E76;
+      --lime: #C7EA46;
+      --lime-dark: #A8C82E;
+      --aqua: #7FD4D4;
+      --aqua-dark: #5DB5B5;
+      --yellow: #F5E663;
+      --yellow-dark: #D8C842;
+      --espresso: #4A3428;
+
+      --petal-pink: #FFB6A9;
+      --petal-pink-dark: #E89A8C;
+      --on-petal-pink: #5A2A22;
+      --seed-green: #CAD23C;
+      --seed-green-dark: #A8AF28;
+      --on-seed-green: #2A3008;
+      --blue-linen: #A1AED1;
+      --blue-linen-dark: #7E8CB8;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: radial-gradient(circle at 25% 15%, #FFEFD5 0%, #FFE4B5 45%, #FFDAB9 75%, #EEE8AA 100%);
+      background: linear-gradient(135deg, #F0EBF8 0%, #FFE0CC 50%, #E0F5F5 100%);
       height: 100vh; height: 100dvh;
       display: flex; justify-content: center; align-items: center;
       padding: calc(4px + env(safe-area-inset-top)) calc(4px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(4px + env(safe-area-inset-left));
     }
     .container {
       max-width: 860px; width: 100%; height: 100%; max-height: 900px;
-      background: rgba(255, 252, 242, 0.72);
-      -webkit-backdrop-filter: blur(6px) saturate(1.15); backdrop-filter: blur(6px) saturate(1.15);
+      background: rgba(252, 250, 255, 0.82);
+      -webkit-backdrop-filter: blur(8px) saturate(1.2); backdrop-filter: blur(8px) saturate(1.2);
       border-radius: 26px; padding: 5px 5px 4px;
-      box-shadow: 0 20px 50px rgba(120, 90, 50, 0.22), 0 8px 24px rgba(120, 90, 50, 0.14), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(200, 170, 130, 0.20);
-      border: 1px solid rgba(240, 220, 190, 0.6);
+      box-shadow: 0 20px 50px rgba(74, 52, 40, 0.22), 0 8px 24px rgba(74, 52, 40, 0.12), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(197, 185, 232, 0.30);
+      border: 1px solid rgba(197, 185, 232, 0.65);
       display: flex; flex-direction: column; position: relative; overflow: hidden;
     }
-    h1 { text-align: center; font-weight: 900; font-size: 1rem; color: #4a2a10; margin-bottom: 2px; display: flex; align-items: center; justify-content: center; gap: 4px; flex-shrink: 0; flex-wrap: nowrap; text-shadow: 0 1px 0 rgba(255,255,255,0.95); overflow: hidden; }
-    h1 .title-hanzi { font-size: 0.92rem; font-weight: 900; color: #2a7a80; background: linear-gradient(145deg, #d8f0ee, #a8dcd8); padding: 2px 7px; border-radius: 8px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(60,140,140,0.20), 0 1px 0 rgba(50,120,120,0.20), 0 2px 5px rgba(40,100,100,0.18); text-shadow: 0 1px 0 rgba(255,255,255,0.9); line-height: 1; white-space: nowrap; }
-    h1 .title-pinyin { font-size: 0.55rem; font-weight: 800; color: #6a4a20; background: linear-gradient(145deg, #FFE4B5, #f0c898); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); white-space: nowrap; }
-    h1 .title-rus { font-size: 0.55rem; font-weight: 900; color: #4a2a10; background: linear-gradient(145deg, #FFEFD5, #FFDAB9); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95); white-space: nowrap; }
-    .subhead { text-align: center; font-size: 0.5rem; color: #6a4a20; background: linear-gradient(145deg, #FFE4B5, #FFDAB9); display: block; padding: 1px 8px; border-radius: 30px; margin: 0 auto 3px; flex-shrink: 0; font-weight: 700; line-height: 1.2; width: fit-content; max-width: 96%; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); }
-    .subhead b { color: #2a7a80; font-weight: 900; }
+    h1 { text-align: center; font-weight: 900; font-size: 1rem; color: #2A1F4A; margin-bottom: 3px; display: flex; align-items: center; justify-content: center; gap: 4px; flex-shrink: 0; flex-wrap: nowrap; text-shadow: 0 1px 0 rgba(255,255,255,0.95); overflow: hidden; }
+    h1 .title-hanzi { font-size: 0.92rem; font-weight: 900; color: #ffffff; background: linear-gradient(145deg, var(--lavender-dark), var(--lavender)); padding: 2px 7px; border-radius: 8px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.45), inset 0 -1px 2px rgba(42,31,74,0.25), 0 1px 0 rgba(42,31,74,0.25), 0 2px 5px rgba(42,31,74,0.22); text-shadow: 0 1px 0 rgba(0,0,0,0.20); line-height: 1; white-space: nowrap; }
+    h1 .title-pinyin { font-size: 0.55rem; font-weight: 800; color: #4A2418; background: var(--peach); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.6); white-space: nowrap; }
+    h1 .title-rus { font-size: 0.55rem; font-weight: 900; color: #1E2808; background: var(--lime); padding: 2px 5px; border-radius: 30px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.7); white-space: nowrap; }
+
+    .subhead {
+      text-align: center;
+      font-size: 0.5rem;
+      font-weight: 800;
+      color: #2A1F4A;
+      background: linear-gradient(145deg, #E8E0F8, #C5B9E8);
+      padding: 2px 10px;
+      border-radius: 30px;
+      margin: 0 auto 3px;
+      flex-shrink: 0;
+      width: fit-content;
+      max-width: 96%;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.85);
+      line-height: 1.3;
+    }
+    .subhead b { color: #7E6DB8; font-weight: 900; }
+
     .grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 4px; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding: 1px; scrollbar-width: none; }
     .grid::-webkit-scrollbar { display: none; }
-    .card { border-radius: 12px; padding: 3px 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease; cursor: pointer; position: relative; min-height: 0; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(180, 140, 90, 0.12), inset 0 0 20px rgba(255, 245, 220, 0.40), 0 2px 0 rgba(180, 140, 90, 0.18), 0 4px 8px rgba(120, 80, 40, 0.16); border: 2px solid transparent; overflow: hidden; }
-    .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.55) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(200, 170, 130, 0.15) 0%, transparent 50%); opacity: 0.7; mix-blend-mode: soft-light; }
-    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 100%); border-radius: 12px 12px 50% 50%; pointer-events: none; }
-    .card:active { transform: translateY(2px) scale(0.97); }
-    .card.active {
-      background: linear-gradient(145deg, #fff6d0, #ffe9a8) !important;
-      border: 2px solid #f0b040;
-      box-shadow: 0 0 0 3px rgba(240, 176, 64, 0.35), 0 6px 18px rgba(180, 120, 30, 0.30), inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -2px 6px rgba(180, 140, 90, 0.20);
-      transform: translateY(-2px) scale(1.02);
+    .card { border-radius: 14px; padding: 3px 4px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; transition: transform 0.12s ease, box-shadow 0.2s ease; cursor: pointer; position: relative; min-height: 0; -webkit-user-select: none; user-select: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(74,52,40,0.14), inset 0 0 20px rgba(255,255,255,0.35), 0 2px 0 rgba(74,52,40,0.16), 0 5px 10px rgba(74,52,40,0.14); border: 1px solid rgba(255,255,255,0.80); border-top-color: rgba(255,255,255,1); border-bottom-color: rgba(160,150,180,0.40); overflow: hidden; gap: 2px; }
+    .card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.60) 0%, transparent 45%), radial-gradient(circle at 80% 80%, rgba(197,185,232,0.18) 0%, transparent 50%); opacity: 0.7; mix-blend-mode: soft-light; }
+    .card::after { content: ""; position: absolute; top: 0; left: 8%; right: 8%; height: 40%; background: linear-gradient(180deg, rgba(255,255,255,0.60), transparent 100%); border-radius: 14px 14px 50% 50%; pointer-events: none; }
+    .card:active { transform: translateY(2px) scale(0.97); box-shadow: inset 0 2px 5px rgba(74,52,40,0.22), inset 0 0 20px rgba(255,255,255,0.40), 0 1px 0 rgba(74,52,40,0.18); }
+    .card.active { border-bottom: 4px solid var(--card-color, #C5B9E8); box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 5px rgba(74,52,40,0.15), inset 0 0 24px rgba(255,255,255,0.45), 0 4px 0 rgba(74,52,40,0.20), 0 7px 14px rgba(74,52,40,0.16); }
+
+    .rec-dot {
+      position: absolute;
+      top: 3px; right: 4px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      font-size: 0.46rem;
+      font-weight: 900;
+      background: var(--seed-green);
+      color: var(--on-seed-green);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.28), inset 0 1px 1px rgba(255,255,255,0.65);
+      z-index: 5;
+      line-height: 1;
     }
-    .card.active .hanzi .key-char { background: linear-gradient(145deg, #ffe08a, #f8c860); color: #7a3a10; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 0 0 2px rgba(240, 176, 64, 0.35); }
-    .card.active .russian { background: #f0b040; color: #fff; box-shadow: 0 2px 6px rgba(180, 120, 30, 0.35); }
-    .card.has-rec { box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), inset 0 -2px 4px rgba(60,140,90,0.15), inset 0 0 20px rgba(220,255,230,0.45), 0 2px 0 rgba(60,140,90,0.20), 0 4px 8px rgba(30,90,50,0.16); }
-    .emoji-corner { position: absolute; top: 2px; left: 3px; font-size: 0.85rem; line-height: 1; opacity: 0.9; pointer-events: none; z-index: 1; filter: drop-shadow(0 1px 1px rgba(120, 80, 40, 0.25)); }
-    .rec-indicator { position: absolute; top: 2px; right: 3px; width: 12px; height: 12px; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 900; background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 1px 3px rgba(30,90,50,0.3); z-index: 5; line-height: 1; }
-    .rec-indicator.show { display: flex; }
-    .rec-indicator.recording { background: linear-gradient(145deg, #ff6060, #d83030); animation: pulse 1s infinite; }
-    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,80,0.7); } 50% { box-shadow: 0 0 0 8px rgba(255,80,80,0); } }
-    .card-inner { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; height: 100%; padding-top: 10px; gap: 3px; }
-    .hanzi { font-size: 1.5rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: 0.5px; color: #3a1a08; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 3px rgba(120, 70, 20, 0.22); position: relative; z-index: 2; text-align: center; word-break: break-all; overflow-wrap: break-word; white-space: normal; max-width: 100%; }
-    .hanzi .key-char { border-radius: 4px; padding: 0 3px; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.22); transition: background 0.25s ease, color 0.25s ease; }
-    .pinyin { font-size: 0.62rem; font-weight: 800; color: #5a3a18; background: rgba(255,255,255,0.78); padding: 1px 6px; border-radius: 30px; margin: 0; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); text-align: center; line-height: 1.2; max-width: 100%; white-space: normal; word-break: break-word; }
-    .russian { font-size: 0.72rem; font-weight: 900; color: #3a1a08; background: rgba(255,255,255,0.9); padding: 2px 7px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(120, 80, 40, 0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.85); line-height: 1.2; text-align: center; word-break: break-word; overflow-wrap: break-word; max-width: 100%; transition: background 0.25s ease, color 0.25s ease; }
-    .example { font-size: 0.5rem; font-weight: 700; color: #5a3a18; background: rgba(255,255,255,0.85); padding: 2px 5px; border-radius: 8px; margin-top: auto; position: relative; z-index: 2; border: 1px solid rgba(220, 190, 150, 0.55); box-shadow: inset 0 1px 1px rgba(255,255,255,0.80); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.25; width: 100%; white-space: normal; word-break: break-word; overflow-wrap: break-word; }
-    .example .highlight { background: rgba(255,255,255,0.95); padding: 0 3px; border-radius: 4px; font-weight: 900; color: #2a7a80; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95); white-space: normal; }
-    .example .ru { display: block; font-weight: 600; color: #8a5a30; font-size: 0.46rem; margin-top: 1px; font-style: italic; line-height: 1.25; white-space: normal; word-break: break-word; }
-    .card[data-color="n1"]  { --card-color: #40A0A0; background: linear-gradient(145deg, #FFEFD5, #FFE4B5); }
-    .card[data-color="n1"] .hanzi .key-char { color: #2a7a80; background: linear-gradient(145deg, #d8f0ee, #b0e0dc); }
-    .card[data-color="n2"]  { --card-color: #40B0A8; background: linear-gradient(145deg, #FFF2DC, #FFE4B5); }
-    .card[data-color="n2"] .hanzi .key-char { color: #2a8a88; background: linear-gradient(145deg, #d8f2ee, #b0e4e0); }
-    .card[data-color="n3"]  { --card-color: #F0B878; background: linear-gradient(145deg, #FFEAD0, #FFDAB9); }
-    .card[data-color="n3"] .hanzi .key-char { color: #a87030; background: linear-gradient(145deg, #ffe0b8, #f8c898); }
-    .card[data-color="n4"]  { --card-color: #E8B878; background: linear-gradient(145deg, #FFF0D8, #FFE4B5); }
-    .card[data-color="n4"] .hanzi .key-char { color: #a07838; background: linear-gradient(145deg, #ffe4c0, #f8c8a0); }
-    .card[data-color="n5"]  { --card-color: #48A8A8; background: linear-gradient(145deg, #E8F4F0, #C8E8E4); }
-    .card[data-color="n5"] .hanzi .key-char { color: #2a8080; background: linear-gradient(145deg, #d0ece8, #a8dcd8); }
-    .card[data-color="n6"]  { --card-color: #D8A868; background: linear-gradient(145deg, #FFF4DC, #FFE4B5); }
-    .card[data-color="n6"] .hanzi .key-char { color: #98682a; background: linear-gradient(145deg, #ffe8c8, #f8d0a0); }
-    .card[data-color="n7"]  { --card-color: #F0C898; background: linear-gradient(145deg, #FFF8E0, #FFE4B5); }
-    .card[data-color="n7"] .hanzi .key-char { color: #a88848; background: linear-gradient(145deg, #ffecd0, #f8d8b0); }
-    .card[data-color="n8"]  { --card-color: #E0C088; background: linear-gradient(145deg, #F8F0C8, #EEE8AA); }
-    .card[data-color="n8"] .hanzi .key-char { color: #9a8850; background: linear-gradient(145deg, #f4e8b8, #e4d898); }
-    .card[data-color="n9"]  { --card-color: #50B0B0; background: linear-gradient(145deg, #DDF0EC, #B8E4E0); }
-    .card[data-color="n9"] .hanzi .key-char { color: #2a8888; background: linear-gradient(145deg, #c8e8e4, #9ed8d4); }
-    .card[data-color="n10"] { --card-color: #F8D0A0; background: linear-gradient(145deg, #FFF4E0, #FFDAB9); }
-    .card[data-color="n10"] .hanzi .key-char { color: #b89858; background: linear-gradient(145deg, #ffe8cc, #f8d0a8); }
-    .card[data-color="n11"] { --card-color: #D0B070; background: linear-gradient(145deg, #F8EAC0, #EEE8AA); }
-    .card[data-color="n11"] .hanzi .key-char { color: #8a7838; background: linear-gradient(145deg, #f0e0a8, #e0d088); }
-    .card[data-color="n12"] { --card-color: #48A8B8; background: linear-gradient(145deg, #DCF0F4, #B8E0E8); }
-    .card[data-color="n12"] .hanzi .key-char { color: #2a8088; background: linear-gradient(145deg, #c8e4ec, #9ed0dc); }
-    .rec-panel { margin-top: 4px; padding: 5px 6px; background: linear-gradient(145deg, #FFE4B5, #F0C898); border-radius: 14px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px; flex-shrink: 0; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(180, 140, 90, 0.20), 0 2px 5px rgba(140, 100, 60, 0.15); }
-    .rec-panel-title { font-size: 0.6rem; font-weight: 800; color: #5a3a18; margin-right: 2px; text-shadow: 0 1px 0 rgba(255,255,255,0.85); }
-    .rec-num { width: 26px; height: 26px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.85); background: linear-gradient(145deg, #ffffff, #FFEFD5); box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), 0 1px 2px rgba(120, 80, 40, 0.20); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; color: #5a3a18; cursor: pointer; padding: 0; transition: transform 0.12s ease, background 0.2s ease; position: relative; line-height: 1; user-select: none; -webkit-appearance: none; appearance: none; }
-    .rec-num:active { transform: scale(0.9); }
-    .rec-num.recording { background: linear-gradient(145deg, #ff7070, #d83030); color: #fff; animation: pulse2 1s infinite; }
-    .rec-num.has-rec { background: linear-gradient(145deg, #7ae8a8, #3ac878); color: #fff; }
-    @keyframes pulse2 { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,80,80,0.7); } 50% { box-shadow: 0 0 0 5px rgba(255,80,80,0); } }
-    .footer-note { margin-top: 3px; text-align: center; font-size: 0.55rem; font-weight: 700; color: #5a3a18; background: linear-gradient(145deg, #FFE4B5, #F0C898); padding: 3px 10px; border-radius: 60px; display: inline-block; width: auto; flex-shrink: 0; align-self: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.9); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.2; }
-    .footer-note b { font-weight: 900; color: #2a7a80; }
-    .back-link { position: fixed; top: calc(env(safe-area-inset-top, 8px) + 6px); left: calc(env(safe-area-inset-left, 8px) + 6px); z-index: 999; background: rgba(255,255,255,0.95); color: #2a7a80; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-decoration: none; font-family: inherit; box-shadow: 0 2px 6px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
-    .back-link:active { transform: scale(0.95); }
+    .rec-dot.show { display: flex; }
+
+    .phrase-cn { font-size: 1.15rem; font-weight: 900; line-height: 1.05; color: #1A1410; text-shadow: 0 1px 0 rgba(255,255,255,0.95), 0 2px 4px rgba(74,52,40,0.25); position: relative; z-index: 2; text-align: center; word-break: break-word; overflow-wrap: break-word; max-width: 100%; margin-top: 1px; }
+    .phrase-py { font-size: 0.44rem; font-weight: 800; color: #2A1F4A; background: rgba(255,255,255,0.88); padding: 1px 6px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 2px rgba(74,52,40,0.22); line-height: 1.2; text-align: center; max-width: 100%; word-break: break-word; }
+    .phrase-ru { font-size: 0.56rem; font-weight: 900; color: #1A1410; background: rgba(255,255,255,0.96); padding: 2px 7px; border-radius: 30px; position: relative; z-index: 2; box-shadow: inset 0 1px 2px rgba(255,255,255,0.95), 0 1px 3px rgba(74,52,40,0.22); text-shadow: 0 1px 0 rgba(255,255,255,0.9); line-height: 1.2; text-align: center; max-width: 100%; word-break: break-word; overflow-wrap: break-word; hyphens: auto; }
+    .phrase-note { font-size: 0.42rem; font-weight: 700; color: #5A2A00; background: linear-gradient(145deg, #FFF4D8, #FFE4B0); padding: 2px 6px; border-radius: 20px; position: relative; z-index: 2; box-shadow: inset 0 1px 1px rgba(255,255,255,0.95), 0 1px 2px rgba(120,90,20,0.20); line-height: 1.25; text-align: center; max-width: 100%; word-break: break-word; margin-top: 1px; }
+    .phrase-note b { color: #8A4A00; font-weight: 900; }
+
+    .card[data-color="n1"] { --card-color: var(--lavender); background: linear-gradient(135deg, #E8E0F8 0%, #C5B9E8 50%, #A89BD9 100%); }
+    .card[data-color="n2"] { --card-color: var(--peach); background: linear-gradient(135deg, #FFE4D0 0%, #FFBE98 50%, #E89E76 100%); }
+    .card[data-color="n3"] { --card-color: var(--lime); background: linear-gradient(135deg, #E4F5B0 0%, #C7EA46 50%, #A8C82E 100%); }
+    .card[data-color="n4"] { --card-color: var(--aqua); background: linear-gradient(135deg, #C0E8E8 0%, #7FD4D4 50%, #5DB5B5 100%); }
+    .card[data-color="n5"] { --card-color: var(--yellow); background: linear-gradient(135deg, #FBF4A8 0%, #F5E663 50%, #D8C842 100%); }
+    .card[data-color="n6"] { --card-color: var(--espresso); background: linear-gradient(135deg, #7A6458 0%, #4A3428 50%, #33241B 100%); }
+    .card[data-color="n7"] { --card-color: var(--lavender-dark); background: linear-gradient(135deg, #DCD2F0 0%, #B5A8DC 50%, #9484C8 100%); }
+    .card[data-color="n8"] { --card-color: var(--peach-dark); background: linear-gradient(135deg, #FFD8BC 0%, #F5B08A 50%, #DC9068 100%); }
+    .card[data-color="n9"] { --card-color: var(--aqua-dark); background: linear-gradient(135deg, #B0DEDE 0%, #6AC4C4 50%, #48A0A0 100%); }
+    .card[data-color="n10"] { --card-color: var(--espresso); background: linear-gradient(135deg, #7A6458 0%, #4A3428 50%, #33241B 100%); }
+    .card[data-color="n11"] { --card-color: var(--lavender); background: linear-gradient(135deg, #E8E0F8 0%, #C5B9E8 50%, #A89BD9 100%); }
+    .card[data-color="n12"] { --card-color: var(--lime); background: linear-gradient(135deg, #E4F5B0 0%, #C7EA46 50%, #A8C82E 100%); }
+    .card[data-color="n13"] { --card-color: var(--yellow); background: linear-gradient(135deg, #FBF4A8 0%, #F5E663 50%, #D8C842 100%); }
+    .card[data-color="n14"] { --card-color: var(--peach); background: linear-gradient(135deg, #FFE4D0 0%, #FFBE98 50%, #E89E76 100%); }
+    .card[data-color="n15"] { --card-color: var(--aqua); background: linear-gradient(135deg, #C0E8E8 0%, #7FD4D4 50%, #5DB5B5 100%); }
+    .card[data-color="n16"] { --card-color: var(--lavender-dark); background: linear-gradient(135deg, #DCD2F0 0%, #B5A8DC 50%, #9484C8 100%); }
+    .card[data-color="n17"] { --card-color: var(--peach-dark); background: linear-gradient(135deg, #FFD8BC 0%, #F5B08A 50%, #DC9068 100%); }
+    .card[data-color="n18"] { --card-color: var(--lime-dark); background: linear-gradient(135deg, #D4EC90 0%, #B8DC38 50%, #96B820 100%); }
+
+    .card[data-color="n6"] .phrase-cn,
+    .card[data-color="n10"] .phrase-cn { color: #FFFFFF; text-shadow: 0 1px 0 rgba(0,0,0,0.35), 0 2px 4px rgba(0,0,0,0.30); }
+    .card[data-color="n6"] .phrase-py,
+    .card[data-color="n10"] .phrase-py { color: #F5E6DC; background: rgba(255,255,255,0.22); }
+    .card[data-color="n6"] .phrase-ru,
+    .card[data-color="n10"] .phrase-ru { color: #F5E6DC; background: rgba(255,255,255,0.16); }
+
+    .rec-panel {
+      margin-top: 3px;
+      padding: 4px 5px;
+      background: linear-gradient(145deg, var(--blue-linen), var(--blue-linen-dark));
+      border-radius: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.55),
+        inset 0 -1px 2px rgba(26,34,64,0.20),
+        0 2px 6px rgba(26,34,64,0.18);
+    }
+    .rec-panel-title {
+      font-size: 0.48rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-right: 2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.28);
+      letter-spacing: 0.3px;
+    }
+    .rec-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 7px;
+      border: 1px solid rgba(255,255,255,0.85);
+      background: var(--petal-pink);
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.75),
+        inset 0 -1px 2px rgba(90,42,34,0.15),
+        0 2px 4px rgba(26,34,64,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 900;
+      color: var(--on-petal-pink);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.12s ease, background 0.2s ease;
+      line-height: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .rec-num:active { transform: scale(0.88); }
+    .rec-num.recording {
+      background: var(--petal-pink-dark);
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+    .rec-num.has-rec {
+      background: var(--seed-green);
+      color: var(--on-seed-green);
+      border-color: var(--seed-green-dark);
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,154,140,0.75); }
+      50% { box-shadow: 0 0 0 6px rgba(232,154,140,0); }
+    }
+
+    .footer-note { margin-top: 3px; text-align: center; font-size: 0.42rem; font-weight: 700; color: #2A1F4A; background: linear-gradient(145deg, #E8E0F8, #C5B9E8); padding: 2px 8px; border-radius: 60px; display: inline-block; width: auto; flex-shrink: 0; align-self: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.75); line-height: 1.2; }
+    .footer-note b { font-weight: 900; color: #7E6DB8; }
+
     @media (max-width: 420px) {
       .container { padding: 4px 4px 3px; border-radius: 22px; }
       .grid { gap: 3px; }
-      .hanzi { font-size: 1.4rem; }
-      .pinyin { font-size: 0.58rem; padding: 1px 5px; }
-      .russian { font-size: 0.68rem; padding: 2px 6px; }
-      .example { font-size: 0.46rem; padding: 2px 4px; }
-      .example .ru { font-size: 0.42rem; }
+      .phrase-cn { font-size: 1.05rem; }
+      .phrase-py { font-size: 0.4rem; padding: 1px 5px; }
+      .phrase-ru { font-size: 0.51rem; padding: 2px 5px; }
+      .phrase-note { font-size: 0.4rem; padding: 1px 5px; }
       h1 { gap: 3px; }
       h1 .title-hanzi { font-size: 0.85rem; padding: 2px 6px; }
       h1 .title-pinyin { font-size: 0.5rem; padding: 2px 5px; }
       h1 .title-rus { font-size: 0.5rem; padding: 2px 5px; }
-      .subhead { font-size: 0.46rem; padding: 1px 7px; }
-      .rec-num { width: 24px; height: 24px; font-size: 0.72rem; border-radius: 7px; }
-      .rec-panel { padding: 4px 5px; gap: 3px; border-radius: 12px; }
-      .rec-panel-title { font-size: 0.56rem; }
-      .footer-note { font-size: 0.5rem; padding: 2px 9px; }
-      .rec-indicator { width: 11px; height: 11px; font-size: 0.46rem; }
-      .emoji-corner { font-size: 0.8rem; }
-      .card-inner { padding-top: 8px; gap: 2px; }
+      .subhead { font-size: 0.46rem; padding: 2px 8px; }
+      .footer-note { font-size: 0.4rem; padding: 1px 7px; }
+      .rec-num { width: 18px; height: 18px; font-size: 0.5rem; border-radius: 6px; }
+      .rec-panel { padding: 3px 4px; gap: 3px; border-radius: 12px; }
+      .rec-panel-title { font-size: 0.44rem; }
+      .rec-dot { width: 10px; height: 10px; font-size: 0.42rem; }
     }
+
     @media (max-width: 380px) {
-      .hanzi { font-size: 1.3rem; }
-      .rec-num { width: 22px; height: 22px; font-size: 0.68rem; border-radius: 6px; }
-      .pinyin { font-size: 0.54rem; }
-      .russian { font-size: 0.62rem; }
-      .example { font-size: 0.42rem; }
-      .example .ru { font-size: 0.38rem; }
+      .phrase-cn { font-size: 0.92rem; }
+      .phrase-py { font-size: 0.38rem; }
+      .phrase-ru { font-size: 0.46rem; }
+      .phrase-note { font-size: 0.38rem; }
+      .rec-num { width: 17px; height: 17px; font-size: 0.46rem; }
     }
-    @media (max-height: 640px) { .hanzi { font-size: 1.35rem; } .card-inner { padding-top: 6px; } }
+
     @media (orientation: landscape) and (max-height: 500px) {
       .container { max-height: 100%; border-radius: 16px; }
       .grid { grid-template-columns: repeat(5, 1fr); }
       h1 { font-size: 0.85rem; }
       h1 .title-hanzi { font-size: 1rem; padding: 2px 6px; }
       .subhead { display: none; }
-      .example { display: none; }
-      .rec-num { width: 20px; height: 20px; font-size: 0.58rem; }
+      .phrase-note { display: none; }
+      .rec-num { width: 22px; height: 22px; font-size: 0.6rem; }
     }
   </style>
 </head>
 <body>
-<a href="/" class="back-link">← Диалоги</a>
+
 <div class="container">
   <h1>
-    <span class="title-hanzi">你好</span>
-    <span class="title-pinyin">nǐ hǎo</span>
-    <span class="title-rus">приветствия</span>
+    <span class="title-hanzi">没 有</span>
+    <span class="title-pinyin">méiyǒu</span>
+    <span class="title-rus">без / не имея</span>
   </h1>
   <div style="text-align: center; flex-shrink: 0;">
     <span class="subhead">
-      <b>Нажми на карточку</b> — услышишь перевод · <b>цифра</b> — запись голоса
+      ⚠️ В китайском <b>нет предлога «без»</b> — вместо него <b>没有</b> (не иметь)
     </span>
   </div>
 
   <div class="grid" id="cardGrid">
 
-    <div class="card" data-color="n1" data-key="hsk_greet_00" data-russian-audio="привет">
-      <div class="emoji-corner">👋</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">你好</span></div>
-        <div class="pinyin">nǐ hǎo</div>
-        <div class="russian">привет</div>
-        <div class="example">📌 <span class="highlight">你好</span>！很高兴认识你<span class="ru">Привет! Приятно познакомиться.</span></div>
-      </div>
+    <div class="card" data-color="n1" data-key="c1" data-hanzi-audio="我不能没有你" data-russian-audio="Я не могу без тебя">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">我不能没有你</div>
+      <div class="phrase-py">Wǒ bù néng méiyǒu nǐ</div>
+      <div class="phrase-ru">Я не могу без тебя</div>
+      <div class="phrase-note"><b>没有</b> = не иметь → «без»</div>
     </div>
 
-    <div class="card" data-color="n2" data-key="hsk_greet_01" data-russian-audio="как дела">
-      <div class="emoji-corner">🙋</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">你好吗</span></div>
-        <div class="pinyin">nǐ hǎo ma</div>
-        <div class="russian">как дела</div>
-        <div class="example">📌 <span class="highlight">你好吗</span>？我很好<span class="ru">Как дела? У меня всё хорошо.</span></div>
-      </div>
+    <div class="card" data-color="n2" data-key="c2" data-hanzi-audio="没有糖的咖啡" data-russian-audio="Кофе без сахара">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有糖的咖啡</div>
+      <div class="phrase-py">Méiyǒu táng de kāfēi</div>
+      <div class="phrase-ru">Кофе без сахара</div>
+      <div class="phrase-note"><b>没有</b> = не имеет сахара → без</div>
     </div>
 
-    <div class="card" data-color="n3" data-key="hsk_greet_02" data-russian-audio="до свидания">
-      <div class="emoji-corner">🤚</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">再见</span></div>
-        <div class="pinyin">zàijiàn</div>
-        <div class="russian">до свидания</div>
-        <div class="example">📌 <span class="highlight">再见</span>！明天见<span class="ru">До свидания! До завтра.</span></div>
-      </div>
+    <div class="card" data-color="n3" data-key="c3" data-hanzi-audio="他没有钱就走了" data-russian-audio="Он ушёл без денег">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">他没有钱就走了</div>
+      <div class="phrase-py">Tā méiyǒu qián jiù zǒu le</div>
+      <div class="phrase-ru">Он ушёл без денег</div>
+      <div class="phrase-note"><b>没有钱</b> = без денег</div>
     </div>
 
-    <div class="card" data-color="n4" data-key="hsk_greet_03" data-russian-audio="не за что">
-      <div class="emoji-corner">🤝</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">不客气</span></div>
-        <div class="pinyin">bú kèqi</div>
-        <div class="russian">не за что</div>
-        <div class="example">📌 谢谢你！<span class="highlight">不客气</span><span class="ru">Спасибо! — Не за что.</span></div>
-      </div>
+    <div class="card" data-color="n4" data-key="c4" data-hanzi-audio="没有你很无聊" data-russian-audio="Без тебя скучно">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你很无聊</div>
+      <div class="phrase-py">Méiyǒu nǐ hěn wúliáo</div>
+      <div class="phrase-ru">Без тебя скучно</div>
+      <div class="phrase-note"><b>没有</b> = «не имея тебя»</div>
     </div>
 
-    <div class="card" data-color="n5" data-key="hsk_greet_04" data-russian-audio="пожалуйста">
-      <div class="emoji-corner">🙏</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">请</span></div>
-        <div class="pinyin">qǐng</div>
-        <div class="russian">пожалуйста</div>
-        <div class="example">📌 <span class="highlight">请</span>坐！请喝茶<span class="ru">Садитесь, пожалуйста! Выпейте чаю.</span></div>
-      </div>
+    <div class="card" data-color="n5" data-key="c5" data-hanzi-audio="没有你我很难受" data-russian-audio="Без тебя мне плохо">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你我很难受</div>
+      <div class="phrase-py">Méiyǒu nǐ wǒ hěn nánshòu</div>
+      <div class="phrase-ru">Без тебя мне плохо</div>
+      <div class="phrase-note"><b>难受</b> = тяжело, плохо (не «грустно»)</div>
     </div>
 
-    <div class="card" data-color="n6" data-key="hsk_greet_05" data-russian-audio="да">
-      <div class="emoji-corner">✅</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">是的</span></div>
-        <div class="pinyin">shì de</div>
-        <div class="russian">да</div>
-        <div class="example">📌 <span class="highlight">是的</span>，我同意<span class="ru">Да, я согласен.</span></div>
-      </div>
+    <div class="card" data-color="n6" data-key="c6" data-hanzi-audio="没有他我不知道怎么办" data-russian-audio="Без него я не знаю что делать">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有他我不知道怎么办</div>
+      <div class="phrase-py">Méiyǒu tā wǒ bù zhīdào zěnme bàn</div>
+      <div class="phrase-ru">Без него я не знаю, что делать</div>
+      <div class="phrase-note"><b>怎么办</b> = что делать</div>
     </div>
 
-    <div class="card" data-color="n7" data-key="hsk_greet_06" data-russian-audio="здравствуйте">
-      <div class="emoji-corner">🙇</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">您好</span></div>
-        <div class="pinyin">nín hǎo</div>
-        <div class="russian">здравствуйте</div>
-        <div class="example">📌 <span class="highlight">您好</span>！欢迎光临<span class="ru">Здравствуйте! Добро пожаловать.</span></div>
-      </div>
+    <div class="card" data-color="n7" data-key="c7" data-hanzi-audio="没有你的日子很难过" data-russian-audio="Без тебя дни тянутся долго">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你的日子很难过</div>
+      <div class="phrase-py">Méiyǒu nǐ de rìzi hěn nánguò</div>
+      <div class="phrase-ru">Без тебя дни тянутся долго</div>
+      <div class="phrase-note"><b>没有…的</b> = без (чего-то)</div>
     </div>
 
-    <div class="card" data-color="n8" data-key="hsk_greet_07" data-russian-audio="спасибо">
-      <div class="emoji-corner">💝</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">谢谢</span></div>
-        <div class="pinyin">xièxie</div>
-        <div class="russian">спасибо</div>
-        <div class="example">📌 <span class="highlight">谢谢</span>你的帮助<span class="ru">Спасибо за твою помощь.</span></div>
-      </div>
+    <div class="card" data-color="n8" data-key="c8" data-hanzi-audio="没有水不能活" data-russian-audio="Без воды не прожить">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有水不能活</div>
+      <div class="phrase-py">Méiyǒu shuǐ bù néng huó</div>
+      <div class="phrase-ru">Без воды не прожить</div>
+      <div class="phrase-note"><b>没有水</b> = не имея воды</div>
     </div>
 
-    <div class="card" data-color="n9" data-key="hsk_greet_08" data-russian-audio="извините">
-      <div class="emoji-corner">😔</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">对不起</span></div>
-        <div class="pinyin">duìbuqǐ</div>
-        <div class="russian">извините</div>
-        <div class="example">📌 <span class="highlight">对不起</span>，我迟到了<span class="ru">Извините, я опоздал.</span></div>
-      </div>
+    <div class="card" data-color="n9" data-key="c9" data-hanzi-audio="没有手机我不行" data-russian-audio="Без телефона я никак">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有手机我不行</div>
+      <div class="phrase-py">Méiyǒu shǒujī wǒ bù xíng</div>
+      <div class="phrase-ru">Без телефона я никак</div>
+      <div class="phrase-note"><b>不行</b> = никак, не справлюсь</div>
     </div>
 
-    <div class="card" data-color="n10" data-key="hsk_greet_09" data-russian-audio="не страшно">
-      <div class="emoji-corner">😊</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">没关系</span></div>
-        <div class="pinyin">méi guānxi</div>
-        <div class="russian">не страшно</div>
-        <div class="example">📌 <span class="highlight">没关系</span>，别担心<span class="ru">Ничего страшного, не волнуйся.</span></div>
-      </div>
+    <div class="card" data-color="n10" data-key="c10" data-hanzi-audio="没有钱什么都做不了" data-russian-audio="Без денег ничего не сделать">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有钱什么都做不了</div>
+      <div class="phrase-py">Méiyǒu qián shénme dōu zuò bù liǎo</div>
+      <div class="phrase-ru">Без денег ничего не сделать</div>
+      <div class="phrase-note"><b>什么都</b> = ничего · <b>做不了</b> = не сделать</div>
     </div>
 
-    <div class="card" data-color="n11" data-key="hsk_greet_10" data-russian-audio="доброй ночи">
-      <div class="emoji-corner">🌙</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">晚安</span></div>
-        <div class="pinyin">wǎn'ān</div>
-        <div class="russian">доброй ночи</div>
-        <div class="example">📌 <span class="highlight">晚安</span>！做个好梦<span class="ru">Спокойной ночи! Приятных снов.</span></div>
-      </div>
+    <div class="card" data-color="n11" data-key="c11" data-hanzi-audio="没有你的帮助我做不到" data-russian-audio="Без тебя я не справлюсь">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你的帮助我做不到</div>
+      <div class="phrase-py">Méiyǒu nǐ de bāngzhù wǒ zuò bù dào</div>
+      <div class="phrase-ru">Без тебя я не справлюсь</div>
+      <div class="phrase-note"><b>帮助</b> = помощь · <b>做不到</b> = не справиться</div>
     </div>
 
-    <div class="card" data-color="n12" data-key="hsk_greet_11" data-russian-audio="без проблем">
-      <div class="emoji-corner">👍</div>
-      <div class="rec-indicator" data-indicator>✓</div>
-      <div class="card-inner">
-        <div class="hanzi"><span class="key-char">没问题</span></div>
-        <div class="pinyin">méi wèntí</div>
-        <div class="russian">без проблем</div>
-        <div class="example">📌 <span class="highlight">没问题</span>！我帮你<span class="ru">Без проблем! Я помогу тебе.</span></div>
-      </div>
+    <div class="card" data-color="n12" data-key="c12" data-hanzi-audio="没有他我们不行" data-russian-audio="Без него мы никак">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有他我们不行</div>
+      <div class="phrase-py">Méiyǒu tā wǒmen bù xíng</div>
+      <div class="phrase-ru">Без него мы никак</div>
+      <div class="phrase-note"><b>不行</b> = не получится / никак</div>
+    </div>
+
+    <div class="card" data-color="n13" data-key="c13" data-hanzi-audio="没有太阳就没有生命" data-russian-audio="Без солнца нет жизни">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有太阳就没有生命</div>
+      <div class="phrase-py">Méiyǒu tàiyáng jiù méiyǒu shēngmìng</div>
+      <div class="phrase-ru">Без солнца нет жизни</div>
+      <div class="phrase-note"><b>没有…就没有…</b> = без… нет…</div>
+    </div>
+
+    <div class="card" data-color="n14" data-key="c14" data-hanzi-audio="没有朋友很孤单" data-russian-audio="Без друзей одиноко">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有朋友很孤单</div>
+      <div class="phrase-py">Méiyǒu péngyǒu hěn gūdān</div>
+      <div class="phrase-ru">Без друзей одиноко</div>
+      <div class="phrase-note"><b>没有</b> = «без» в китайском</div>
+    </div>
+
+    <div class="card" data-color="n15" data-key="c15" data-hanzi-audio="没有你的支持我坚持不了" data-russian-audio="Без твоей поддержки я не выдержу">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你的支持我坚持不了</div>
+      <div class="phrase-py">Méiyǒu nǐ de zhīchí wǒ jiānchí bù liǎo</div>
+      <div class="phrase-ru">Без твоей поддержки я не выдержу</div>
+      <div class="phrase-note"><b>没有…的</b> = без (чего-то)</div>
+    </div>
+
+    <div class="card" data-color="n16" data-key="c16" data-hanzi-audio="没有咖啡我没精神" data-russian-audio="Без кофе я никакой">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有咖啡我没精神</div>
+      <div class="phrase-py">Méiyǒu kāfēi wǒ méi jīngshén</div>
+      <div class="phrase-ru">Без кофе я никакой</div>
+      <div class="phrase-note"><b>没精神</b> = без сил, вялый</div>
+    </div>
+
+    <div class="card" data-color="n17" data-key="c17" data-hanzi-audio="没有你我不去" data-russian-audio="Без тебя я не пойду">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有你我不去</div>
+      <div class="phrase-py">Méiyǒu nǐ wǒ bù qù</div>
+      <div class="phrase-ru">Без тебя я не пойду</div>
+      <div class="phrase-note"><b>不去</b> = не пойду · <b>没有你</b> = без тебя</div>
+    </div>
+
+    <div class="card" data-color="n18" data-key="c18" data-hanzi-audio="没有爱活着没意思" data-russian-audio="Без любви жизнь пустая">
+      <div class="rec-dot" data-indicator>✓</div>
+      <div class="phrase-cn">没有爱活着没意思</div>
+      <div class="phrase-py">Méiyǒu ài huózhe méi yìsi</div>
+      <div class="phrase-ru">Без любви жизнь пустая</div>
+      <div class="phrase-note"><b>活着</b> = жить · <b>没意思</b> = пусто, без смысла</div>
     </div>
 
   </div>
@@ -295,375 +411,362 @@
 
   <div style="display: flex; justify-content: center; flex-shrink: 0;">
     <div class="footer-note">
-      <b>клик</b> по карточке — озвучка · <b>клик</b> по цифре — запись · повтор — удалить
+      <b>клик</b> по фразе — озвучка · <b>цифра</b> — запись · повтор — удалить
     </div>
   </div>
 </div>
 
 <script>
-(function() {
-  const WORKER_URL = 'https://bejdialog.meledy1111.workers.dev';
-  let uploadKey = localStorage.getItem('upload_key') || '';
+  (function() {
+    const cards = document.querySelectorAll('.card');
+    const recPanel = document.getElementById('recPanel');
 
-  function ensureKey() {
-    if (uploadKey) return true;
-    const k = prompt('Введите код доступа (UPLOAD_KEY):');
-    if (k && k.trim()) {
-      uploadKey = k.trim();
-      localStorage.setItem('upload_key', uploadKey);
-      return true;
+    let audioUnlocked = false;
+    let sharedAudioCtx = null;
+
+    function unlockAudio() {
+      if (audioUnlocked) return;
+      audioUnlocked = true;
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (Ctx) { if (!sharedAudioCtx) sharedAudioCtx = new Ctx(); if (sharedAudioCtx.state === 'suspended') sharedAudioCtx.resume(); }
+      } catch (e) {}
+      try {
+        const warmup = new SpeechSynthesisUtterance(' ');
+        warmup.volume = 0; warmup.lang = 'zh-CN';
+        window.speechSynthesis.speak(warmup);
+      } catch (e) {}
+      try {
+        const silent = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
+        silent.volume = 0; silent.play().catch(() => {});
+      } catch (e) {}
     }
-    alert('❌ Код не введён');
-    return false;
-  }
 
-  function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onloadend = () => resolve(r.result.split(',')[1]);
-      r.onerror = reject;
-      r.readAsDataURL(blob);
-    });
-  }
+    document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
+    document.addEventListener('click', unlockAudio, { once: true });
 
-  async function saveToDB(key, blob) {
-    if (!ensureKey()) throw new Error('No key');
-    const content = await blobToBase64(blob);
-    const res = await fetch(`${WORKER_URL}/recordings/${key}.wav?key=${encodeURIComponent(uploadKey)}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ content, key: uploadKey })
-    });
-    if (!res.ok) throw new Error('Upload failed: ' + res.status);
-    return res.json();
-  }
+    function getChineseVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      let voice = voices.find(v => v.lang === 'zh-CN');
+      if (!voice) voice = voices.find(v => v.lang.startsWith('zh'));
+      return voice || null;
+    }
+    function getRussianVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      let voice = voices.find(v => v.lang === 'ru-RU');
+      if (!voice) voice = voices.find(v => v.lang.startsWith('ru'));
+      return voice || null;
+    }
 
-  async function getFromDB(key) {
-    try {
-      const res = await fetch(`${WORKER_URL}/recordings/${key}.wav`, { cache: 'no-cache' });
-      if (res.ok) return await res.blob();
-    } catch (e) {}
-    return null;
-  }
+    const STORAGE_PREFIX = 'custom_rec_meiyou_';
+    const recordedAudios = {};
 
-  async function deleteFromDB(key) {
-    if (!ensureKey()) return;
-    try {
-      await fetch(`${WORKER_URL}/recordings/${key}.wav?key=${encodeURIComponent(uploadKey)}`, { method: 'DELETE' });
-    } catch (e) {}
-  }
+    function loadSavedRecordings() {
+      cards.forEach(card => {
+        const key = card.dataset.key;
+        if (!key) return;
+        const stored = localStorage.getItem(STORAGE_PREFIX + key);
+        if (stored) recordedAudios[key] = stored;
+      });
+    }
 
-  const cards = document.querySelectorAll('.card');
-  const recPanel = document.getElementById('recPanel');
-  let audioUnlocked = false;
-  let sharedAudioCtx = null;
+    function createNumberButtons() {
+      cards.forEach((card, idx) => {
+        const key = card.dataset.key;
+        const num = idx + 1;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'rec-num';
+        btn.dataset.key = key;
+        btn.dataset.num = num;
+        btn.textContent = num;
+        recPanel.appendChild(btn);
 
-  function unlockAudio() {
-    if (audioUnlocked) return;
-    audioUnlocked = true;
-    try {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (Ctx) {
-        if (!sharedAudioCtx) sharedAudioCtx = new Ctx();
-        if (sharedAudioCtx.state === 'suspended') sharedAudioCtx.resume();
-      }
-    } catch (e) {}
-    try {
-      const warmup = new SpeechSynthesisUtterance(' ');
-      warmup.volume = 0;
-      warmup.lang = 'ru-RU';
-      window.speechSynthesis.speak(warmup);
-    } catch (e) {}
-    try {
-      const silent = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=');
-      silent.volume = 0;
-      silent.play().catch(() => {});
-    } catch (e) {}
-  }
-  document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
-  document.addEventListener('click', unlockAudio, { once: true });
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleNumberClick(card, btn);
+        });
 
-  function getRussianVoice() {
-    const voices = window.speechSynthesis.getVoices();
-    return voices.find(v => v.lang === 'ru-RU') || voices.find(v => v.lang.startsWith('ru')) || null;
-  }
+        updateNumberButton(card, btn);
+      });
+    }
 
-  function createNumberButtons() {
-    cards.forEach((card, idx) => {
+    function updateNumberButton(card, btn) {
       const key = card.dataset.key;
-      const num = idx + 1;
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'rec-num';
-      btn.dataset.key = key;
-      btn.dataset.num = num;
-      btn.textContent = num;
-      btn.title = `Запись для карточки №${num}`;
-      recPanel.appendChild(btn);
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        handleNumberClick(card, btn);
-      });
-    });
-  }
-
-  function updateNumberButton(card, btn, hasRec) {
-    if (!btn) btn = recPanel.querySelector(`.rec-num[data-key="${card.dataset.key}"]`);
-    if (!btn) return;
-    if (hasRec) {
-      btn.classList.add('has-rec');
-      btn.title = `Запись №${btn.dataset.num} есть. Клик — удалить.`;
-    } else {
-      btn.classList.remove('has-rec');
-      btn.title = `Записать перевод для карточки №${btn.dataset.num}`;
-    }
-  }
-
-  function updateCardIndicator(card, hasRec) {
-    const indicator = card.querySelector('[data-indicator]');
-    if (!indicator) return;
-    if (hasRec) { indicator.classList.add('show'); card.classList.add('has-rec'); }
-    else { indicator.classList.remove('show'); card.classList.remove('has-rec'); }
-  }
-
-  function getBestMimeType() {
-    const candidates = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm'];
-    if (typeof MediaRecorder === 'undefined') return '';
-    for (const t of candidates) {
-      try { if (MediaRecorder.isTypeSupported(t)) return t; } catch (e) {}
-    }
-    return '';
-  }
-
-  let mediaRecorder = null;
-  let recordedChunks = [];
-  let recordingKey = null;
-  let currentStream = null;
-
-  async function handleNumberClick(card, btn) {
-    unlockAudio();
-    const key = card.dataset.key;
-
-    if (recordingKey === key) {
-      if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
-      return;
-    }
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      mediaRecorder.stop();
-      await new Promise(r => setTimeout(r, 250));
+      if (!btn) btn = recPanel.querySelector(`.rec-num[data-key="${key}"]`);
+      if (!btn) return;
+      if (recordedAudios[key]) btn.classList.add('has-rec');
+      else btn.classList.remove('has-rec');
     }
 
-    btn.textContent = '⏳';
-    btn.disabled = true;
-    const existing = await getFromDB(key);
-    btn.disabled = false;
-    btn.textContent = btn.dataset.num;
-
-    if (existing) {
-      if (confirm(`Удалить запись №${btn.dataset.num}?`)) {
-        await deleteFromDB(key);
-        updateNumberButton(card, btn, false);
-        updateCardIndicator(card, false);
-      }
-      return;
-    }
-
-    try {
-      currentStream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-      });
-      const mimeType = getBestMimeType();
-      mediaRecorder = new MediaRecorder(currentStream, mimeType ? { mimeType } : {});
-      recordedChunks = [];
-      recordingKey = key;
-
-      btn.classList.add('recording');
-      btn.textContent = '⏹';
-
+    function updateCardIndicator(card) {
+      const key = card.dataset.key;
       const indicator = card.querySelector('[data-indicator]');
-      if (indicator) { indicator.classList.add('show', 'recording'); indicator.textContent = '●'; }
-
-      mediaRecorder.ondataavailable = (e) => { if (e.data && e.data.size > 0) recordedChunks.push(e.data); };
-
-      mediaRecorder.onstop = async () => {
-        if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
-        btn.classList.remove('recording');
-        btn.textContent = btn.dataset.num;
-        const ind = card.querySelector('[data-indicator]');
-        if (ind) { ind.classList.remove('recording'); ind.textContent = '✓'; }
-
-        if (recordedChunks.length === 0) { recordingKey = null; return; }
-
-        const blobMime = mediaRecorder.mimeType || mimeType || 'audio/webm';
-        const blob = new Blob(recordedChunks, { type: blobMime });
-
-        let finalBlob = blob;
-        try { finalBlob = await normalizeAudio(blob); } catch (e) {}
-
-        btn.textContent = '⏳';
-        try {
-          await saveToDB(key, finalBlob);
-          updateNumberButton(card, btn, true);
-          updateCardIndicator(card, true);
-        } catch (e) {
-          alert('Ошибка загрузки: ' + e.message);
-        } finally {
-          btn.textContent = btn.dataset.num;
-        }
-        recordingKey = null;
-      };
-
-      mediaRecorder.onerror = () => {
-        if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
-        btn.classList.remove('recording');
-        btn.textContent = btn.dataset.num;
-        recordingKey = null;
-      };
-
-      mediaRecorder.start();
-    } catch (err) {
-      alert('Не удалось получить доступ к микрофону.');
-      recordingKey = null;
+      if (!indicator) return;
+      if (recordedAudios[key]) indicator.classList.add('show');
+      else indicator.classList.remove('show');
     }
-  }
 
-  async function normalizeAudio(blob) {
-    const arrayBuffer = await blob.arrayBuffer();
-    const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) return blob;
-    let audioCtx;
-    try { audioCtx = sharedAudioCtx || new Ctx(); } catch (e) { return blob; }
-    if (audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch (e) {} }
-    let audioBuffer;
-    try { audioBuffer = await audioCtx.decodeAudioData(arrayBuffer.slice(0)); } catch (e) { return blob; }
-    let peak = 0;
-    for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
-      const data = audioBuffer.getChannelData(ch);
-      for (let i = 0; i < data.length; i++) { const abs = Math.abs(data[i]); if (abs > peak) peak = abs; }
-    }
-    const targetPeak = 0.95;
-    const gain = peak > 0 ? targetPeak / peak : 1;
-    const cappedGain = Math.min(gain, 8);
-    for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
-      const data = audioBuffer.getChannelData(ch);
-      for (let i = 0; i < data.length; i++) data[i] = Math.max(-1, Math.min(1, data[i] * cappedGain));
-    }
-    return audioBufferToWav(audioBuffer);
-  }
-
-  function audioBufferToWav(buffer) {
-    const numCh = buffer.numberOfChannels;
-    const sampleRate = buffer.sampleRate;
-    const length = buffer.length * numCh * 2 + 44;
-    const arrayBuffer = new ArrayBuffer(length);
-    const view = new DataView(arrayBuffer);
-    const writeString = (offset, str) => {
-      for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-    };
-    writeString(0, 'RIFF');
-    view.setUint32(4, length - 8, true);
-    writeString(8, 'WAVE');
-    writeString(12, 'fmt ');
-    view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true);
-    view.setUint16(22, numCh, true);
-    view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * numCh * 2, true);
-    view.setUint16(32, numCh * 2, true);
-    view.setUint16(34, 16, true);
-    writeString(36, 'data');
-    view.setUint32(40, length - 44, true);
-    let offset = 44;
-    const channels = [];
-    for (let i = 0; i < numCh; i++) channels.push(buffer.getChannelData(i));
-    for (let i = 0; i < buffer.length; i++) {
-      for (let ch = 0; ch < numCh; ch++) {
-        let sample = Math.max(-1, Math.min(1, channels[ch][i]));
-        sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
-        view.setInt16(offset, sample, true);
-        offset += 2;
+    function getBestMimeType() {
+      const candidates = ['audio/mp4','audio/mp4;codecs=mp4a.40.2','audio/webm;codecs=opus','audio/webm'];
+      if (typeof MediaRecorder === 'undefined') return '';
+      for (const t of candidates) {
+        try { if (MediaRecorder.isTypeSupported(t)) return t; } catch (e) {}
       }
+      return '';
     }
-    return new Blob([arrayBuffer], { type: 'audio/wav' });
-  }
 
-  function speakRussian(text) {
-    const cleanText = text.trim();
-    if (!cleanText) return;
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'ru-RU';
-    utterance.rate = 0.85;
-    utterance.pitch = 1.0;
-    utterance.volume = 0.3;
-    const voice = getRussianVoice();
-    if (voice) utterance.voice = voice;
-    window.speechSynthesis.speak(utterance);
-  }
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let recordingKey = null;
+    let currentStream = null;
 
-  function playBlob(blob) {
-    const url = URL.createObjectURL(blob);
-    const audio = new Audio(url);
-    audio.volume = 1.0;
-    audio.setAttribute('playsinline', 'true');
-    audio.setAttribute('webkit-playsinline', 'true');
-    audio.onended = () => URL.revokeObjectURL(url);
-    audio.onerror = () => URL.revokeObjectURL(url);
-    audio.play().catch(() => {});
-  }
-
-  async function speakRussianOnly(card) {
-    window.speechSynthesis.cancel();
-    const key = card.dataset.key;
-    const russianEl = card.querySelector('.russian');
-    const russianText = russianEl ? russianEl.textContent : card.dataset.russianAudio;
-
-    const blob = await getFromDB(key);
-    if (blob) {
-      playBlob(blob);
-      return;
-    }
-    speakRussian(russianText);
-  }
-
-  function clearActive() { cards.forEach(c => c.classList.remove('active')); }
-
-  async function checkAllRecordings() {
-    for (const card of cards) {
+    async function handleNumberClick(card, btn) {
+      unlockAudio();
       const key = card.dataset.key;
-      const blob = await getFromDB(key);
-      if (blob) {
-        const btn = recPanel.querySelector(`.rec-num[data-key="${key}"]`);
-        updateNumberButton(card, btn, true);
-        updateCardIndicator(card, true);
+
+      if (recordingKey === key) {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
+        return;
+      }
+
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        await new Promise(r => setTimeout(r, 250));
+      }
+
+      if (recordedAudios[key]) {
+        if (confirm(`Удалить запись №${btn.dataset.num}?`)) {
+          delete recordedAudios[key];
+          try { localStorage.removeItem(STORAGE_PREFIX + key); } catch (e) {}
+          updateNumberButton(card, btn);
+          updateCardIndicator(card);
+        }
+        return;
+      }
+
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+        });
+
+        const mimeType = getBestMimeType();
+        mediaRecorder = new MediaRecorder(currentStream, mimeType ? { mimeType } : {});
+        recordedChunks = [];
+        recordingKey = key;
+
+        btn.classList.add('recording');
+        btn.textContent = '⏹';
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = async () => {
+          if (currentStream) {
+            currentStream.getTracks().forEach(t => t.stop());
+            currentStream = null;
+          }
+          btn.classList.remove('recording');
+          btn.textContent = btn.dataset.num;
+
+          if (recordedChunks.length === 0) { recordingKey = null; return; }
+
+          const blobMime = mediaRecorder.mimeType || mimeType || 'audio/mp4';
+          const blob = new Blob(recordedChunks, { type: blobMime });
+
+          let finalBlob = blob;
+          try { finalBlob = await normalizeAudio(blob); } catch (e) {}
+
+          let url;
+          try { url = await blobToDataURL(finalBlob); } catch (e) { recordingKey = null; return; }
+
+          recordedAudios[key] = url;
+          try { localStorage.setItem(STORAGE_PREFIX + key, url); } catch (e) { alert('Не хватает места.'); }
+
+          updateNumberButton(card, btn);
+          updateCardIndicator(card);
+          recordingKey = null;
+        };
+
+        mediaRecorder.onerror = () => {
+          if (currentStream) { currentStream.getTracks().forEach(t => t.stop()); currentStream = null; }
+          btn.classList.remove('recording');
+          btn.textContent = btn.dataset.num;
+          recordingKey = null;
+        };
+
+        mediaRecorder.start();
+      } catch (err) {
+        alert('Не удалось получить доступ к микрофону.');
+        recordingKey = null;
       }
     }
-  }
 
-  createNumberButtons();
-  cards.forEach(card => updateCardIndicator(card, false));
-  checkAllRecordings();
+    async function normalizeAudio(blob) {
+      const arrayBuffer = await blob.arrayBuffer();
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return blob;
 
-  cards.forEach(card => {
-    card.addEventListener('click', function(e) {
-      if (e.target.closest('.rec-num')) return;
-      e.stopPropagation();
-      window.speechSynthesis.cancel();
-      clearActive();
-      this.classList.add('active');
-      setTimeout(() => speakRussianOnly(this), 60);
-    });
-  });
+      let audioCtx;
+      try { audioCtx = sharedAudioCtx || new Ctx(); } catch (e) { return blob; }
+      if (audioCtx.state === 'suspended') { try { await audioCtx.resume(); } catch (e) {} }
 
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.card') && !e.target.closest('.rec-panel')) {
-      window.speechSynthesis.cancel();
-      clearActive();
+      let audioBuffer;
+      try { audioBuffer = await audioCtx.decodeAudioData(arrayBuffer.slice(0)); } catch (e) { return blob; }
+
+      let peak = 0;
+      for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
+        const data = audioBuffer.getChannelData(ch);
+        for (let i = 0; i < data.length; i++) {
+          const abs = Math.abs(data[i]);
+          if (abs > peak) peak = abs;
+        }
+      }
+
+      const targetPeak = 0.95;
+      const gain = peak > 0 ? targetPeak / peak : 1;
+      const cappedGain = Math.min(gain, 8);
+
+      for (let ch = 0; ch < audioBuffer.numberOfChannels; ch++) {
+        const data = audioBuffer.getChannelData(ch);
+        for (let i = 0; i < data.length; i++) {
+          data[i] = Math.max(-1, Math.min(1, data[i] * cappedGain));
+        }
+      }
+
+      return audioBufferToWav(audioBuffer);
     }
-  });
 
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-})();
+    function audioBufferToWav(buffer) {
+      const numCh = buffer.numberOfChannels;
+      const sampleRate = buffer.sampleRate;
+      const length = buffer.length * numCh * 2 + 44;
+      const arrayBuffer = new ArrayBuffer(length);
+      const view = new DataView(arrayBuffer);
+
+      const writeString = (offset, str) => {
+        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+      };
+
+      writeString(0, 'RIFF');
+      view.setUint32(4, length - 8, true);
+      writeString(8, 'WAVE');
+      writeString(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, numCh, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * numCh * 2, true);
+      view.setUint16(32, numCh * 2, true);
+      view.setUint16(34, 16, true);
+      writeString(36, 'data');
+      view.setUint32(40, length - 44, true);
+
+      let offset = 44;
+      const channels = [];
+      for (let i = 0; i < numCh; i++) channels.push(buffer.getChannelData(i));
+
+      for (let i = 0; i < buffer.length; i++) {
+        for (let ch = 0; ch < numCh; ch++) {
+          let sample = Math.max(-1, Math.min(1, channels[ch][i]));
+          sample = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
+          view.setInt16(offset, sample, true);
+          offset += 2;
+        }
+      }
+      return new Blob([arrayBuffer], { type: 'audio/wav' });
+    }
+
+    function blobToDataURL(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    function speakRussian(text, onEnd) {
+      const cleanText = text.trim();
+      if (!cleanText) { if (onEnd) onEnd(); return; }
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = 'ru-RU'; utterance.rate = 0.85; utterance.pitch = 1.0; utterance.volume = 1.0;
+      const voice = getRussianVoice();
+      if (voice) utterance.voice = voice;
+      if (onEnd) utterance.onend = () => onEnd();
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function playRecorded(key) {
+      const url = recordedAudios[key];
+      if (!url) return;
+      if (sharedAudioCtx && sharedAudioCtx.state === 'suspended') sharedAudioCtx.resume().catch(() => {});
+      const audio = new Audio(url);
+      audio.volume = 1.0;
+      audio.setAttribute('playsinline', 'true');
+      audio.play().catch(() => {});
+    }
+
+    function speakChineseAndRussian(card) {
+      window.speechSynthesis.cancel();
+      const hanziText = card.dataset.hanziAudio;
+      const russianText = card.dataset.russianAudio;
+      const key = card.dataset.key;
+
+      const utter1 = new SpeechSynthesisUtterance(hanziText);
+      utter1.lang = 'zh-CN'; utter1.rate = 0.7; utter1.pitch = 1.0; utter1.volume = 1.0;
+      const chVoice = getChineseVoice();
+      if (chVoice) utter1.voice = chVoice;
+
+      let spoken = false;
+      function speakTranslationOnce() {
+        if (spoken) return;
+        spoken = true;
+        if (recordedAudios[key]) playRecorded(key);
+        else speakRussian(russianText);
+      }
+
+      utter1.onend = () => setTimeout(speakTranslationOnce, 900);
+      utter1.onerror = () => setTimeout(speakTranslationOnce, 900);
+      window.speechSynthesis.speak(utter1);
+    }
+
+    function clearActive() { cards.forEach(c => c.classList.remove('active')); }
+
+    loadSavedRecordings();
+    createNumberButtons();
+    cards.forEach(card => updateCardIndicator(card));
+
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('.rec-num')) return;
+        e.stopPropagation();
+        window.speechSynthesis.cancel();
+        clearActive();
+        this.classList.add('active');
+        setTimeout(() => speakChineseAndRussian(this), 60);
+      });
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.card') && !e.target.closest('.rec-panel')) {
+        window.speechSynthesis.cancel();
+        clearActive();
+      }
+    });
+
+    let lastTouch = 0;
+    document.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      if (now - lastTouch <= 300) e.preventDefault();
+      lastTouch = now;
+    }, { passive: false });
+
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  })();
 </script>
+
 </body>
 </html>
