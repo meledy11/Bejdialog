@@ -428,7 +428,7 @@ const SCENES = {
     ]
   }
 };
-<script>
+
 const SCENE_ORDER = ['mcdonalds','help','late','phone','job','wallet','birthday','battery','directions','sick','glasses','beach','cosmetics','cinema','restaurant','thailand','friends','guest'];
 const THEME_MAP = { mcdonalds:'', help:'help-theme', late:'late-theme', phone:'phone-theme', job:'job-theme', wallet:'wallet-theme', birthday:'birthday-theme', battery:'battery-theme', directions:'directions-theme', sick:'sick-theme', glasses:'glasses-theme', beach:'beach-theme', cosmetics:'cosmetics-theme', cinema:'cinema-theme', restaurant:'restaurant-theme', thailand:'thailand-theme', friends:'friends-theme', guest:'guest-theme' };
 const SCENE_NAMES = { mcdonalds:'🍔 McDonald\'s', help:'🤝 Просьба о помощи', late:'⏰ Опоздание', phone:'📱 Что делать?', job:'💼 Новая работа', wallet:'👛 Потерянный кошелёк', birthday:'🎂 День рождения', battery:'🔋 Разрядился телефон', directions:'🗺️ Как пройти?', sick:'🤒 Я простудилась', glasses:'👓 Поход за очками', beach:'🏖️ Пошли на пляж!', cosmetics:'🛍️ Корейская косметика', cinema:'🎬 Поход в кино', restaurant:'🌹 Пошли в ресторан', thailand:'✈️ Полетели в Таиланд', friends:'🌸 Встреча подруг', guest:'🏠 В гостях' };
@@ -468,7 +468,7 @@ function wakeUpSpeechSynthesis() {
   });
 }
 
-/* ===== ПРОГРЕВ ГОЛОСОВ — ВАЖНО ДЛЯ iOS ===== */
+/* ===== ПРОГРЕВ ГОЛОСОВ ===== */
 function warmUpVoices() {
   if (!('speechSynthesis' in window)) return;
   const voices = speechSynthesis.getVoices();
@@ -488,9 +488,7 @@ function warmUpVoices() {
   } catch (e) {}
 }
 
-/* ==================== GITHUB через Worker ==================== */
 let uploadKey = localStorage.getItem('upload_key') || '';
-
 function ensureKey() {
   if (uploadKey) return true;
   const k = prompt('Введите код доступа (UPLOAD_KEY):');
@@ -502,7 +500,6 @@ function ensureKey() {
   showToast('❌ Код не введён');
   return false;
 }
-
 function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -511,7 +508,6 @@ function blobToBase64(blob) {
     r.readAsDataURL(blob);
   });
 }
-
 async function saveToDB(key, blob) {
   if (!ensureKey()) throw new Error('No key');
   const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
@@ -529,7 +525,6 @@ async function saveToDB(key, blob) {
   }
   return res.json();
 }
-
 async function getFromDB(key) {
   for (const ext of ['webm', 'mp4']) {
     try {
@@ -539,7 +534,6 @@ async function getFromDB(key) {
   }
   return null;
 }
-
 async function deleteFromDB(key) {
   if (!ensureKey()) return;
   for (const ext of ['webm', 'mp4']) {
@@ -551,7 +545,6 @@ async function deleteFromDB(key) {
   }
 }
 
-/* ==================== INIT ==================== */
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
@@ -577,7 +570,6 @@ function resetAllRecordButtons() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
-/* ==================== RENDER ==================== */
 async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
@@ -676,7 +668,6 @@ function stopPlayback() {
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
-/* ==================== RECORDING ==================== */
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
@@ -762,12 +753,9 @@ function playTTSRobust(sceneKey, idx, lang) {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-    // ИСПРАВЛЕНО: медленнее для китайского
     utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.05;
-    // ИСПРАВЛЕНО: меньше pitch
     utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.1 : 0.95;
-    // ИСПРАВЛЕНО: было 0.3 — почти не слышно
-    utterance.volume = 1.0;
+    utterance.volume = 1.0; // ИСПРАВЛЕНО: было 0.3
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
 
@@ -779,14 +767,12 @@ function playTTSRobust(sceneKey, idx, lang) {
       resolve();
     };
 
-    // ИСПРАВЛЕНО: больше запас
     const maxDuration = Math.min((text.length * 500) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.05) + 3000, 25000);
     const safetyTimeout = setTimeout(finish, maxDuration);
 
-    // ИСПРАВЛЕНО: задержка 150 мс, чтобы хвост речи доиграл
     utterance.onend = () => {
       clearTimeout(safetyTimeout);
-      setTimeout(finish, 150);
+      setTimeout(finish, 150); // ИСПРАВЛЕНО: даём хвосту доиграть
     };
     utterance.onerror = (e) => {
       console.warn('TTS error:', e);
@@ -803,7 +789,6 @@ function playTTSRobust(sceneKey, idx, lang) {
   });
 }
 
-/* ==================== PLAYBACK ==================== */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     playRecordingFallback(blob, sceneKey, idx, lang, resolve);
@@ -851,7 +836,6 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
 
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
 
-/* ==================== HIGHLIGHT ==================== */
 function highlightText(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
   const panel = document.getElementById(`${sceneKey}-p${idx}`);
@@ -891,7 +875,6 @@ function showRepeatPause(sceneKey, idx) {
   if (npT) npT.textContent = '🗣️ Повторите фразу вслух...';
 }
 
-/* ==================== PLAYBACK CONTROL ==================== */
 async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -928,8 +911,7 @@ async function playCardInternal(sceneKey, idx) {
     await wakeUpSpeechSynthesis();
     await playTTSRobust(sceneKey, idx, 'zh');
     if (!isPlaying) return;
-    // ИСПРАВЛЕНО: было 500 → 800, чтобы русский не наезжал
-    await sleep(800);
+    await sleep(800); // ИСПРАВЛЕНО: было 500
     if (!isPlaying) return;
     await wakeUpSpeechSynthesis();
 
@@ -983,11 +965,10 @@ async function playAndNext(sceneKey, idx) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-/* ==================== START ==================== */
 window.addEventListener('load', async () => {
   globalAudio = document.getElementById('globalAudio');
   renderScene(currentScene);
-  warmUpVoices(); // ИСПРАВЛЕНО: прогреваем голоса при загрузке
+  warmUpVoices();
   if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
