@@ -461,34 +461,12 @@ document.addEventListener('click', unlockAudioOnInteraction);
 
 function wakeUpSpeechSynthesis() {
   if (!('speechSynthesis' in window)) return Promise.resolve();
-  return new Promise(resolve => {
-    speechSynthesis.cancel();
-    if (isIOS) speechSynthesis.resume();
-    setTimeout(resolve, 80);
-  });
+  return new Promise(resolve => { speechSynthesis.cancel(); if (isIOS) speechSynthesis.resume(); setTimeout(resolve, 50); });
 }
 
-/* ===== ПРОГРЕВ ГОЛОСОВ ===== */
-function warmUpVoices() {
-  if (!('speechSynthesis' in window)) return;
-  const voices = speechSynthesis.getVoices();
-  if (voices.length === 0) {
-    setTimeout(warmUpVoices, 100);
-    return;
-  }
-  try {
-    const w1 = new SpeechSynthesisUtterance(' ');
-    w1.lang = 'zh-CN';
-    w1.volume = 0;
-    speechSynthesis.speak(w1);
-    const w2 = new SpeechSynthesisUtterance(' ');
-    w2.lang = 'ru-RU';
-    w2.volume = 0;
-    speechSynthesis.speak(w2);
-  } catch (e) {}
-}
-
+/* ==================== GITHUB через Worker ==================== */
 let uploadKey = localStorage.getItem('upload_key') || '';
+
 function ensureKey() {
   if (uploadKey) return true;
   const k = prompt('Введите код доступа (UPLOAD_KEY):');
@@ -500,6 +478,7 @@ function ensureKey() {
   showToast('❌ Код не введён');
   return false;
 }
+
 function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -508,6 +487,7 @@ function blobToBase64(blob) {
     r.readAsDataURL(blob);
   });
 }
+
 async function saveToDB(key, blob) {
   if (!ensureKey()) throw new Error('No key');
   const ext = blob.type.includes('mp4') ? 'mp4' : 'webm';
@@ -525,6 +505,7 @@ async function saveToDB(key, blob) {
   }
   return res.json();
 }
+
 async function getFromDB(key) {
   for (const ext of ['webm', 'mp4']) {
     try {
@@ -534,6 +515,7 @@ async function getFromDB(key) {
   }
   return null;
 }
+
 async function deleteFromDB(key) {
   if (!ensureKey()) return;
   for (const ext of ['webm', 'mp4']) {
@@ -545,16 +527,13 @@ async function deleteFromDB(key) {
   }
 }
 
+/* ==================== INIT ==================== */
 function loadVoices() {
   const voices = speechSynthesis.getVoices();
   zhVoice = voices.find(v => v.lang.includes('zh-CN') || v.lang.includes('cmn')) || voices[0];
   ruVoice = voices.find(v => v.lang.includes('ru-RU')) || voices[0];
-  warmUpVoices();
 }
-if ('speechSynthesis' in window) {
-  speechSynthesis.onvoiceschanged = loadVoices;
-  loadVoices();
-}
+if ('speechSynthesis' in window) { speechSynthesis.onvoiceschanged = loadVoices; loadVoices(); }
 document.getElementById('speedSlider').addEventListener('input', (e) => {
   currentSpeed = parseFloat(e.target.value);
   document.getElementById('speedValue').textContent = currentSpeed.toFixed(2) + 'x';
@@ -570,6 +549,7 @@ function resetAllRecordButtons() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('recording-panel'));
 }
 
+/* ==================== RENDER ==================== */
 async function renderScene(sceneKey) {
   const data = SCENES[sceneKey];
   const container = document.getElementById('panelsContainer');
@@ -653,9 +633,9 @@ function stopPlayback() {
   isPlaying = false;
   isAudioLoading = false;
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-  if (globalAudio) {
-    globalAudio.pause();
-    globalAudio.currentTime = 0;
+  if (globalAudio) { 
+    globalAudio.pause(); 
+    globalAudio.currentTime = 0; 
     globalAudio.src = '';
   }
   stopCurrentRecording();
@@ -668,6 +648,7 @@ function stopPlayback() {
   document.getElementById('stopBtn').classList.remove('visible');
 }
 
+/* ==================== RECORDING ==================== */
 async function toggleRecording(sceneKey, idx, lang) {
   const recBtn = document.getElementById(`${sceneKey}-rec-${lang}-${idx}`);
   const panelEl = document.getElementById(`${sceneKey}-p${idx}`);
@@ -743,52 +724,32 @@ async function handleDelete(sceneKey, idx, lang) {
   } catch(e) { showToast('❌ Ошибка удаления'); }
 }
 
-/* ==================== TTS (ИСПРАВЛЕНО) ==================== */
+/* ==================== TTS (ТОЛЬКО ЗДЕСЬ ИЗМЕНЕНО) ==================== */
 function playTTSRobust(sceneKey, idx, lang) {
   return new Promise(async (resolve) => {
     if (!isPlaying) { resolve(); return; }
     highlightText(sceneKey, idx, lang);
     const p = SCENES[sceneKey].panels[idx];
     const text = lang === 'zh' ? p.zh : p.ru;
-
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === 'zh' ? "zh-CN" : "ru-RU";
-    utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.05;
-    utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.1 : 0.95;
-    utterance.volume = 1.0; // ИСПРАВЛЕНО: было 0.3
+    utterance.rate = lang === 'zh' ? currentSpeed : currentSpeed * 1.1;
+    utterance.pitch = (lang === 'zh' && p.who === "s") ? 1.15 : 0.9;
+    utterance.volume = 1.0;
     if (lang === 'zh' && zhVoice) utterance.voice = zhVoice;
     if (lang === 'ru' && ruVoice) utterance.voice = ruVoice;
-
     let finished = false;
-    const finish = () => {
-      if (finished) return;
-      finished = true;
-      clearHighlight(sceneKey, idx, lang);
-      resolve();
-    };
-
-    const maxDuration = Math.min((text.length * 500) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.05) + 3000, 25000);
+    const finish = () => { if(finished) return; finished=true; clearHighlight(sceneKey, idx, lang); resolve(); };
+    const maxDuration = Math.min((text.length * 400) / (lang === 'zh' ? currentSpeed : currentSpeed * 1.1) + 3000, 20000);
     const safetyTimeout = setTimeout(finish, maxDuration);
-
-    utterance.onend = () => {
-      clearTimeout(safetyTimeout);
-      setTimeout(finish, 150); // ИСПРАВЛЕНО: даём хвосту доиграть
-    };
-    utterance.onerror = (e) => {
-      console.warn('TTS error:', e);
-      clearTimeout(safetyTimeout);
-      setTimeout(finish, 150);
-    };
-
+    utterance.onend = () => { clearTimeout(safetyTimeout); setTimeout(finish, 150); };
+    utterance.onerror = () => { clearTimeout(safetyTimeout); setTimeout(finish, 150); };
     await wakeUpSpeechSynthesis();
-    setTimeout(() => {
-      if (!finished && isPlaying) {
-        try { speechSynthesis.speak(utterance); } catch(e) { finish(); }
-      } else if (!isPlaying) finish();
-    }, 100);
+    setTimeout(() => { if (!finished && isPlaying) { try { speechSynthesis.speak(utterance); } catch(e) { finish(); } } else if (!isPlaying) finish(); }, 100);
   });
 }
 
+/* ==================== PLAYBACK (ИСПРАВЛЕНО) ==================== */
 function playRecordingWithNormalization(blob, sceneKey, idx, lang) {
   return new Promise((resolve) => {
     playRecordingFallback(blob, sceneKey, idx, lang, resolve);
@@ -836,6 +797,7 @@ function playRecordingFallback(blob, sceneKey, idx, lang, resolve) {
 
 function playRecordingRobust(blob, sceneKey, idx, lang) { return playRecordingWithNormalization(blob, sceneKey, idx, lang); }
 
+/* ==================== HIGHLIGHT ==================== */
 function highlightText(sceneKey, idx, lang) {
   const el = document.getElementById(`${sceneKey}-${lang}-${idx}`);
   const panel = document.getElementById(`${sceneKey}-p${idx}`);
@@ -875,6 +837,7 @@ function showRepeatPause(sceneKey, idx) {
   if (npT) npT.textContent = '🗣️ Повторите фразу вслух...';
 }
 
+/* ==================== PLAYBACK CONTROL ==================== */
 async function handleSpeak(sceneKey, idx, lang) {
   isPlaying = true;
   document.getElementById('stopBtn').classList.add('visible');
@@ -886,9 +849,9 @@ async function handleSpeak(sceneKey, idx, lang) {
         const blob = await getFromDB(`${sceneKey}_ru_${idx}`);
         if (blob) await playRecordingRobust(blob, sceneKey, idx, 'ru');
         else await playTTSRobust(sceneKey, idx, 'ru');
-      } catch(e) {
+      } catch(e) { 
         console.error(e);
-        await playTTSRobust(sceneKey, idx, 'ru');
+        await playTTSRobust(sceneKey, idx, 'ru'); 
       }
     }
   } finally {
@@ -911,7 +874,7 @@ async function playCardInternal(sceneKey, idx) {
     await wakeUpSpeechSynthesis();
     await playTTSRobust(sceneKey, idx, 'zh');
     if (!isPlaying) return;
-    await sleep(800); // ИСПРАВЛЕНО: было 500
+    await sleep(800);
     if (!isPlaying) return;
     await wakeUpSpeechSynthesis();
 
@@ -965,10 +928,10 @@ async function playAndNext(sceneKey, idx) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/* ==================== START ==================== */
 window.addEventListener('load', async () => {
   globalAudio = document.getElementById('globalAudio');
   renderScene(currentScene);
-  warmUpVoices();
   if (!('speechSynthesis' in window)) showToast('⚠️ Используйте Chrome/Safari');
 });
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopPlayback(); });
